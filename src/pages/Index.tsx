@@ -2,6 +2,9 @@ import Header from "@/components/Header";
 import TrainingPillar from "@/components/TrainingPillar";
 import WeeklyPlan from "@/components/WeeklyPlan";
 import SkillShowcase from "@/components/SkillShowcase";
+import ExerciseLibrary from "@/components/ExerciseLibrary";
+import WorkoutTimer from "@/components/WorkoutTimer";
+import ProgressTracker from "@/components/ProgressTracker";
 import { Zap, Dumbbell, ArrowUp, CircleDot } from "lucide-react";
 
 const Index = () => {
@@ -86,6 +89,17 @@ const Index = () => {
 
         {/* Skill Showcase */}
         <SkillShowcase />
+
+        {/* Exercise Library */}
+        <ExerciseLibrary />
+
+        {/* Workout Timer and Progress Tracker */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <WorkoutTimer />
+          <div>
+            <ProgressTracker />
+          </div>
+        </div>
       </main>
     </div>
   );

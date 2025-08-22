@@ -1,6 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { useToast } from "@/hooks/use-toast";
 import { Star, Zap, Award } from "lucide-react";
 
 interface Skill {
@@ -43,6 +44,14 @@ const skills: Skill[] = [
 ];
 
 const SkillShowcase = () => {
+  const { toast } = useToast();
+
+  const handlePracticeSkill = (skillName: string) => {
+    toast({
+      title: `Starting ${skillName} Practice`,
+      description: "Remember to warm up and focus on proper form!",
+    });
+  };
   return (
     <Card className="glass-card leather-texture border-2 border-card-border premium-shadow">
       <CardHeader>
@@ -101,6 +110,7 @@ const SkillShowcase = () => {
               {skill.unlocked && (
                 <Button 
                   size="sm" 
+                  onClick={() => handlePracticeSkill(skill.name)}
                   className="w-full mt-3 primary-gradient hover:opacity-90 text-primary-foreground gold-shadow"
                 >
                   Practice Now

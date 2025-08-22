@@ -146,6 +146,10 @@
     background: var(--gradient-dark);
     background-attachment: fixed;
   }
+
+  html {
+    @apply dark;
+  }
 }
 
 @layer components {

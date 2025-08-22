@@ -2,6 +2,7 @@ import { ReactNode } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { useToast } from "@/hooks/use-toast";
 import { ChevronRight, Star } from "lucide-react";
 
 interface Exercise {
@@ -21,6 +22,14 @@ interface TrainingPillarProps {
 
 const TrainingPillar = ({ title, icon, description, color, exercises, progress }: TrainingPillarProps) => {
   const themeClass = `${color}-theme`;
+  const { toast } = useToast();
+
+  const handleViewExercises = () => {
+    toast({
+      title: `${title} Exercises`,
+      description: `Opening ${title.toLowerCase()} exercise library...`,
+    });
+  };
   
   return (
     <Card className={`glass-card leather-texture ${themeClass} border-2 premium-shadow transition-all duration-300 hover:scale-105`}>
@@ -76,7 +85,10 @@ const TrainingPillar = ({ title, icon, description, color, exercises, progress }
             </div>
           ))}
           
-          <Button className="w-full mt-4 primary-gradient hover:opacity-90 text-primary-foreground font-semibold gold-shadow">
+          <Button 
+            onClick={handleViewExercises}
+            className="w-full mt-4 primary-gradient hover:opacity-90 text-primary-foreground font-semibold gold-shadow"
+          >
             View All Exercises
             <ChevronRight className="ml-2 h-4 w-4" />
           </Button>
