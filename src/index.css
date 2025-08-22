@@ -2,41 +2,83 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* Premium Skeuomorphic Fitness App Design System */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Premium Background System */
+    --background: 20 15% 8%;
+    --background-secondary: 25 20% 12%;
+    --background-tertiary: 30 18% 15%;
+    --foreground: 45 25% 95%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    /* Premium Card System */
+    --card: 25 20% 12%;
+    --card-secondary: 30 22% 14%;
+    --card-foreground: 45 25% 95%;
+    --card-border: 35 30% 25%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    /* Glass Morphism */
+    --glass: 45 25% 95% / 0.1;
+    --glass-border: 45 25% 95% / 0.2;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Premium Bronze/Gold System */
+    --bronze: 30 85% 45%;
+    --bronze-light: 35 90% 55%;
+    --bronze-dark: 25 80% 35%;
+    
+    --gold: 45 95% 60%;
+    --gold-light: 50 100% 70%;
+    --gold-dark: 40 90% 50%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Training Pillar Colors */
+    --handstand: 220 85% 60%;
+    --planche: 45 95% 60%;
+    --pullup: 0 85% 60%;
+    --rings: 140 85% 55%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    /* Gradients */
+    --gradient-bronze: linear-gradient(135deg, hsl(var(--bronze-light)), hsl(var(--bronze)), hsl(var(--bronze-dark)));
+    --gradient-gold: linear-gradient(135deg, hsl(var(--gold-light)), hsl(var(--gold)), hsl(var(--gold-dark)));
+    --gradient-primary: linear-gradient(135deg, hsl(var(--bronze)), hsl(var(--gold)));
+    --gradient-dark: linear-gradient(180deg, hsl(var(--background)), hsl(var(--background-secondary)));
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    /* Premium Shadows */
+    --shadow-premium: 0 25px 50px -12px hsl(var(--background) / 0.8);
+    --shadow-card: 0 10px 30px -10px hsl(var(--background) / 0.6);
+    --shadow-bronze: 0 8px 25px -8px hsl(var(--bronze) / 0.4);
+    --shadow-gold: 0 8px 25px -8px hsl(var(--gold) / 0.4);
+    --shadow-inner: inset 0 2px 4px hsl(var(--background) / 0.3);
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    /* Leather Texture */
+    --leather-texture: radial-gradient(circle at 20% 50%, hsl(var(--background-secondary) / 0.3) 0%, transparent 50%),
+                      radial-gradient(circle at 80% 20%, hsl(var(--background-tertiary) / 0.3) 0%, transparent 50%),
+                      radial-gradient(circle at 40% 80%, hsl(var(--bronze) / 0.1) 0%, transparent 50%);
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    /* System Colors */
+    --popover: 25 20% 12%;
+    --popover-foreground: 45 25% 95%;
 
-    --radius: 0.5rem;
+    --primary: 45 95% 60%;
+    --primary-foreground: 25 20% 12%;
+
+    --secondary: 30 22% 14%;
+    --secondary-foreground: 45 25% 95%;
+
+    --muted: 30 18% 15%;
+    --muted-foreground: 45 15% 70%;
+
+    --accent: 45 95% 60%;
+    --accent-foreground: 25 20% 12%;
+
+    --destructive: 0 85% 60%;
+    --destructive-foreground: 45 25% 95%;
+
+    --border: 35 30% 25%;
+    --input: 30 22% 14%;
+    --ring: 45 95% 60%;
+
+    --radius: 0.75rem;
 
     --sidebar-background: 0 0% 98%;
 
@@ -101,5 +143,72 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+    background: var(--gradient-dark);
+    background-attachment: fixed;
+  }
+}
+
+@layer components {
+  .glass-card {
+    background: hsl(var(--glass));
+    backdrop-filter: blur(20px);
+    border: 1px solid hsl(var(--glass-border));
+    box-shadow: var(--shadow-card);
+  }
+
+  .bronze-gradient {
+    background: var(--gradient-bronze);
+  }
+
+  .gold-gradient {
+    background: var(--gradient-gold);
+  }
+
+  .primary-gradient {
+    background: var(--gradient-primary);
+  }
+
+  .leather-texture {
+    background: var(--leather-texture), hsl(var(--card));
+  }
+
+  .premium-shadow {
+    box-shadow: var(--shadow-premium);
+  }
+
+  .card-shadow {
+    box-shadow: var(--shadow-card);
+  }
+
+  .bronze-shadow {
+    box-shadow: var(--shadow-bronze);
+  }
+
+  .gold-shadow {
+    box-shadow: var(--shadow-gold);
+  }
+
+  .inner-shadow {
+    box-shadow: var(--shadow-inner);
+  }
+
+  .handstand-theme {
+    background: linear-gradient(135deg, hsl(var(--handstand) / 0.2), hsl(var(--handstand) / 0.1));
+    border-color: hsl(var(--handstand) / 0.3);
+  }
+
+  .planche-theme {
+    background: linear-gradient(135deg, hsl(var(--planche) / 0.2), hsl(var(--planche) / 0.1));
+    border-color: hsl(var(--planche) / 0.3);
+  }
+
+  .pullup-theme {
+    background: linear-gradient(135deg, hsl(var(--pullup) / 0.2), hsl(var(--pullup) / 0.1));
+    border-color: hsl(var(--pullup) / 0.3);
+  }
+
+  .rings-theme {
+    background: linear-gradient(135deg, hsl(var(--rings) / 0.2), hsl(var(--rings) / 0.1));
+    border-color: hsl(var(--rings) / 0.3);
   }
 }
