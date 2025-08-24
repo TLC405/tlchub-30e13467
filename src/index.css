@@ -6,79 +6,61 @@
 
 @layer base {
   :root {
-    /* Premium Background System */
-    --background: 20 15% 8%;
-    --background-secondary: 25 20% 12%;
-    --background-tertiary: 30 18% 15%;
-    --foreground: 45 25% 95%;
+    /* Vibrant Bumble-inspired Color System */
+    --background: 222 84% 4%;
+    --background-secondary: 225 71% 8%;
+    --background-tertiary: 230 60% 12%;
+    --foreground: 210 40% 98%;
 
-    /* Premium Card System */
-    --card: 25 20% 12%;
-    --card-secondary: 30 22% 14%;
-    --card-foreground: 45 25% 95%;
-    --card-border: 35 30% 25%;
+    /* Card System */
+    --card: 225 71% 8%;
+    --card-secondary: 230 60% 12%;
+    --card-foreground: 210 40% 98%;
+    --card-border: 240 48% 20%;
 
-    /* Glass Morphism */
-    --glass: 45 25% 95% / 0.1;
-    --glass-border: 45 25% 95% / 0.2;
-
-    /* Premium Bronze/Gold System */
-    --bronze: 30 85% 45%;
-    --bronze-light: 35 90% 55%;
-    --bronze-dark: 25 80% 35%;
+    /* Vibrant Primary Colors */
+    --primary: 45 100% 60%;
+    --primary-foreground: 222 84% 4%;
     
-    --gold: 45 95% 60%;
-    --gold-light: 50 100% 70%;
-    --gold-dark: 40 90% 50%;
+    --secondary: 280 100% 70%;
+    --secondary-foreground: 210 40% 98%;
 
-    /* Training Pillar Colors */
-    --handstand: 220 85% 60%;
-    --planche: 45 95% 60%;
-    --pullup: 0 85% 60%;
-    --rings: 140 85% 55%;
+    /* Accent Colors */
+    --accent: 330 100% 65%;
+    --accent-foreground: 210 40% 98%;
 
-    /* Gradients */
-    --gradient-bronze: linear-gradient(135deg, hsl(var(--bronze-light)), hsl(var(--bronze)), hsl(var(--bronze-dark)));
-    --gradient-gold: linear-gradient(135deg, hsl(var(--gold-light)), hsl(var(--gold)), hsl(var(--gold-dark)));
-    --gradient-primary: linear-gradient(135deg, hsl(var(--bronze)), hsl(var(--gold)));
-    --gradient-dark: linear-gradient(180deg, hsl(var(--background)), hsl(var(--background-secondary)));
+    --muted: 240 48% 20%;
+    --muted-foreground: 240 5% 65%;
 
-    /* Premium Shadows */
-    --shadow-premium: 0 25px 50px -12px hsl(var(--background) / 0.8);
-    --shadow-card: 0 10px 30px -10px hsl(var(--background) / 0.6);
-    --shadow-bronze: 0 8px 25px -8px hsl(var(--bronze) / 0.4);
-    --shadow-gold: 0 8px 25px -8px hsl(var(--gold) / 0.4);
-    --shadow-inner: inset 0 2px 4px hsl(var(--background) / 0.3);
+    /* Training Colors */
+    --handstand: 200 100% 60%;
+    --planche: 45 100% 60%;
+    --pullup: 120 100% 50%;
+    --rings: 280 100% 70%;
 
-    /* Leather Texture */
-    --leather-texture: radial-gradient(circle at 20% 50%, hsl(var(--background-secondary) / 0.3) 0%, transparent 50%),
-                      radial-gradient(circle at 80% 20%, hsl(var(--background-tertiary) / 0.3) 0%, transparent 50%),
-                      radial-gradient(circle at 40% 80%, hsl(var(--bronze) / 0.1) 0%, transparent 50%);
+    /* Special Colors */
+    --success: 120 100% 50%;
+    --warning: 45 100% 60%;
+    --destructive: 0 100% 60%;
+    --destructive-foreground: 210 40% 98%;
+
+    /* Glass Effect */
+    --glass: 210 40% 98% / 0.1;
+    --glass-border: 210 40% 98% / 0.2;
+
+    /* Shadows */
+    --shadow-vibrant: 0 25px 50px -12px hsl(var(--primary) / 0.25);
+    --shadow-card: 0 10px 30px -10px hsl(var(--background) / 0.8);
+    --shadow-glow: 0 0 20px hsl(var(--accent) / 0.3);
 
     /* System Colors */
-    --popover: 25 20% 12%;
-    --popover-foreground: 45 25% 95%;
-
-    --primary: 45 95% 60%;
-    --primary-foreground: 25 20% 12%;
-
-    --secondary: 30 22% 14%;
-    --secondary-foreground: 45 25% 95%;
-
-    --muted: 30 18% 15%;
-    --muted-foreground: 45 15% 70%;
-
-    --accent: 45 95% 60%;
-    --accent-foreground: 25 20% 12%;
-
-    --destructive: 0 85% 60%;
-    --destructive-foreground: 45 25% 95%;
-
-    --border: 35 30% 25%;
-    --input: 30 22% 14%;
-    --ring: 45 95% 60%;
-
-    --radius: 0.75rem;
+    --popover: 225 71% 8%;
+    --popover-foreground: 210 40% 98%;
+    --border: 240 48% 20%;
+    --input: 230 60% 12%;
+    --ring: 45 100% 60%;
+    --radius: 1rem;
+  }
 
     --sidebar-background: 0 0% 98%;
 
@@ -160,59 +142,72 @@
     box-shadow: var(--shadow-card);
   }
 
-  .bronze-gradient {
-    background: var(--gradient-bronze);
+  .vibrant-gradient {
+    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
   }
 
-  .gold-gradient {
-    background: var(--gradient-gold);
+  .secondary-gradient {
+    background: linear-gradient(135deg, hsl(var(--secondary)), hsl(var(--primary)));
   }
 
-  .primary-gradient {
-    background: var(--gradient-primary);
+  .success-gradient {
+    background: linear-gradient(135deg, hsl(var(--success)), hsl(120 100% 40%));
   }
 
-  .leather-texture {
-    background: var(--leather-texture), hsl(var(--card));
+  .vibrant-shadow {
+    box-shadow: var(--shadow-vibrant);
   }
 
-  .premium-shadow {
-    box-shadow: var(--shadow-premium);
-  }
-
-  .card-shadow {
-    box-shadow: var(--shadow-card);
-  }
-
-  .bronze-shadow {
-    box-shadow: var(--shadow-bronze);
-  }
-
-  .gold-shadow {
-    box-shadow: var(--shadow-gold);
-  }
-
-  .inner-shadow {
-    box-shadow: var(--shadow-inner);
+  .glow-effect {
+    box-shadow: var(--shadow-glow);
   }
 
   .handstand-theme {
-    background: linear-gradient(135deg, hsl(var(--handstand) / 0.2), hsl(var(--handstand) / 0.1));
-    border-color: hsl(var(--handstand) / 0.3);
+    background: linear-gradient(135deg, hsl(var(--handstand) / 0.3), hsl(var(--handstand) / 0.1));
+    border-color: hsl(var(--handstand) / 0.5);
   }
 
   .planche-theme {
-    background: linear-gradient(135deg, hsl(var(--planche) / 0.2), hsl(var(--planche) / 0.1));
-    border-color: hsl(var(--planche) / 0.3);
+    background: linear-gradient(135deg, hsl(var(--planche) / 0.3), hsl(var(--planche) / 0.1));
+    border-color: hsl(var(--planche) / 0.5);
   }
 
   .pullup-theme {
-    background: linear-gradient(135deg, hsl(var(--pullup) / 0.2), hsl(var(--pullup) / 0.1));
-    border-color: hsl(var(--pullup) / 0.3);
+    background: linear-gradient(135deg, hsl(var(--pullup) / 0.3), hsl(var(--pullup) / 0.1));
+    border-color: hsl(var(--pullup) / 0.5);
   }
 
   .rings-theme {
-    background: linear-gradient(135deg, hsl(var(--rings) / 0.2), hsl(var(--rings) / 0.1));
-    border-color: hsl(var(--rings) / 0.3);
+    background: linear-gradient(135deg, hsl(var(--rings) / 0.3), hsl(var(--rings) / 0.1));
+    border-color: hsl(var(--rings) / 0.5);
+  }
+
+  .mobile-safe-area {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .tab-animate {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .bounce-in {
+    animation: bounce-in 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+
+  @keyframes bounce-in {
+    0% {
+      transform: scale(0.3);
+      opacity: 0;
+    }
+    50% {
+      transform: scale(1.05);
+    }
+    70% {
+      transform: scale(0.9);
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
   }
 }
