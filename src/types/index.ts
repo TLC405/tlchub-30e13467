@@ -1,0 +1,1 @@
+export type ViewType = 'dashboard' | 'training' | 'progress' | 'library' | 'timer';
