@@ -8,7 +8,8 @@ import {
   RotateCcw, 
   StopCircle,
   Timer,
-  Clock
+  Clock,
+  Target
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
@@ -19,7 +20,9 @@ const MobileTimer = () => {
   const [workoutActive, setWorkoutActive] = useState(false);
   const [restActive, setRestActive] = useState(false);
   const [stopwatchActive, setStopwatchActive] = useState(false);
-  const [activeTab, setActiveTab] = useState<'workout' | 'stopwatch'>('workout');
+  const [activeTab, setActiveTab] = useState<'workout' | 'stopwatch' | 'interval'>('workout');
+  const [intervalRounds, setIntervalRounds] = useState(1);
+  const [currentRound, setCurrentRound] = useState(1);
   const { toast } = useToast();
 
   // Workout Timer Logic
@@ -101,42 +104,79 @@ const MobileTimer = () => {
     setWorkoutActive(false);
     setRestActive(false);
     setStopwatchActive(false);
+    setCurrentRound(1);
+  };
+
+  const nextRound = () => {
+    if (currentRound < intervalRounds) {
+      setCurrentRound(prev => prev + 1);
+      setWorkoutTime(0);
+      toast({
+        title: `Round ${currentRound + 1} Started!`,
+        description: `${intervalRounds - currentRound} rounds remaining`,
+      });
+    } else {
+      toast({
+        title: "Workout Complete! 🎉",
+        description: "Amazing work! Time to rest and recover.",
+      });
+      resetAll();
+    }
   };
 
   return (
-    <div className="p-4 space-y-6 mobile-safe-area">
+    <div className="min-h-screen bg-gradient-to-br from-background via-background-secondary to-background-tertiary p-4 pb-24">
+      {/* Header */}
+      <div className="mb-6">
+        <h1 className="text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+          Training Timer
+        </h1>
+        <p className="text-muted-foreground mt-1">Track your workout sessions</p>
+      </div>
       {/* Tab Selector */}
-      <div className="flex bg-card rounded-2xl p-1 border border-border">
+      <div className="flex bg-card/50 backdrop-blur-xl rounded-3xl p-2 border border-border mb-6">
         <Button
-          variant={activeTab === 'workout' ? 'default' : 'ghost'}
-          className={`flex-1 rounded-xl transition-all duration-300 ${
+          variant="ghost"
+          className={`flex-1 rounded-2xl transition-all duration-300 h-12 ${
             activeTab === 'workout' 
-              ? 'vibrant-gradient text-primary-foreground vibrant-shadow' 
-              : 'text-muted-foreground'
+              ? 'bg-gradient-to-r from-primary to-primary/80 text-primary-foreground shadow-lg shadow-primary/25' 
+              : 'text-muted-foreground hover:text-foreground'
           }`}
           onClick={() => setActiveTab('workout')}
         >
           <Timer className="h-4 w-4 mr-2" />
-          Workout Timer
+          Workout
         </Button>
         <Button
-          variant={activeTab === 'stopwatch' ? 'default' : 'ghost'}
-          className={`flex-1 rounded-xl transition-all duration-300 ${
+          variant="ghost"
+          className={`flex-1 rounded-2xl transition-all duration-300 h-12 ${
             activeTab === 'stopwatch' 
-              ? 'secondary-gradient text-secondary-foreground vibrant-shadow' 
-              : 'text-muted-foreground'
+              ? 'bg-gradient-to-r from-accent to-accent/80 text-accent-foreground shadow-lg shadow-accent/25' 
+              : 'text-muted-foreground hover:text-foreground'
           }`}
           onClick={() => setActiveTab('stopwatch')}
         >
           <Clock className="h-4 w-4 mr-2" />
           Stopwatch
         </Button>
+        <Button
+          variant="ghost"
+          className={`flex-1 rounded-2xl transition-all duration-300 h-12 ${
+            activeTab === 'interval' 
+              ? 'bg-gradient-to-r from-secondary to-secondary/80 text-secondary-foreground shadow-lg shadow-secondary/25' 
+              : 'text-muted-foreground hover:text-foreground'
+          }`}
+          onClick={() => setActiveTab('interval')}
+        >
+          <Target className="h-4 w-4 mr-2" />
+          Interval
+        </Button>
       </div>
 
+      {/* Workout Timer */}
       {activeTab === 'workout' && (
-        <div className="space-y-6 bounce-in">
-          {/* Main Workout Timer */}
-          <Card className="glass-card border-2 border-border glow-effect">
+        <div className="space-y-6 animate-fade-in">
+          <Card className="glass-card border-2">
             <CardHeader className="text-center pb-4">
               <CardTitle className="text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
                 Workout Timer
@@ -144,26 +184,26 @@ const MobileTimer = () => {
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="text-center">
-                <div className="text-6xl font-mono font-bold text-primary mb-4">
+                <div className="text-7xl font-mono font-bold text-primary mb-6 drop-shadow-lg">
                   {formatTime(workoutTime)}
                 </div>
                 <div className="flex justify-center space-x-4">
                   <Button
                     onClick={() => setWorkoutActive(!workoutActive)}
-                    className={`px-8 py-3 rounded-2xl transition-all duration-300 ${
+                    className={`px-8 py-4 rounded-2xl transition-all duration-300 text-lg font-semibold ${
                       workoutActive 
-                        ? 'bg-destructive hover:bg-destructive/80 text-destructive-foreground' 
-                        : 'vibrant-gradient hover:opacity-90 text-primary-foreground'
-                    } vibrant-shadow`}
+                        ? 'bg-destructive hover:bg-destructive/80 text-destructive-foreground shadow-lg shadow-destructive/25' 
+                        : 'bg-gradient-to-r from-primary to-primary/80 hover:opacity-90 text-primary-foreground shadow-lg shadow-primary/25'
+                    }`}
                   >
                     {workoutActive ? (
                       <>
-                        <Pause className="h-5 w-5 mr-2" />
+                        <Pause className="h-6 w-6 mr-2" />
                         Pause
                       </>
                     ) : (
                       <>
-                        <Play className="h-5 w-5 mr-2" />
+                        <Play className="h-6 w-6 mr-2" />
                         Start
                       </>
                     )}
@@ -171,9 +211,9 @@ const MobileTimer = () => {
                   <Button
                     variant="outline"
                     onClick={resetAll}
-                    className="px-6 py-3 rounded-2xl border-2 hover:bg-background-secondary/50"
+                    className="px-6 py-4 rounded-2xl border-2 hover:bg-background-secondary/50 text-lg"
                   >
-                    <RotateCcw className="h-5 w-5" />
+                    <RotateCcw className="h-6 w-6" />
                   </Button>
                 </div>
               </div>
@@ -181,35 +221,35 @@ const MobileTimer = () => {
           </Card>
 
           {/* Rest Timer */}
-          <Card className="glass-card border-2 border-border">
+          <Card className="glass-card border-2">
             <CardHeader>
               <CardTitle className="text-center text-lg text-accent">Rest Timer</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               {restActive && (
                 <div className="text-center">
-                  <div className="text-4xl font-bold text-accent mb-4">
+                  <div className="text-5xl font-bold text-accent mb-4 drop-shadow-lg">
                     {formatTime(restTime)}
                   </div>
                   <Button
                     variant="outline"
                     onClick={() => setRestActive(false)}
-                    className="border-destructive text-destructive hover:bg-destructive/10"
+                    className="border-destructive text-destructive hover:bg-destructive/10 rounded-2xl px-6 py-3"
                   >
-                    <StopCircle className="h-4 w-4 mr-2" />
+                    <StopCircle className="h-5 w-5 mr-2" />
                     Stop Rest
                   </Button>
                 </div>
               )}
               
               {!restActive && (
-                <div className="grid grid-cols-4 gap-2">
+                <div className="grid grid-cols-2 gap-3">
                   {[30, 60, 90, 120].map((seconds) => (
                     <Button
                       key={seconds}
                       variant="outline"
                       onClick={() => startRest(seconds)}
-                      className="py-3 rounded-xl border-2 hover:border-accent hover:text-accent transition-all duration-300"
+                      className="py-4 rounded-2xl border-2 hover:border-accent hover:text-accent transition-all duration-300 text-lg font-semibold"
                     >
                       {seconds}s
                     </Button>
@@ -221,36 +261,37 @@ const MobileTimer = () => {
         </div>
       )}
 
+      {/* Stopwatch */}
       {activeTab === 'stopwatch' && (
-        <div className="space-y-6 bounce-in">
-          <Card className="glass-card border-2 border-border glow-effect">
+        <div className="space-y-6 animate-fade-in">
+          <Card className="glass-card border-2">
             <CardHeader className="text-center pb-4">
-              <CardTitle className="text-2xl font-bold bg-gradient-to-r from-secondary to-primary bg-clip-text text-transparent">
+              <CardTitle className="text-2xl font-bold bg-gradient-to-r from-accent to-secondary bg-clip-text text-transparent">
                 Precision Stopwatch
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="text-center">
-                <div className="text-5xl font-mono font-bold text-secondary mb-6">
+                <div className="text-6xl font-mono font-bold text-accent mb-6 drop-shadow-lg">
                   {formatStopwatch(stopwatchTime)}
                 </div>
                 <div className="flex justify-center space-x-4">
                   <Button
                     onClick={() => setStopwatchActive(!stopwatchActive)}
-                    className={`px-8 py-3 rounded-2xl transition-all duration-300 ${
+                    className={`px-8 py-4 rounded-2xl transition-all duration-300 text-lg font-semibold ${
                       stopwatchActive 
-                        ? 'bg-destructive hover:bg-destructive/80 text-destructive-foreground' 
-                        : 'secondary-gradient hover:opacity-90 text-secondary-foreground'
-                    } vibrant-shadow`}
+                        ? 'bg-destructive hover:bg-destructive/80 text-destructive-foreground shadow-lg shadow-destructive/25' 
+                        : 'bg-gradient-to-r from-accent to-accent/80 hover:opacity-90 text-accent-foreground shadow-lg shadow-accent/25'
+                    }`}
                   >
                     {stopwatchActive ? (
                       <>
-                        <Pause className="h-5 w-5 mr-2" />
+                        <Pause className="h-6 w-6 mr-2" />
                         Stop
                       </>
                     ) : (
                       <>
-                        <Play className="h-5 w-5 mr-2" />
+                        <Play className="h-6 w-6 mr-2" />
                         Start
                       </>
                     )}
@@ -258,29 +299,96 @@ const MobileTimer = () => {
                   <Button
                     variant="outline"
                     onClick={() => setStopwatchTime(0)}
-                    className="px-6 py-3 rounded-2xl border-2 hover:bg-background-secondary/50"
+                    className="px-6 py-4 rounded-2xl border-2 hover:bg-background-secondary/50 text-lg"
                   >
-                    <RotateCcw className="h-5 w-5" />
+                    <RotateCcw className="h-6 w-6" />
                   </Button>
                 </div>
               </div>
 
-              {/* Lap Time Tracking */}
-              <div className="space-y-2">
-                <h3 className="text-sm font-semibold text-muted-foreground text-center">Quick Actions</h3>
-                <div className="grid grid-cols-2 gap-3">
-                  <Card className="p-3 border border-border hover:border-secondary transition-colors duration-300">
-                    <div className="text-center">
-                      <div className="text-lg font-bold text-secondary">Hold Time</div>
-                      <div className="text-xs text-muted-foreground">Perfect for isometric holds</div>
-                    </div>
-                  </Card>
-                  <Card className="p-3 border border-border hover:border-primary transition-colors duration-300">
-                    <div className="text-center">
-                      <div className="text-lg font-bold text-primary">Sprint Time</div>
-                      <div className="text-xs text-muted-foreground">Track explosive movements</div>
-                    </div>
-                  </Card>
+            </CardContent>
+          </Card>
+
+          {/* Quick Actions */}
+          <div className="grid grid-cols-2 gap-4">
+            <Card className="glass-card border hover:border-accent transition-all duration-300 cursor-pointer">
+              <CardContent className="p-4 text-center">
+                <div className="text-xl font-bold text-accent mb-1">Hold Time</div>
+                <div className="text-sm text-muted-foreground">Perfect for isometric holds</div>
+              </CardContent>
+            </Card>
+            <Card className="glass-card border hover:border-primary transition-all duration-300 cursor-pointer">
+              <CardContent className="p-4 text-center">
+                <div className="text-xl font-bold text-primary mb-1">Sprint Time</div>
+                <div className="text-sm text-muted-foreground">Track explosive movements</div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      )}
+
+      {/* Interval Timer */}
+      {activeTab === 'interval' && (
+        <div className="space-y-6 animate-fade-in">
+          <Card className="glass-card border-2">
+            <CardHeader className="text-center pb-4">
+              <CardTitle className="text-2xl font-bold bg-gradient-to-r from-secondary to-primary bg-clip-text text-transparent">
+                Interval Training
+              </CardTitle>
+              <div className="flex justify-center items-center space-x-4 mt-4">
+                <Badge variant="outline" className="text-lg px-4 py-2">
+                  Round {currentRound} of {intervalRounds}
+                </Badge>
+              </div>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              {/* Round Selector */}
+              <div className="flex justify-center space-x-2 mb-6">
+                {[3, 5, 8, 10].map((rounds) => (
+                  <Button
+                    key={rounds}
+                    variant={intervalRounds === rounds ? "default" : "outline"}
+                    onClick={() => setIntervalRounds(rounds)}
+                    className="rounded-xl px-4 py-2"
+                  >
+                    {rounds}R
+                  </Button>
+                ))}
+              </div>
+
+              <div className="text-center">
+                <div className="text-7xl font-mono font-bold text-secondary mb-6 drop-shadow-lg">
+                  {formatTime(workoutTime)}
+                </div>
+                <div className="flex justify-center space-x-4">
+                  <Button
+                    onClick={() => setWorkoutActive(!workoutActive)}
+                    className={`px-8 py-4 rounded-2xl transition-all duration-300 text-lg font-semibold ${
+                      workoutActive 
+                        ? 'bg-destructive hover:bg-destructive/80 text-destructive-foreground shadow-lg shadow-destructive/25' 
+                        : 'bg-gradient-to-r from-secondary to-secondary/80 hover:opacity-90 text-secondary-foreground shadow-lg shadow-secondary/25'
+                    }`}
+                  >
+                    {workoutActive ? (
+                      <>
+                        <Pause className="h-6 w-6 mr-2" />
+                        Pause
+                      </>
+                    ) : (
+                      <>
+                        <Play className="h-6 w-6 mr-2" />
+                        Start Round
+                      </>
+                    )}
+                  </Button>
+                  <Button
+                    variant="outline"
+                    onClick={nextRound}
+                    disabled={!workoutActive && workoutTime === 0}
+                    className="px-6 py-4 rounded-2xl border-2 hover:bg-background-secondary/50 text-lg"
+                  >
+                    Next Round
+                  </Button>
                 </div>
               </div>
             </CardContent>

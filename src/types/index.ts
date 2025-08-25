@@ -1,1 +1,1 @@
-export type ViewType = 'dashboard' | 'training' | 'progress' | 'library' | 'timer';
+export type ViewType = 'dashboard' | 'training' | 'progress' | 'library' | 'timer' | 'foundation';
