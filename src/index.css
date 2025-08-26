@@ -6,53 +6,53 @@
 
 @layer base {
   :root {
-    /* Call of Duty Military Color System */
-    --background: 120 10% 8%;        /* Dark Olive Green */
-    --background-secondary: 25 15% 12%;  /* Dark Military Brown */
-    --background-tertiary: 35 20% 16%;   /* Tactical Tan */
-    --foreground: 45 15% 92%;            /* Off-White */
+    /* Call of Duty Military Color System - Enhanced */
+    --background: 120 15% 6%;        /* Deep Tactical Black */
+    --background-secondary: 25 20% 8%;  /* Dark Military Brown */
+    --background-tertiary: 35 25% 10%;   /* Tactical Tan */
+    --foreground: 45 25% 95%;            /* Crisp Off-White */
 
-    /* Card System - Military Grade */
-    --card: 25 15% 12%;
-    --card-secondary: 35 20% 16%;
-    --card-foreground: 45 15% 92%;
-    --card-border: 25 25% 25%;
+    /* Card System - Military Grade Enhanced */
+    --card: 25 20% 8%;
+    --card-secondary: 35 25% 10%;
+    --card-foreground: 45 25% 95%;
+    --card-border: 25 35% 20%;
 
-    /* Military Primary Colors */
-    --primary: 25 85% 55%;           /* Military Orange/Amber */
-    --primary-foreground: 120 10% 8%;
+    /* Military Primary Colors - Enhanced */
+    --primary: 35 90% 58%;           /* Enhanced Military Orange/Amber */
+    --primary-foreground: 120 15% 6%;
     
-    --secondary: 120 35% 35%;        /* Military Green */
-    --secondary-foreground: 45 15% 92%;
+    --secondary: 120 45% 32%;        /* Enhanced Military Green */
+    --secondary-foreground: 45 25% 95%;
 
-    /* Tactical Accent Colors */
-    --accent: 35 70% 50%;            /* Tactical Gold */
-    --accent-foreground: 120 10% 8%;
+    /* Tactical Accent Colors - Enhanced */
+    --accent: 45 85% 55%;            /* Enhanced Tactical Gold */
+    --accent-foreground: 120 15% 6%;
 
-    --muted: 25 25% 25%;
-    --muted-foreground: 45 10% 65%;
+    --muted: 25 30% 18%;
+    --muted-foreground: 45 15% 68%;
 
-    /* Training Division Colors */
-    --handstand: 25 85% 55%;         /* Amber Division */
-    --planche: 35 70% 50%;           /* Gold Division */
-    --pullup: 120 35% 35%;           /* Green Division */
-    --rings: 0 60% 45%;              /* Red Division */
+    /* Training Division Colors - Enhanced */
+    --handstand: 35 90% 58%;         /* Enhanced Amber Division */
+    --planche: 45 85% 55%;           /* Enhanced Gold Division */
+    --pullup: 120 45% 32%;           /* Enhanced Green Division */
+    --rings: 0 75% 48%;              /* Enhanced Red Division */
 
-    /* Status Colors - Military Grade */
-    --success: 120 60% 40%;          /* Mission Success Green */
-    --warning: 25 85% 55%;           /* Alert Amber */
-    --destructive: 0 85% 55%;        /* Danger Red */
-    --destructive-foreground: 45 15% 92%;
+    /* Status Colors - Military Grade Enhanced */
+    --success: 120 65% 38%;          /* Enhanced Mission Success Green */
+    --warning: 35 90% 58%;           /* Enhanced Alert Amber */
+    --destructive: 0 90% 58%;        /* Enhanced Danger Red */
+    --destructive-foreground: 45 25% 95%;
 
-    /* Military Glass Effects */
-    --glass: 45 15% 92% / 0.08;
-    --glass-border: 25 85% 55% / 0.15;
+    /* Military Glass Effects - Enhanced */
+    --glass: 45 25% 95% / 0.06;
+    --glass-border: 35 90% 58% / 0.25;
 
-    /* Tactical Shadows & Effects */
-    --shadow-vibrant: 0 25px 50px -12px hsl(var(--primary) / 0.4);
-    --shadow-card: 0 15px 35px -10px hsl(0 0% 0% / 0.6);
-    --shadow-glow: 0 0 25px hsl(var(--accent) / 0.4);
-    --shadow-tactical: inset 0 1px 0 hsl(var(--glass-border)), 0 8px 25px -8px hsl(0 0% 0% / 0.7);
+    /* Tactical Shadows & Effects - Enhanced */
+    --shadow-vibrant: 0 30px 60px -15px hsl(var(--primary) / 0.5);
+    --shadow-card: 0 20px 40px -12px hsl(0 0% 0% / 0.8);
+    --shadow-glow: 0 0 35px hsl(var(--accent) / 0.6);
+    --shadow-tactical: inset 0 2px 0 hsl(var(--glass-border)), 0 12px 35px -10px hsl(0 0% 0% / 0.9);
 
     /* System Colors */
     --popover: 225 71% 8%;

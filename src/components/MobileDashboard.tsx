@@ -195,10 +195,34 @@ const MobileDashboard = ({ onNavigate }: MobileDashboardProps) => {
         </div>
       </div>
 
+      {/* Elite Handstand Training Protocol */}
+      <div className="space-y-3">
+        <h2 className="text-xl font-bold text-foreground tactical-font tracking-wide">HANDSTAND INTEL</h2>
+        <Card className="glass-card border-2 border-handstand/30 handstand-theme">
+          <CardContent className="p-4">
+            <div className="flex items-center space-x-3 mb-3">
+              <div className="text-2xl">🎯</div>
+              <h3 className="font-bold text-handstand tactical-font tracking-wide">PRECISION DRILLS</h3>
+            </div>
+            <div className="space-y-2 text-xs text-muted-foreground">
+              <p className="uppercase tracking-wider">REFERENCE POINT TRAINING:</p>
+              <div className="grid grid-cols-1 gap-1 ml-2">
+                <span>• Box Supported Tuck Extensions</span>
+                <span>• Stomach to Wall Knee Slides</span>
+                <span>• Back to Wall Leg Extensions</span>
+                <span>• Side Wall Handstand Hold</span>
+                <span>• Dual Prone Parallette Hold</span>
+              </div>
+              <p className="mt-3 italic">"TOE TAP TO FLOAT builds balance, control, and body awareness"</p>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
       {/* Mission Brief */}
       <Card className="glass-card border-2 border-primary/30 combat-glow">
         <CardContent className="p-4 text-center">
-          <div className="text-3xl mb-2">🎯</div>
+          <div className="text-3xl mb-2">⚔️</div>
           <h3 className="font-bold text-primary mb-1 tactical-font tracking-wide">MISSION BRIEF</h3>
           <p className="text-sm text-muted-foreground uppercase tracking-wider">
             "DISCIPLINE BUILDS WARRIORS"
