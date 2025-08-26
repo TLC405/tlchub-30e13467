@@ -17,6 +17,7 @@ import TrainingView from "@/components/TrainingView";
 import ProgressView from "@/components/ProgressView";
 import ExerciseLibrary from "@/components/ExerciseLibrary";
 import FoundationProgram from "@/components/FoundationProgram";
+import AdvancedWorkouts from "@/components/AdvancedWorkouts";
 
 const Index = () => {
   const [currentView, setCurrentView] = useState<ViewType>('dashboard');

@@ -11,10 +11,14 @@ import {
   ChevronRight,
   BookOpen,
   Timer,
-  Zap
+  Zap,
+  User,
+  Users,
+  Crown
 } from "lucide-react";
 
 const FoundationProgram = () => {
+  const [selectedLevel, setSelectedLevel] = useState<'beginner' | 'intermediate' | 'advanced'>('beginner');
   const [selectedWeek, setSelectedWeek] = useState(1);
   const [activeExercise, setActiveExercise] = useState<string | null>(null);
 
@@ -257,113 +261,153 @@ const FoundationProgram = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background-secondary to-background-tertiary p-4 pb-24">
+    <div className="min-h-screen bg-gradient-to-br from-background via-background-secondary to-background-tertiary p-3 pb-24">
       {/* Header */}
-      <div className="mb-6">
-        <h1 className="text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+      <div className="mb-4">
+        <h1 className="text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
           Foundation Program
         </h1>
-        <p className="text-muted-foreground mt-1">4-week beginner calisthenics program</p>
-        <div className="flex items-center space-x-4 mt-3">
-          <Badge variant="outline" className="bg-success/10 text-success border-success">
+        <p className="text-muted-foreground text-sm mt-1">Progressive calisthenics training</p>
+        <div className="flex items-center space-x-2 mt-2">
+          <Badge variant="outline" className="bg-success/10 text-success border-success text-xs">
             <Target className="h-3 w-3 mr-1" />
-            Beginner
+            {selectedLevel.charAt(0).toUpperCase() + selectedLevel.slice(1)}
           </Badge>
-          <Badge variant="outline" className="bg-primary/10 text-primary border-primary">
+          <Badge variant="outline" className="bg-primary/10 text-primary border-primary text-xs">
             <Clock className="h-3 w-3 mr-1" />
             35-50 min
           </Badge>
-          <Badge variant="outline" className="bg-accent/10 text-accent border-accent">
+          <Badge variant="outline" className="bg-accent/10 text-accent border-accent text-xs">
             <Zap className="h-3 w-3 mr-1" />
             3x/week
           </Badge>
         </div>
       </div>
 
+      {/* Level Selector */}
+      <div className="flex gap-2 mb-4">
+        <Button
+          variant={selectedLevel === 'beginner' ? "default" : "outline"}
+          onClick={() => setSelectedLevel('beginner')}
+          className={`rounded-xl flex-1 h-10 text-sm ${
+            selectedLevel === 'beginner' 
+              ? 'bg-gradient-to-r from-success to-success/80 text-success-foreground' 
+              : ''
+          }`}
+        >
+          <User className="h-3 w-3 mr-1" />
+          Beginner
+        </Button>
+        <Button
+          variant={selectedLevel === 'intermediate' ? "default" : "outline"}
+          onClick={() => setSelectedLevel('intermediate')}
+          className={`rounded-xl flex-1 h-10 text-sm ${
+            selectedLevel === 'intermediate'
+              ? 'bg-gradient-to-r from-primary to-primary/80 text-primary-foreground'
+              : ''
+          }`}
+        >
+          <Users className="h-3 w-3 mr-1" />
+          Intermediate
+        </Button>
+        <Button
+          variant={selectedLevel === 'advanced' ? "default" : "outline"}
+          onClick={() => setSelectedLevel('advanced')}
+          className={`rounded-xl flex-1 h-10 text-sm ${
+            selectedLevel === 'advanced'
+              ? 'bg-gradient-to-r from-warning to-warning/80 text-warning-foreground'
+              : ''
+          }`}
+        >
+          <Crown className="h-3 w-3 mr-1" />
+          Advanced
+        </Button>
+      </div>
+
       {/* Week Selector */}
-      <div className="grid grid-cols-4 gap-2 mb-6">
+      <div className="grid grid-cols-4 gap-2 mb-4">
         {[1, 2, 3, 4].map((week) => (
           <Button
             key={week}
             variant={selectedWeek === week ? "default" : "outline"}
             onClick={() => setSelectedWeek(week)}
-            className={`rounded-2xl h-16 flex flex-col ${
+            className={`rounded-xl h-12 flex flex-col text-xs ${
               selectedWeek === week 
                 ? 'bg-gradient-to-r from-primary to-primary/80 text-primary-foreground shadow-lg' 
                 : 'border-2'
             }`}
           >
-            <span className="text-sm font-medium">Week {week}</span>
+            <span className="font-medium">Week {week}</span>
             <Progress value={getWeekProgress(week)} className="w-full h-1 mt-1" />
           </Button>
         ))}
       </div>
 
       {/* Current Week Overview */}
-      <Card className="glass-card border-2 mb-6">
-        <CardHeader>
-          <CardTitle className="flex items-center justify-between">
+      <Card className="glass-card border-2 mb-4">
+        <CardHeader className="pb-3">
+          <CardTitle className="flex items-center justify-between text-lg">
             <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
               Week {selectedWeek}: {foundationProgram.weeks[selectedWeek as keyof typeof foundationProgram.weeks].focus}
             </span>
-            <Trophy className="h-6 w-6 text-warning" />
+            <Trophy className="h-5 w-5 text-warning" />
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-3 gap-4 text-center">
+          <div className="grid grid-cols-3 gap-2 text-center">
             <div>
-              <div className="text-2xl font-bold text-primary">
+              <div className="text-lg font-bold text-primary">
                 {foundationProgram.benchmarks[`week${selectedWeek}` as keyof typeof foundationProgram.benchmarks].pushups}
               </div>
-              <div className="text-sm text-muted-foreground">Push-ups Target</div>
+              <div className="text-xs text-muted-foreground">Push-ups</div>
             </div>
             <div>
-              <div className="text-2xl font-bold text-accent">
+              <div className="text-lg font-bold text-accent">
                 {foundationProgram.benchmarks[`week${selectedWeek}` as keyof typeof foundationProgram.benchmarks].plank}
               </div>
-              <div className="text-sm text-muted-foreground">Plank Target</div>
+              <div className="text-xs text-muted-foreground">Plank</div>
             </div>
             <div>
-              <div className="text-2xl font-bold text-secondary">
+              <div className="text-lg font-bold text-secondary">
                 {foundationProgram.benchmarks[`week${selectedWeek}` as keyof typeof foundationProgram.benchmarks].deadHang}
               </div>
-              <div className="text-sm text-muted-foreground">Dead Hang Target</div>
+              <div className="text-xs text-muted-foreground">Dead Hang</div>
             </div>
           </div>
         </CardContent>
       </Card>
 
       {/* Exercise List */}
-      <div className="space-y-4">
+      <div className="space-y-3">
         {foundationProgram.weeks[selectedWeek as keyof typeof foundationProgram.weeks].sessions[0].exercises.map((exercise, index) => (
           <Card 
             key={exercise.name} 
-            className={`glass-card border-2 transition-all duration-300 ${
+            className={`glass-card border transition-all duration-300 ${
               activeExercise === exercise.name ? 'border-primary shadow-lg shadow-primary/25' : ''
             }`}
           >
-            <CardContent className="p-4">
+            <CardContent className="p-3">
               <div 
                 className="flex items-center justify-between cursor-pointer"
                 onClick={() => setActiveExercise(activeExercise === exercise.name ? null : exercise.name)}
               >
-                <div className="flex items-center space-x-3">
-                  <div className="w-10 h-10 rounded-full bg-gradient-to-r from-primary to-accent flex items-center justify-center text-primary-foreground font-bold">
+                <div className="flex items-center space-x-2">
+                  <div className="w-8 h-8 rounded-full bg-gradient-to-r from-primary to-accent flex items-center justify-center text-primary-foreground font-bold text-sm">
                     {index + 1}
                   </div>
                   <div>
-                    <h3 className="font-semibold text-lg">{exercise.name}</h3>
-                    <div className="flex items-center space-x-4 text-sm text-muted-foreground">
-                      <span>{exercise.sets} sets</span>
+                    <h3 className="font-semibold text-sm">{exercise.name}</h3>
+                    <div className="flex items-center space-x-2 text-xs text-muted-foreground">
+                      <span>{exercise.sets}</span>
                       <span>•</span>
-                      <span>{exercise.reps} reps</span>
+                      <span>{exercise.reps}</span>
                       <span>•</span>
-                      <span>{exercise.rest} rest</span>
+                      <span>{exercise.rest}</span>
                     </div>
                   </div>
                 </div>
                 <ChevronRight 
-                  className={`h-5 w-5 text-muted-foreground transition-transform duration-300 ${
+                  className={`h-4 w-4 text-muted-foreground transition-transform duration-300 ${
                     activeExercise === exercise.name ? 'rotate-90' : ''
                   }`} 
                 />
@@ -371,14 +415,14 @@ const FoundationProgram = () => {
 
               {/* Expanded Exercise Details */}
               {activeExercise === exercise.name && (
-                <div className="mt-4 space-y-4 animate-fade-in">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="mt-3 space-y-2 animate-fade-in">
+                  <div className="grid grid-cols-1 gap-2">
                     {/* Primary Muscles */}
                     <div>
-                      <h4 className="font-semibold text-primary mb-2">Primary Muscles</h4>
-                      <div className="flex flex-wrap gap-2">
+                      <h4 className="font-semibold text-primary text-xs mb-1">Primary Muscles</h4>
+                      <div className="flex flex-wrap gap-1">
                         {exercise.primaryMuscles.map((muscle) => (
-                          <Badge key={muscle} variant="outline" className="bg-primary/10 text-primary border-primary">
+                          <Badge key={muscle} variant="outline" className="bg-primary/10 text-primary border-primary text-xs">
                             {muscle}
                           </Badge>
                         ))}
@@ -388,10 +432,10 @@ const FoundationProgram = () => {
                     {/* Secondary Muscles */}
                     {exercise.secondaryMuscles && (
                       <div>
-                        <h4 className="font-semibold text-accent mb-2">Secondary Muscles</h4>
-                        <div className="flex flex-wrap gap-2">
+                        <h4 className="font-semibold text-accent text-xs mb-1">Secondary Muscles</h4>
+                        <div className="flex flex-wrap gap-1">
                           {exercise.secondaryMuscles.map((muscle) => (
-                            <Badge key={muscle} variant="outline" className="bg-accent/10 text-accent border-accent">
+                            <Badge key={muscle} variant="outline" className="bg-accent/10 text-accent border-accent text-xs">
                               {muscle}
                             </Badge>
                           ))}
@@ -402,11 +446,11 @@ const FoundationProgram = () => {
 
                   {/* Tips */}
                   <div>
-                    <h4 className="font-semibold text-secondary mb-2 flex items-center">
-                      <BookOpen className="h-4 w-4 mr-2" />
+                    <h4 className="font-semibold text-secondary text-xs mb-1 flex items-center">
+                      <BookOpen className="h-3 w-3 mr-1" />
                       Coaching Tips
                     </h4>
-                    <p className="text-muted-foreground bg-background-secondary/50 p-3 rounded-xl">
+                    <p className="text-xs text-muted-foreground bg-background-secondary/50 p-2 rounded-lg">
                       {exercise.tips}
                     </p>
                   </div>
@@ -414,14 +458,14 @@ const FoundationProgram = () => {
                   {/* Progressions */}
                   {exercise.progressions && (
                     <div>
-                      <h4 className="font-semibold text-warning mb-2">Progressions</h4>
-                      <div className="space-y-2">
-                        {exercise.progressions.map((progression, idx) => (
-                          <div key={idx} className="flex items-center space-x-2">
-                            <div className="w-6 h-6 rounded-full bg-warning/20 text-warning text-sm flex items-center justify-center font-bold">
+                      <h4 className="font-semibold text-warning text-xs mb-1">Progressions</h4>
+                      <div className="space-y-1">
+                        {exercise.progressions.slice(0, 3).map((progression, idx) => (
+                          <div key={idx} className="flex items-center space-x-1">
+                            <div className="w-4 h-4 rounded-full bg-warning/20 text-warning text-xs flex items-center justify-center font-bold">
                               {idx + 1}
                             </div>
-                            <span className="text-sm">{progression}</span>
+                            <span className="text-xs">{progression}</span>
                           </div>
                         ))}
                       </div>
@@ -429,13 +473,13 @@ const FoundationProgram = () => {
                   )}
 
                   {/* Action Buttons */}
-                  <div className="flex space-x-3 pt-2">
-                    <Button className="flex-1 bg-gradient-to-r from-primary to-primary/80 text-primary-foreground rounded-xl">
-                      <PlayCircle className="h-4 w-4 mr-2" />
-                      Start Exercise
+                  <div className="flex space-x-2 pt-1">
+                    <Button size="sm" className="flex-1 bg-gradient-to-r from-primary to-primary/80 text-primary-foreground rounded-lg">
+                      <PlayCircle className="h-3 w-3 mr-1" />
+                      Start
                     </Button>
-                    <Button variant="outline" className="rounded-xl px-6">
-                      <Timer className="h-4 w-4" />
+                    <Button variant="outline" size="sm" className="rounded-lg">
+                      <Timer className="h-3 w-3" />
                     </Button>
                   </div>
                 </div>
@@ -445,12 +489,12 @@ const FoundationProgram = () => {
         ))}
       </div>
 
-      {/* Recovery & Tips Section */}
-      <Card className="glass-card border-2 mt-6">
-        <CardHeader>
-          <CardTitle className="text-accent">Recovery Protocols</CardTitle>
+      {/* Recovery & Tips Section - Smaller */}
+      <Card className="glass-card border mt-4">
+        <CardHeader className="pb-2">
+          <CardTitle className="text-accent text-sm">Recovery Tips</CardTitle>
         </CardHeader>
-        <CardContent className="space-y-3">
+        <CardContent className="space-y-2">
           <div>
             <span className="font-semibold text-primary">Frequency:</span>
             <span className="text-muted-foreground ml-2">{foundationProgram.recoveryProtocols.frequency}</span>
