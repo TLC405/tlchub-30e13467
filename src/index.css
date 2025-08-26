@@ -2,56 +2,57 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Premium Skeuomorphic Fitness App Design System */
+/* CalisXTLC - Elite Tactical Calisthenics Training Design System */
 
 @layer base {
   :root {
-    /* Vibrant Bumble-inspired Color System */
-    --background: 222 84% 4%;
-    --background-secondary: 225 71% 8%;
-    --background-tertiary: 230 60% 12%;
-    --foreground: 210 40% 98%;
+    /* Call of Duty Military Color System */
+    --background: 120 10% 8%;        /* Dark Olive Green */
+    --background-secondary: 25 15% 12%;  /* Dark Military Brown */
+    --background-tertiary: 35 20% 16%;   /* Tactical Tan */
+    --foreground: 45 15% 92%;            /* Off-White */
 
-    /* Card System */
-    --card: 225 71% 8%;
-    --card-secondary: 230 60% 12%;
-    --card-foreground: 210 40% 98%;
-    --card-border: 240 48% 20%;
+    /* Card System - Military Grade */
+    --card: 25 15% 12%;
+    --card-secondary: 35 20% 16%;
+    --card-foreground: 45 15% 92%;
+    --card-border: 25 25% 25%;
 
-    /* Vibrant Primary Colors */
-    --primary: 45 100% 60%;
-    --primary-foreground: 222 84% 4%;
+    /* Military Primary Colors */
+    --primary: 25 85% 55%;           /* Military Orange/Amber */
+    --primary-foreground: 120 10% 8%;
     
-    --secondary: 280 100% 70%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 120 35% 35%;        /* Military Green */
+    --secondary-foreground: 45 15% 92%;
 
-    /* Accent Colors */
-    --accent: 330 100% 65%;
-    --accent-foreground: 210 40% 98%;
+    /* Tactical Accent Colors */
+    --accent: 35 70% 50%;            /* Tactical Gold */
+    --accent-foreground: 120 10% 8%;
 
-    --muted: 240 48% 20%;
-    --muted-foreground: 240 5% 65%;
+    --muted: 25 25% 25%;
+    --muted-foreground: 45 10% 65%;
 
-    /* Training Colors */
-    --handstand: 200 100% 60%;
-    --planche: 45 100% 60%;
-    --pullup: 120 100% 50%;
-    --rings: 280 100% 70%;
+    /* Training Division Colors */
+    --handstand: 25 85% 55%;         /* Amber Division */
+    --planche: 35 70% 50%;           /* Gold Division */
+    --pullup: 120 35% 35%;           /* Green Division */
+    --rings: 0 60% 45%;              /* Red Division */
 
-    /* Special Colors */
-    --success: 120 100% 50%;
-    --warning: 45 100% 60%;
-    --destructive: 0 100% 60%;
-    --destructive-foreground: 210 40% 98%;
+    /* Status Colors - Military Grade */
+    --success: 120 60% 40%;          /* Mission Success Green */
+    --warning: 25 85% 55%;           /* Alert Amber */
+    --destructive: 0 85% 55%;        /* Danger Red */
+    --destructive-foreground: 45 15% 92%;
 
-    /* Glass Effect */
-    --glass: 210 40% 98% / 0.1;
-    --glass-border: 210 40% 98% / 0.2;
+    /* Military Glass Effects */
+    --glass: 45 15% 92% / 0.08;
+    --glass-border: 25 85% 55% / 0.15;
 
-    /* Shadows */
-    --shadow-vibrant: 0 25px 50px -12px hsl(var(--primary) / 0.25);
-    --shadow-card: 0 10px 30px -10px hsl(var(--background) / 0.8);
-    --shadow-glow: 0 0 20px hsl(var(--accent) / 0.3);
+    /* Tactical Shadows & Effects */
+    --shadow-vibrant: 0 25px 50px -12px hsl(var(--primary) / 0.4);
+    --shadow-card: 0 15px 35px -10px hsl(0 0% 0% / 0.6);
+    --shadow-glow: 0 0 25px hsl(var(--accent) / 0.4);
+    --shadow-tactical: inset 0 1px 0 hsl(var(--glass-border)), 0 8px 25px -8px hsl(0 0% 0% / 0.7);
 
     /* System Colors */
     --popover: 225 71% 8%;
@@ -108,8 +109,19 @@
 
   body {
     @apply bg-background text-foreground;
-    background: var(--gradient-dark);
+    font-family: 'Rajdhani', sans-serif;
+    background: linear-gradient(135deg, 
+      hsl(120 10% 8%) 0%, 
+      hsl(25 15% 12%) 25%, 
+      hsl(35 20% 16%) 50%, 
+      hsl(25 15% 12%) 75%, 
+      hsl(120 10% 8%) 100%
+    );
     background-attachment: fixed;
+  }
+
+  .tactical-font {
+    font-family: 'Orbitron', monospace;
   }
 
   html {
@@ -120,29 +132,82 @@
 @layer components {
   .glass-card {
     background: hsl(var(--glass));
-    backdrop-filter: blur(20px);
+    backdrop-filter: blur(25px);
     border: 1px solid hsl(var(--glass-border));
-    box-shadow: var(--shadow-card);
+    box-shadow: var(--shadow-tactical);
+    position: relative;
   }
 
-  .vibrant-gradient {
-    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
+  .glass-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, hsl(var(--primary) / 0.6), transparent);
   }
 
-  .secondary-gradient {
-    background: linear-gradient(135deg, hsl(var(--secondary)), hsl(var(--primary)));
+  .tactical-gradient {
+    background: linear-gradient(135deg, 
+      hsl(var(--primary)), 
+      hsl(var(--accent)), 
+      hsl(var(--primary))
+    );
   }
 
-  .success-gradient {
-    background: linear-gradient(135deg, hsl(var(--success)), hsl(120 100% 40%));
+  .military-gradient {
+    background: linear-gradient(135deg, 
+      hsl(var(--secondary)), 
+      hsl(var(--primary))
+    );
   }
 
-  .vibrant-shadow {
-    box-shadow: var(--shadow-vibrant);
+  .mission-gradient {
+    background: linear-gradient(135deg, 
+      hsl(var(--success)), 
+      hsl(120 60% 30%)
+    );
   }
 
-  .glow-effect {
+  .tactical-shadow {
+    box-shadow: var(--shadow-tactical);
+  }
+
+  .combat-glow {
     box-shadow: var(--shadow-glow);
+    border: 1px solid hsl(var(--primary) / 0.3);
+  }
+
+  .skeuomorphic-button {
+    background: linear-gradient(145deg, 
+      hsl(var(--card-secondary)), 
+      hsl(var(--card))
+    );
+    border: 1px solid hsl(var(--primary) / 0.2);
+    box-shadow: 
+      inset 0 1px 0 hsl(var(--glass-border)),
+      0 4px 12px -4px hsl(0 0% 0% / 0.6);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .skeuomorphic-button:hover {
+    background: linear-gradient(145deg, 
+      hsl(var(--card)), 
+      hsl(var(--card-secondary))
+    );
+    box-shadow: 
+      inset 0 1px 0 hsl(var(--primary) / 0.3),
+      0 8px 25px -8px hsl(0 0% 0% / 0.8),
+      0 0 20px hsl(var(--primary) / 0.2);
+    transform: translateY(-1px);
+  }
+
+  .skeuomorphic-button:active {
+    transform: translateY(0);
+    box-shadow: 
+      inset 0 2px 4px hsl(0 0% 0% / 0.3),
+      0 2px 8px -2px hsl(0 0% 0% / 0.5);
   }
 
   .handstand-theme {

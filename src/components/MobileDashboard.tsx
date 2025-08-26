@@ -27,53 +27,54 @@ interface MobileDashboardProps {
 const MobileDashboard = ({ onNavigate }: MobileDashboardProps) => {
   const [selectedPillar, setSelectedPillar] = useState<string | null>(null);
 
+  // No fake progress data - start fresh
   const stats = {
-    weekStreak: 12,
-    totalWorkouts: 47,
-    thisWeek: { completed: 3, total: 4 },
-    nextGoal: "30s Handstand"
+    weekStreak: 0,
+    totalWorkouts: 0,
+    thisWeek: { completed: 0, total: 4 },
+    nextGoal: "Begin Training"
   };
 
   const trainingPillars = [
     {
       id: "handstand",
-      title: "Handstand",
-      emoji: "🤸‍♂️",
-      progress: 65,
-      current: "Wall Hold 45s",
-      next: "Freestanding 10s",
+      title: "Handstand Ops",
+      emoji: "🎯",
+      progress: 0,
+      current: "Not Started",
+      next: "Wall Handstand",
       color: "handstand",
-      gradient: "from-blue-500 to-blue-700"
+      division: "AMBER"
     },
     {
       id: "planche",
-      title: "Planche",
-      emoji: "💪",
-      progress: 45,
-      current: "Tuck Hold 15s",
-      next: "Advanced Tuck",
+      title: "Planche Force",
+      emoji: "⚡",
+      progress: 0,
+      current: "Not Started", 
+      next: "Planche Leans",
       color: "planche",
-      gradient: "from-amber-500 to-orange-600"
+      division: "GOLD"
     },
     {
       id: "pullup",
-      title: "Pull-ups",
-      emoji: "🏋️‍♂️",
-      progress: 75,
-      current: "8 reps",
-      next: "Weighted +10kg",
+      title: "Pull-up Squad",
+      emoji: "🪖",
+      progress: 0,
+      current: "Not Started",
+      next: "Australian Rows",
       color: "pullup",
-      gradient: "from-emerald-500 to-green-700"
+      division: "GREEN"
     },
     {
       id: "rings",
-      title: "Rings",
-      emoji: "⭕",
-      progress: 30,
-      current: "Support 20s",
-      next: "Ring Dips",
+      title: "Rings Unit",
+      emoji: "🔴",
+      progress: 0,
+      current: "Not Started",
+      next: "Ring Support",
       color: "rings",
-      gradient: "from-purple-500 to-indigo-700"
+      division: "RED"
     }
   ];
 
@@ -86,42 +87,47 @@ const MobileDashboard = ({ onNavigate }: MobileDashboardProps) => {
   return (
     <div className="p-4 space-y-6 mobile-safe-area">
       {/* Header */}
-      <div className="text-center space-y-2">
-        <h1 className="text-3xl font-bold bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent">
-          Gravitas Fit
-        </h1>
-        <p className="text-muted-foreground">Ready to level up? 🚀</p>
+      <div className="text-center space-y-2 py-6">
+        <div className="tactical-font text-4xl font-black text-primary tracking-wider drop-shadow-lg">
+          CALIS<span className="text-accent">X</span>TLC
+        </div>
+        <div className="text-sm font-medium text-muted-foreground tracking-wide">
+          [ ELITE TACTICAL CALISTHENICS ]
+        </div>
+        <p className="text-xs text-muted-foreground uppercase tracking-widest">
+          READY FOR DEPLOYMENT? 🎯
+        </p>
       </div>
 
       {/* Stats Cards */}
       <div className="grid grid-cols-2 gap-3">
-        <Card className="glass-card border border-border">
+        <Card className="glass-card skeuomorphic-button border border-primary/20">
           <CardContent className="p-4 text-center">
             <div className="flex items-center justify-center space-x-2 mb-2">
-              <Flame className="h-5 w-5 text-primary" />
-              <span className="text-2xl font-bold text-foreground">{stats.weekStreak}</span>
+              <Target className="h-5 w-5 text-primary" />
+              <span className="text-2xl font-bold tactical-font text-foreground">{stats.weekStreak}</span>
             </div>
-            <p className="text-xs text-muted-foreground">Day Streak</p>
+            <p className="text-xs text-muted-foreground uppercase tracking-wider">MISSION STREAK</p>
           </CardContent>
         </Card>
 
-        <Card className="glass-card border border-border">
+        <Card className="glass-card skeuomorphic-button border border-accent/20">
           <CardContent className="p-4 text-center">
             <div className="flex items-center justify-center space-x-2 mb-2">
               <Trophy className="h-5 w-5 text-accent" />
-              <span className="text-2xl font-bold text-foreground">{stats.totalWorkouts}</span>
+              <span className="text-2xl font-bold tactical-font text-foreground">{stats.totalWorkouts}</span>
             </div>
-            <p className="text-xs text-muted-foreground">Total Workouts</p>
+            <p className="text-xs text-muted-foreground uppercase tracking-wider">OPERATIONS</p>
           </CardContent>
         </Card>
       </div>
 
-      {/* This Week Progress */}
-      <Card className="glass-card border-2 border-border glow-effect">
+      {/* Mission Status */}
+      <Card className="glass-card border-2 border-primary/30 combat-glow">
         <CardContent className="p-4">
           <div className="flex items-center justify-between mb-3">
-            <h3 className="font-semibold text-foreground">This Week</h3>
-            <Badge className="vibrant-gradient text-primary-foreground">
+            <h3 className="font-semibold text-foreground tactical-font tracking-wide">WEEKLY MISSION</h3>
+            <Badge className="tactical-gradient text-primary-foreground font-bold">
               {stats.thisWeek.completed}/{stats.thisWeek.total}
             </Badge>
           </div>
@@ -129,69 +135,73 @@ const MobileDashboard = ({ onNavigate }: MobileDashboardProps) => {
             value={(stats.thisWeek.completed / stats.thisWeek.total) * 100} 
             className="h-3 mb-2" 
           />
-          <p className="text-xs text-muted-foreground">
-            Next Goal: {stats.nextGoal}
+          <p className="text-xs text-muted-foreground uppercase tracking-wider">
+            PRIMARY OBJECTIVE: {stats.nextGoal}
           </p>
         </CardContent>
       </Card>
 
-      {/* Training Pillars */}
+      {/* Training Divisions */}
       <div className="space-y-3">
-        <h2 className="text-xl font-bold text-foreground">Training Focus</h2>
+        <h2 className="text-xl font-bold text-foreground tactical-font tracking-wide">TRAINING DIVISIONS</h2>
         <div className="grid grid-cols-1 gap-3">
           {trainingPillars.map((pillar) => (
             <Card 
               key={pillar.id}
-              className={`glass-card border-2 ${pillar.color}-theme transition-all duration-300 hover:scale-[1.02] cursor-pointer`}
+              className={`glass-card skeuomorphic-button border-2 ${pillar.color}-theme transition-all duration-300 hover:scale-[1.02] cursor-pointer`}
               onClick={() => onNavigate('training')}
             >
               <CardContent className="p-4">
                 <div className="flex items-center space-x-3 mb-3">
                   <div className="text-2xl">{pillar.emoji}</div>
                   <div className="flex-1">
-                    <h3 className="font-semibold text-foreground">{pillar.title}</h3>
-                    <p className="text-xs text-muted-foreground">{pillar.current}</p>
+                    <div className="flex items-center gap-2 mb-1">
+                      <h3 className="font-semibold text-foreground tactical-font">{pillar.title}</h3>
+                      <Badge variant="outline" className="text-xs tactical-font">
+                        {pillar.division}
+                      </Badge>
+                    </div>
+                    <p className="text-xs text-muted-foreground uppercase tracking-wider">{pillar.current}</p>
                   </div>
                   <div className="text-right">
-                    <div className="text-lg font-bold text-foreground">{pillar.progress}%</div>
+                    <div className="text-lg font-bold text-foreground tactical-font">{pillar.progress}%</div>
                   </div>
                 </div>
                 <Progress value={pillar.progress} className="h-2 mb-2" />
-                <p className="text-xs text-muted-foreground">Next: {pillar.next}</p>
+                <p className="text-xs text-muted-foreground uppercase tracking-wider">NEXT: {pillar.next}</p>
               </CardContent>
             </Card>
           ))}
         </div>
       </div>
 
-      {/* Quick Actions */}
+      {/* Quick Deploy */}
       <div className="space-y-3">
-        <h2 className="text-xl font-bold text-foreground">Quick Actions</h2>
+        <h2 className="text-xl font-bold text-foreground tactical-font tracking-wide">QUICK DEPLOY</h2>
         <div className="grid grid-cols-1 gap-3">
           {quickActions.map((action, index) => {
             const Icon = action.icon;
             return (
               <Button
                 key={index}
-                variant="outline"
-                className={`h-16 justify-start space-x-4 border-2 bg-gradient-to-r ${action.color} border-transparent text-white hover:opacity-90 transition-all duration-300 vibrant-shadow`}
+                className={`skeuomorphic-button h-16 justify-start space-x-4 border-2 tactical-gradient text-primary-foreground hover:opacity-90 transition-all duration-300 tactical-shadow tactical-font`}
                 onClick={() => onNavigate(action.view)}
               >
                 <Icon className="h-6 w-6" />
-                <span className="text-lg font-semibold">{action.title}</span>
+                <span className="text-lg font-semibold tracking-wide">{action.title.toUpperCase()}</span>
               </Button>
             );
           })}
         </div>
       </div>
 
-      {/* Today's Motivation */}
-      <Card className="glass-card border-2 border-primary/30 glow-effect">
+      {/* Mission Brief */}
+      <Card className="glass-card border-2 border-primary/30 combat-glow">
         <CardContent className="p-4 text-center">
-          <div className="text-3xl mb-2">💪</div>
-          <h3 className="font-bold text-primary mb-1">Today's Focus</h3>
-          <p className="text-sm text-muted-foreground">
-            "Every rep gets you closer to your goals!"
+          <div className="text-3xl mb-2">🎯</div>
+          <h3 className="font-bold text-primary mb-1 tactical-font tracking-wide">MISSION BRIEF</h3>
+          <p className="text-sm text-muted-foreground uppercase tracking-wider">
+            "DISCIPLINE BUILDS WARRIORS"
           </p>
         </CardContent>
       </Card>
