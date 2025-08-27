@@ -51,15 +51,15 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background-secondary to-background-tertiary">
+    <div className="min-h-screen bg-background">
       {/* Main Content */}
       <main className="pb-20 overflow-auto">
         {renderView()}
       </main>
 
       {/* Mobile Bottom Tab Navigation */}
-      <div className="fixed bottom-0 left-0 right-0 bg-card/95 backdrop-blur-xl border-t border-border mobile-safe-area">
-        <div className="grid grid-cols-6 px-1 py-2">
+      <div className="fixed bottom-0 left-0 right-0 bg-card border-t border-border mobile-safe-area">
+        <div className="grid grid-cols-6 px-1 py-1">
           {tabs.map((tab) => {
             const Icon = tab.icon;
             const isActive = currentView === tab.id;
@@ -68,20 +68,17 @@ const Index = () => {
               <Button
                 key={tab.id}
                 variant="ghost"
-                className={`flex-col h-16 space-y-1 transition-all duration-300 tab-animate ${
+                className={`flex-col h-12 space-y-1 transition-all duration-300 ${
                   isActive 
-                    ? `${tab.color} bg-gradient-to-br from-primary/10 to-accent/10 border border-primary/20 rounded-2xl vibrant-shadow` 
-                    : 'text-muted-foreground hover:text-foreground'
+                    ? `${tab.color} bg-primary/20 border border-primary` 
+                    : 'text-muted-foreground hover:text-foreground hover:bg-accent/20'
                 }`}
                 onClick={() => setCurrentView(tab.id)}
               >
-                <Icon className={`h-5 w-5 ${isActive ? 'scale-110' : ''} transition-transform duration-300`} />
+                <Icon className={`h-4 w-4 ${isActive ? 'scale-110' : ''} transition-transform duration-300`} />
                 <span className={`text-xs font-medium ${isActive ? 'font-semibold' : ''}`}>
                   {tab.label}
                 </span>
-                {isActive && (
-                  <div className="w-1 h-1 bg-current rounded-full" />
-                )}
               </Button>
             );
           })}

@@ -110,14 +110,7 @@
   body {
     @apply bg-background text-foreground;
     font-family: 'Rajdhani', sans-serif;
-    background: linear-gradient(135deg, 
-      hsl(120 10% 8%) 0%, 
-      hsl(25 15% 12%) 25%, 
-      hsl(35 20% 16%) 50%, 
-      hsl(25 15% 12%) 75%, 
-      hsl(120 10% 8%) 100%
-    );
-    background-attachment: fixed;
+    background: hsl(var(--background));
   }
 
   .tactical-font {
@@ -131,43 +124,21 @@
 
 @layer components {
   .glass-card {
-    background: hsl(var(--glass));
-    backdrop-filter: blur(25px);
-    border: 1px solid hsl(var(--glass-border));
-    box-shadow: var(--shadow-tactical);
-    position: relative;
-  }
-
-  .glass-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, hsl(var(--primary) / 0.6), transparent);
+    background: hsl(var(--card));
+    border: 1px solid hsl(var(--border));
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   }
 
   .tactical-gradient {
-    background: linear-gradient(135deg, 
-      hsl(var(--primary)), 
-      hsl(var(--accent)), 
-      hsl(var(--primary))
-    );
+    background: hsl(var(--primary));
   }
 
   .military-gradient {
-    background: linear-gradient(135deg, 
-      hsl(var(--secondary)), 
-      hsl(var(--primary))
-    );
+    background: hsl(var(--secondary));
   }
 
   .mission-gradient {
-    background: linear-gradient(135deg, 
-      hsl(var(--success)), 
-      hsl(120 60% 30%)
-    );
+    background: hsl(var(--success));
   }
 
   .tactical-shadow {
@@ -175,31 +146,21 @@
   }
 
   .combat-glow {
-    box-shadow: var(--shadow-glow);
-    border: 1px solid hsl(var(--primary) / 0.3);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    border: 1px solid hsl(var(--primary));
   }
 
   .skeuomorphic-button {
-    background: linear-gradient(145deg, 
-      hsl(var(--card-secondary)), 
-      hsl(var(--card))
-    );
-    border: 1px solid hsl(var(--primary) / 0.2);
-    box-shadow: 
-      inset 0 1px 0 hsl(var(--glass-border)),
-      0 4px 12px -4px hsl(0 0% 0% / 0.6);
+    background: hsl(var(--card));
+    border: 1px solid hsl(var(--border));
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .skeuomorphic-button:hover {
-    background: linear-gradient(145deg, 
-      hsl(var(--card)), 
-      hsl(var(--card-secondary))
-    );
-    box-shadow: 
-      inset 0 1px 0 hsl(var(--primary) / 0.3),
-      0 8px 25px -8px hsl(0 0% 0% / 0.8),
-      0 0 20px hsl(var(--primary) / 0.2);
+    background: hsl(var(--accent) / 0.1);
+    border-color: hsl(var(--primary));
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     transform: translateY(-1px);
   }
 
@@ -211,23 +172,23 @@
   }
 
   .handstand-theme {
-    background: linear-gradient(135deg, hsl(var(--handstand) / 0.3), hsl(var(--handstand) / 0.1));
-    border-color: hsl(var(--handstand) / 0.5);
+    background: hsl(var(--card));
+    border-color: hsl(var(--handstand));
   }
 
   .planche-theme {
-    background: linear-gradient(135deg, hsl(var(--planche) / 0.3), hsl(var(--planche) / 0.1));
-    border-color: hsl(var(--planche) / 0.5);
+    background: hsl(var(--card));
+    border-color: hsl(var(--planche));
   }
 
   .pullup-theme {
-    background: linear-gradient(135deg, hsl(var(--pullup) / 0.3), hsl(var(--pullup) / 0.1));
-    border-color: hsl(var(--pullup) / 0.5);
+    background: hsl(var(--card));
+    border-color: hsl(var(--pullup));
   }
 
   .rings-theme {
-    background: linear-gradient(135deg, hsl(var(--rings) / 0.3), hsl(var(--rings) / 0.1));
-    border-color: hsl(var(--rings) / 0.5);
+    background: hsl(var(--card));
+    border-color: hsl(var(--rings));
   }
 
   .mobile-safe-area {

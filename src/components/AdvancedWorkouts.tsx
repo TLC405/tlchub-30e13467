@@ -478,7 +478,7 @@ const AdvancedWorkouts = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background-secondary to-background-tertiary p-3 pb-24">
+    <div className="min-h-screen bg-background p-2 pb-20">
       {/* Header */}
       <div className="mb-4">
         <h1 className="text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
