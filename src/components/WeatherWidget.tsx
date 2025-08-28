@@ -13,18 +13,19 @@ import {
   MapPin,
   RefreshCw
 } from "lucide-react";
-import { getWeatherData } from "@/services/weatherService";
+import { WeatherService } from "@/services/weatherService";
 import type { WeatherData } from "@/types";
 
 const WeatherWidget = () => {
   const [weather, setWeather] = useState<WeatherData | null>(null);
   const [location, setLocation] = useState<string>("Current Location");
   const [loading, setLoading] = useState(false);
+  const weatherService = WeatherService.getInstance();
 
   const loadWeatherData = async () => {
     setLoading(true);
     try {
-      const data = await getWeatherData();
+      const data = await weatherService.getWeatherData();
       setWeather(data);
     } catch (error) {
       console.error('Failed to load weather data:', error);
@@ -135,10 +136,7 @@ const WeatherWidget = () => {
           <div className="bg-background-secondary p-3 rounded-lg clean-border">
             <p className="text-xs font-medium text-foreground mb-1">Workout Recommendation:</p>
             <p className="text-xs text-muted-foreground">
-              {weather.workoutSuitability === 'excellent' && "Perfect conditions for outdoor training!"}
-              {weather.workoutSuitability === 'good' && "Good conditions for most exercises."}
-              {weather.workoutSuitability === 'fair' && "Consider indoor alternatives or shorter sessions."}
-              {weather.workoutSuitability === 'poor' && "Indoor training recommended today."}
+              {weatherService.getWorkoutRecommendation(weather)}
             </p>
           </div>
 
