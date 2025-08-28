@@ -22,6 +22,9 @@ import AdvancedWorkouts from "@/components/AdvancedWorkouts";
 import SkillMastery from "@/components/SkillMastery";
 import DisciplineLibrary from "@/components/DisciplineLibrary";
 import WeeklyPlan from "@/components/WeeklyPlan";
+import FileManager from "@/components/FileManager";
+import AIAssistant from "@/components/AIAssistant";
+import EnhancedExerciseLibrary from "@/components/EnhancedExerciseLibrary";
 
 const Index = () => {
   const [currentView, setCurrentView] = useState<ViewType>('dashboard');
@@ -54,6 +57,12 @@ const Index = () => {
         return <DisciplineLibrary />;
       case 'plan':
         return <WeeklyPlan />;
+      case 'files':
+        return <FileManager />;
+      case 'ai':
+        return <AIAssistant />;
+      case 'enhanced-library':
+        return <EnhancedExerciseLibrary />;
       default:
         return <MobileDashboard onNavigate={setCurrentView} />;
     }

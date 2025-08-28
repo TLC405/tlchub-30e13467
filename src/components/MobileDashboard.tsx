@@ -79,10 +79,10 @@ const MobileDashboard = ({ onNavigate }: MobileDashboardProps) => {
   ];
 
   const quickActions = [
-    { title: "Start Timer", icon: Timer, view: 'timer' as ViewType, color: "from-primary to-accent" },
-    { title: "Skills Mastery", icon: Trophy, view: 'skills' as ViewType, color: "from-secondary to-primary" },
-    { title: "Weekly Plan", icon: Calendar, view: 'plan' as ViewType, color: "from-success to-emerald-600" },
-    { title: "Library", icon: BookOpen, view: 'discipline' as ViewType, color: "from-warning to-amber-600" }
+    { title: "AI Assistant", icon: Timer, view: 'ai' as ViewType, color: "from-primary to-accent" },
+    { title: "Enhanced Library", icon: BookOpen, view: 'enhanced-library' as ViewType, color: "from-secondary to-primary" },
+    { title: "File Manager", icon: Calendar, view: 'files' as ViewType, color: "from-success to-emerald-600" },
+    { title: "Weekly Plan", icon: Trophy, view: 'plan' as ViewType, color: "from-warning to-amber-600" }
   ];
 
   return (
