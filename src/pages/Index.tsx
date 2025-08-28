@@ -7,7 +7,8 @@ import {
   TrendingUp, 
   BookOpen, 
   Timer,
-  GraduationCap
+  Trophy,
+  Calendar
 } from "lucide-react";
 
 // Mobile Components
@@ -18,17 +19,19 @@ import ProgressView from "@/components/ProgressView";
 import ExerciseLibrary from "@/components/ExerciseLibrary";
 import FoundationProgram from "@/components/FoundationProgram";
 import AdvancedWorkouts from "@/components/AdvancedWorkouts";
+import SkillMastery from "@/components/SkillMastery";
+import DisciplineLibrary from "@/components/DisciplineLibrary";
+import WeeklyPlan from "@/components/WeeklyPlan";
 
 const Index = () => {
   const [currentView, setCurrentView] = useState<ViewType>('dashboard');
 
   const tabs = [
     { id: 'dashboard' as ViewType, label: 'Home', icon: LayoutDashboard, color: 'text-primary' },
-    { id: 'training' as ViewType, label: 'Train', icon: Dumbbell, color: 'text-accent' },
+    { id: 'plan' as ViewType, label: 'Plan', icon: Calendar, color: 'text-accent' },
     { id: 'timer' as ViewType, label: 'Timer', icon: Timer, color: 'text-secondary' },
-    { id: 'foundation' as ViewType, label: 'Program', icon: GraduationCap, color: 'text-warning' },
-    { id: 'library' as ViewType, label: 'Library', icon: BookOpen, color: 'text-success' },
-    { id: 'progress' as ViewType, label: 'Stats', icon: TrendingUp, color: 'text-destructive' },
+    { id: 'discipline' as ViewType, label: 'Library', icon: BookOpen, color: 'text-warning' },
+    { id: 'skills' as ViewType, label: 'Skills', icon: Trophy, color: 'text-success' },
   ];
 
   const renderView = () => {
@@ -45,6 +48,12 @@ const Index = () => {
         return <ExerciseLibrary />;
       case 'progress':
         return <ProgressView />;
+      case 'skills':
+        return <SkillMastery />;
+      case 'discipline':
+        return <DisciplineLibrary />;
+      case 'plan':
+        return <WeeklyPlan />;
       default:
         return <MobileDashboard onNavigate={setCurrentView} />;
     }
@@ -59,7 +68,7 @@ const Index = () => {
 
       {/* Mobile Bottom Tab Navigation */}
       <div className="fixed bottom-0 left-0 right-0 bg-card border-t border-border mobile-safe-area">
-        <div className="grid grid-cols-6 px-1 py-1">
+        <div className="grid grid-cols-5 px-1 py-1">
           {tabs.map((tab) => {
             const Icon = tab.icon;
             const isActive = currentView === tab.id;

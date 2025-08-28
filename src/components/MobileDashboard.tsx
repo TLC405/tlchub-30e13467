@@ -80,8 +80,9 @@ const MobileDashboard = ({ onNavigate }: MobileDashboardProps) => {
 
   const quickActions = [
     { title: "Start Timer", icon: Timer, view: 'timer' as ViewType, color: "from-primary to-accent" },
-    { title: "Exercise Library", icon: BookOpen, view: 'library' as ViewType, color: "from-secondary to-primary" },
-    { title: "Progress", icon: TrendingUp, view: 'progress' as ViewType, color: "from-success to-emerald-600" }
+    { title: "Skills Mastery", icon: Trophy, view: 'skills' as ViewType, color: "from-secondary to-primary" },
+    { title: "Weekly Plan", icon: Calendar, view: 'plan' as ViewType, color: "from-success to-emerald-600" },
+    { title: "Library", icon: BookOpen, view: 'discipline' as ViewType, color: "from-warning to-amber-600" }
   ];
 
   return (
