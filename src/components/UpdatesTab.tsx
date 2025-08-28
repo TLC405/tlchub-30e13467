@@ -15,19 +15,43 @@ import {
 const UpdatesTab = () => {
   const updates: AppUpdate[] = [
     {
+      id: "v2.1.0",
+      version: "2.1.0",
+      date: new Date("2025-01-28"),
+      title: "Clean Design & Enhanced Exercise Details",
+      description: "Complete UI redesign with white/black theme, detailed muscle anatomy, tendon involvement, and recovery times for each exercise",
+      type: "feature"
+    },
+    {
       id: "v2.0.0",
       version: "2.0.0",
       date: new Date("2025-01-28"),
-      title: "Major CalX TLC Transformation",
-      description: "Complete app overhaul with advanced calisthenics database, AI image generation, and comprehensive features",
+      title: "Major CALIXTLC Transformation",
+      description: "Complete app overhaul with advanced calisthenics database, video integration, and comprehensive features",
       type: "feature"
+    },
+    {
+      id: "exercise-anatomy",
+      version: "2.1.0",
+      date: new Date("2025-01-28"),
+      title: "Detailed Exercise Anatomy",
+      description: "Added comprehensive muscle groups, tendon involvement, and specific recovery times for optimal training planning",
+      type: "feature"
+    },
+    {
+      id: "clean-design",
+      version: "2.1.0",
+      date: new Date("2025-01-28"),
+      title: "Clean White/Black Design System",
+      description: "Professional design overhaul with clean white backgrounds, black outlines, and premium shadows throughout",
+      type: "improvement"
     },
     {
       id: "exercise-db",
       version: "2.0.0",
       date: new Date("2025-01-28"),
       title: "Advanced Exercise Database",
-      description: "Added 30+ elite calisthenics moves including Typewriter Pull-ups, Ring Skin the Cat, Human Flag, Dragon Flag, and complex flow combinations",
+      description: "Added 30+ elite calisthenics moves including advanced progressions and flow combinations",
       type: "feature"
     },
     {
@@ -43,23 +67,23 @@ const UpdatesTab = () => {
       version: "2.0.0",
       date: new Date("2025-01-28"), 
       title: "Weather & Location Services",
-      description: "Real-time weather conditions, workout suitability recommendations, GPS location detection, and OKC Vasa gym integration",
+      description: "Real-time weather conditions, workout suitability recommendations, and GPS location detection",
       type: "feature"
     },
     {
       id: "achievement-system",
       version: "2.0.0",
       date: new Date("2025-01-28"),
-      title: "Big Red Heart Achievement System", 
-      description: "Motivational achievement system with daily completion tracking, streak counters, and celebration animations",
+      title: "Achievement System", 
+      description: "Motivational achievement system with daily completion tracking and streak counters",
       type: "feature"
     },
     {
       id: "mobility-yoga",
       version: "2.0.0",
       date: new Date("2025-01-28"),
-      title: "Yoga & Olympic Mobility Integration",
-      description: "Complete yoga flow sequences, Olympic mobility exercises, morning/evening routines, and flexibility progression tracking",
+      title: "Yoga & Mobility Integration",
+      description: "Complete yoga flow sequences, mobility exercises, and flexibility progression tracking",
       type: "feature"
     },
     {
@@ -67,47 +91,23 @@ const UpdatesTab = () => {
       version: "2.0.0",
       date: new Date("2025-01-28"),
       title: "Swimming & Cardio Tracking",
-      description: "Swimming lap counter, Vasa trainer integration for OKC, cardio workout library, and cross-training metrics",
-      type: "feature"
-    },
-    {
-      id: "ai-image-generation",
-      version: "2.0.0",
-      date: new Date("2025-01-28"),
-      title: "AI Exercise Image Generation",
-      description: "Automatic workout image generation for exercise cards, background removal, and smart prompt system",
+      description: "Swimming lap counter, cardio workout library, and cross-training metrics",
       type: "feature"
     },
     {
       id: "compact-ui",
       version: "2.0.0", 
       date: new Date("2025-01-28"),
-      title: "Compact UI & Reduced Scrolling",
-      description: "Redesigned interface with tabbed navigation, collapsible sections, optimized card sizes, and better mobile experience",
+      title: "Compact UI & Better Navigation",
+      description: "Redesigned interface with tabbed navigation, collapsible sections, and optimized mobile experience",
       type: "improvement"
     },
     {
       id: "architecture-polish",
       version: "2.0.0",
       date: new Date("2025-01-28"),
-      title: "Architecture & Code Polish", 
-      description: "Enhanced TypeScript definitions, improved state management, performance optimizations, and better component organization",
-      type: "improvement"
-    },
-    {
-      id: "progression-system",
-      version: "2.0.0",
-      date: new Date("2025-01-28"),
-      title: "Elite Progression System",
-      description: "Skill tree progression from beginner to elite levels, prerequisite tracking, and flow combination mastery paths",
-      type: "feature"
-    },
-    {
-      id: "data-persistence",
-      version: "2.0.0",
-      date: new Date("2025-01-28"),
-      title: "Local Data Persistence",
-      description: "Workout progress, achievements, and user preferences now saved locally with backup/restore capabilities", 
+      title: "Architecture & Code Quality", 
+      description: "Enhanced TypeScript definitions, improved state management, and better component organization",
       type: "improvement"
     }
   ];
@@ -115,26 +115,26 @@ const UpdatesTab = () => {
   const getUpdateIcon = (type: string) => {
     switch (type) {
       case 'feature':
-        return <Star className="h-4 w-4 text-green-500" />;
+        return <Star className="h-4 w-4 text-success" />;
       case 'improvement':
-        return <Zap className="h-4 w-4 text-blue-500" />;
+        return <Zap className="h-4 w-4 text-info" />;
       case 'bugfix':
-        return <Bug className="h-4 w-4 text-red-500" />;
+        return <Bug className="h-4 w-4 text-destructive" />;
       default:
-        return <Wrench className="h-4 w-4 text-gray-500" />;
+        return <Wrench className="h-4 w-4 text-muted-foreground" />;
     }
   };
 
   const getBadgeColor = (type: string) => {
     switch (type) {
       case 'feature':
-        return 'bg-green-500';
+        return 'bg-success text-success-foreground';
       case 'improvement': 
-        return 'bg-blue-500';
+        return 'bg-info text-info-foreground';
       case 'bugfix':
-        return 'bg-red-500';
+        return 'bg-destructive text-destructive-foreground';
       default:
-        return 'bg-gray-500';
+        return 'bg-muted text-muted-foreground';
     }
   };
 
@@ -150,7 +150,7 @@ const UpdatesTab = () => {
     <div className="p-3 space-y-4 mobile-safe-area">
       {/* Header */}
       <div className="text-center space-y-1 py-3">
-        <div className="tactical-font text-2xl font-black text-primary tracking-wider">
+        <div className="text-2xl font-black text-primary tracking-wider">
           UPDATE LOG
         </div>
         <div className="text-xs font-medium text-muted-foreground tracking-wide">
@@ -162,15 +162,15 @@ const UpdatesTab = () => {
       <Card className="bg-card border border-primary">
         <CardContent className="p-3">
           <div className="flex items-center space-x-3 mb-2">
-            <CheckCircle className="h-5 w-5 text-green-500" />
+            <CheckCircle className="h-5 w-5 text-success" />
             <div>
-              <h3 className="font-bold tactical-font text-sm">CURRENT VERSION: 2.0.0</h3>
+              <h3 className="font-bold text-sm">CURRENT VERSION: 2.1.0</h3>
               <p className="text-xs text-muted-foreground">Released: January 28, 2025</p>
             </div>
           </div>
           <p className="text-xs text-muted-foreground">
-            Major transformation with 12 new features, advanced exercise database, 
-            and comprehensive calisthenics mastery system.
+            Enhanced design with detailed exercise anatomy, muscle groups, tendon involvement, 
+            and recovery time tracking for optimal training.
           </p>
         </CardContent>
       </Card>
@@ -178,7 +178,7 @@ const UpdatesTab = () => {
       {/* Updates List */}
       <Card className="bg-card border border-primary">
         <CardHeader className="pb-2">
-          <CardTitle className="text-sm tactical-font">RECENT UPDATES</CardTitle>
+          <CardTitle className="text-sm">RECENT UPDATES</CardTitle>
         </CardHeader>
         <CardContent className="p-3 pt-0">
           <ScrollArea className="h-96">
@@ -194,10 +194,8 @@ const UpdatesTab = () => {
                     </div>
                     <div className="flex-1 space-y-1">
                       <div className="flex items-center justify-between">
-                        <h4 className="font-semibold text-sm tactical-font">{update.title}</h4>
-                        <Badge 
-                          className={`text-xs text-white ${getBadgeColor(update.type)}`}
-                        >
+                        <h4 className="font-semibold text-sm">{update.title}</h4>
+                        <Badge className={`text-xs ${getBadgeColor(update.type)}`}>
                           {update.type.toUpperCase()}
                         </Badge>
                       </div>
@@ -221,21 +219,21 @@ const UpdatesTab = () => {
 
       {/* Stats */}
       <div className="grid grid-cols-3 gap-2">
-        <Card className="bg-card border border-green-500">
+        <Card className="bg-card border border-success">
           <CardContent className="p-2 text-center">
-            <div className="text-lg font-bold tactical-font text-green-500">8</div>
+            <div className="text-lg font-bold text-success">9</div>
             <div className="text-xs text-muted-foreground">NEW FEATURES</div>
           </CardContent>
         </Card>
-        <Card className="bg-card border border-blue-500">
+        <Card className="bg-card border border-info">
           <CardContent className="p-2 text-center">
-            <div className="text-lg font-bold tactical-font text-blue-500">4</div>
+            <div className="text-lg font-bold text-info">4</div>
             <div className="text-xs text-muted-foreground">IMPROVEMENTS</div>
           </CardContent>
         </Card>
         <Card className="bg-card border border-primary">
           <CardContent className="p-2 text-center">
-            <div className="text-lg font-bold tactical-font text-primary">30+</div>
+            <div className="text-lg font-bold text-primary">30+</div>
             <div className="text-xs text-muted-foreground">NEW EXERCISES</div>
           </CardContent>
         </Card>

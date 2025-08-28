@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -29,7 +30,6 @@ interface MobileDashboardProps {
 const MobileDashboard = ({ onNavigate }: MobileDashboardProps) => {
   const [selectedPillar, setSelectedPillar] = useState<string | null>(null);
 
-  // No fake progress data - start fresh
   const stats = {
     weekStreak: 0,
     totalWorkouts: 0,
@@ -40,65 +40,58 @@ const MobileDashboard = ({ onNavigate }: MobileDashboardProps) => {
   const trainingPillars = [
     {
       id: "handstand",
-      title: "Handstand Ops",
+      title: "Handstand Training",
       emoji: "🎯",
       progress: 0,
       current: "Not Started",
       next: "Wall Handstand",
       color: "handstand",
-      division: "AMBER"
+      level: "BEGINNER"
     },
     {
       id: "planche",
-      title: "Planche Force",
+      title: "Planche Development",
       emoji: "⚡",
       progress: 0,
       current: "Not Started", 
       next: "Planche Leans",
       color: "planche",
-      division: "GOLD"
+      level: "INTERMEDIATE"
     },
     {
       id: "pullup",
-      title: "Pull-up Squad",
-      emoji: "🪖",
+      title: "Pull-up Mastery",
+      emoji: "💪",
       progress: 0,
       current: "Not Started",
       next: "Australian Rows",
       color: "pullup",
-      division: "GREEN"
+      level: "BEGINNER"
     },
     {
       id: "rings",
-      title: "Rings Unit",
+      title: "Ring Training",
       emoji: "🔴",
       progress: 0,
       current: "Not Started",
       next: "Ring Support",
       color: "rings",
-      division: "RED"
+      level: "ADVANCED"
     }
-  ];
-
-  const quickActions = [
-    { title: "AI Assistant", icon: Timer, view: 'ai' as ViewType, color: "from-primary to-accent" },
-    { title: "Enhanced Library", icon: BookOpen, view: 'enhanced-library' as ViewType, color: "from-secondary to-primary" },
-    { title: "File Manager", icon: Calendar, view: 'files' as ViewType, color: "from-success to-emerald-600" },
-    { title: "Weekly Plan", icon: Trophy, view: 'plan' as ViewType, color: "from-warning to-amber-600" }
   ];
 
   return (
     <div className="p-3 space-y-4 mobile-safe-area">
       {/* Header */}
       <div className="text-center space-y-1 py-3">
-        <div className="tactical-font text-2xl font-black text-primary tracking-wider">
-          CALIS<span className="text-accent">X</span>TLC
+        <div className="text-2xl font-black text-primary tracking-wider">
+          CALIX<span className="text-accent">TLC</span>
         </div>
         <div className="text-xs font-medium text-muted-foreground tracking-wide">
-          [ ELITE TACTICAL CALISTHENICS ]
+          [ ELITE CALISTHENICS TRAINING ]
         </div>
         <p className="text-xs text-muted-foreground uppercase tracking-widest">
-          READY FOR DEPLOYMENT? 🎯
+          Ready to train? 💪
         </p>
       </div>
 
@@ -114,9 +107,9 @@ const MobileDashboard = ({ onNavigate }: MobileDashboardProps) => {
           <CardContent className="p-3 text-center">
             <div className="flex items-center justify-center space-x-2 mb-1">
               <Target className="h-4 w-4 text-primary" />
-              <span className="text-xl font-bold tactical-font text-foreground">{stats.weekStreak}</span>
+              <span className="text-xl font-bold text-foreground">{stats.weekStreak}</span>
             </div>
-            <p className="text-xs text-muted-foreground uppercase tracking-wider">MISSION STREAK</p>
+            <p className="text-xs text-muted-foreground uppercase tracking-wider">TRAINING STREAK</p>
           </CardContent>
         </Card>
 
@@ -124,18 +117,18 @@ const MobileDashboard = ({ onNavigate }: MobileDashboardProps) => {
           <CardContent className="p-3 text-center">
             <div className="flex items-center justify-center space-x-2 mb-1">
               <Trophy className="h-4 w-4 text-accent" />
-              <span className="text-xl font-bold tactical-font text-foreground">{stats.totalWorkouts}</span>
+              <span className="text-xl font-bold text-foreground">{stats.totalWorkouts}</span>
             </div>
-            <p className="text-xs text-muted-foreground uppercase tracking-wider">OPERATIONS</p>
+            <p className="text-xs text-muted-foreground uppercase tracking-wider">WORKOUTS</p>
           </CardContent>
         </Card>
       </div>
 
-      {/* Mission Status */}
+      {/* Weekly Progress */}
       <Card className="bg-card border border-primary">
         <CardContent className="p-3">
           <div className="flex items-center justify-between mb-2">
-            <h3 className="font-semibold text-foreground tactical-font tracking-wide">WEEKLY MISSION</h3>
+            <h3 className="font-semibold text-foreground tracking-wide">WEEKLY PROGRESS</h3>
             <Badge className="bg-primary text-primary-foreground font-bold">
               {stats.thisWeek.completed}/{stats.thisWeek.total}
             </Badge>
@@ -145,14 +138,14 @@ const MobileDashboard = ({ onNavigate }: MobileDashboardProps) => {
             className="h-2 mb-2" 
           />
           <p className="text-xs text-muted-foreground uppercase tracking-wider">
-            PRIMARY OBJECTIVE: {stats.nextGoal}
+            NEXT GOAL: {stats.nextGoal}
           </p>
         </CardContent>
       </Card>
 
-      {/* Training Divisions - Reduced to show just top 2 */}
+      {/* Training Categories */}
       <div className="space-y-2">
-        <h2 className="text-lg font-bold text-foreground tactical-font tracking-wide">TOP DIVISIONS</h2>
+        <h2 className="text-lg font-bold text-foreground tracking-wide">TRAINING CATEGORIES</h2>
         <div className="grid grid-cols-1 gap-2">
           {trainingPillars.slice(0, 2).map((pillar) => (
             <Card 
@@ -165,15 +158,15 @@ const MobileDashboard = ({ onNavigate }: MobileDashboardProps) => {
                   <div className="text-lg">{pillar.emoji}</div>
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-1">
-                      <h3 className="font-semibold text-foreground tactical-font text-sm">{pillar.title}</h3>
-                      <Badge variant="outline" className="text-xs tactical-font">
-                        {pillar.division}
+                      <h3 className="font-semibold text-foreground text-sm">{pillar.title}</h3>
+                      <Badge variant="outline" className="text-xs">
+                        {pillar.level}
                       </Badge>
                     </div>
                     <p className="text-xs text-muted-foreground uppercase tracking-wider">{pillar.current}</p>
                   </div>
                   <div className="text-right">
-                    <div className="text-sm font-bold text-foreground tactical-font">{pillar.progress}%</div>
+                    <div className="text-sm font-bold text-foreground">{pillar.progress}%</div>
                   </div>
                 </div>
                 <Progress value={pillar.progress} className="h-1 mb-1" />
@@ -184,36 +177,36 @@ const MobileDashboard = ({ onNavigate }: MobileDashboardProps) => {
         </div>
       </div>
 
-      {/* Quick Deploy - Reduced items */}
+      {/* Quick Access */}
       <div className="space-y-2">
-        <h2 className="text-lg font-bold text-foreground tactical-font tracking-wide">QUICK DEPLOY</h2>
+        <h2 className="text-lg font-bold text-foreground tracking-wide">QUICK ACCESS</h2>
         <div className="grid grid-cols-2 gap-2">
           <Button
-            className="h-12 justify-center space-y-1 flex-col border bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-300 tactical-font"
+            className="h-12 justify-center space-y-1 flex-col border bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-300"
             onClick={() => onNavigate('enhanced-library')}
           >
             <BookOpen className="h-4 w-4" />
             <span className="text-xs font-semibold">LIBRARY</span>
           </Button>
           <Button
-            className="h-12 justify-center space-y-1 flex-col border bg-secondary text-secondary-foreground hover:bg-secondary/90 transition-all duration-300 tactical-font"
+            className="h-12 justify-center space-y-1 flex-col border bg-secondary text-secondary-foreground hover:bg-secondary/90 transition-all duration-300"
             onClick={() => onNavigate('ai')}
           >
             <Timer className="h-4 w-4" />
-            <span className="text-xs font-semibold">AI ASSIST</span>
+            <span className="text-xs font-semibold">AI COACH</span>
           </Button>
         </div>
       </div>
 
-      {/* Elite Handstand Training Protocol - Kept compact */}
+      {/* Training Tip */}
       <Card className="bg-card border border-warning">
         <CardContent className="p-3">
           <div className="flex items-center space-x-2 mb-2">
-            <div className="text-lg">🎯</div>
-            <h3 className="font-bold text-warning tactical-font tracking-wide text-sm">PRECISION DRILLS</h3>
+            <div className="text-lg">💡</div>
+            <h3 className="font-bold text-warning tracking-wide text-sm">TRAINING TIP</h3>
           </div>
           <p className="text-xs text-muted-foreground italic">
-            "TOE TAP TO FLOAT builds balance, control, and body awareness"
+            "Start with wall handstands to build shoulder stability and proper alignment"
           </p>
         </CardContent>
       </Card>
