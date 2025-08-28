@@ -1,104 +1,102 @@
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* CalisXTLC - Elite Tactical Calisthenics Training Design System */
-
 @layer base {
   :root {
-    /* Call of Duty Military Color System - Enhanced */
-    --background: 120 15% 6%;        /* Deep Tactical Black */
-    --background-secondary: 25 20% 8%;  /* Dark Military Brown */
-    --background-tertiary: 35 25% 10%;   /* Tactical Tan */
-    --foreground: 45 25% 95%;            /* Crisp Off-White */
+    --background: 0 0% 100%;
+    --background-secondary: 0 0% 98%;
+    --background-tertiary: 0 0% 95%;
+    --foreground: 0 0% 3%;
 
-    /* Card System - Military Grade Enhanced */
-    --card: 25 20% 8%;
-    --card-secondary: 35 25% 10%;
-    --card-foreground: 45 25% 95%;
-    --card-border: 25 35% 20%;
+    --card: 0 0% 100%;
+    --card-secondary: 0 0% 97%;
+    --card-foreground: 0 0% 3%;
+    --card-border: 0 0% 85%;
 
-    /* Military Primary Colors - Enhanced */
-    --primary: 35 90% 58%;           /* Enhanced Military Orange/Amber */
-    --primary-foreground: 120 15% 6%;
-    
-    --secondary: 120 45% 32%;        /* Enhanced Military Green */
-    --secondary-foreground: 45 25% 95%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 3%;
 
-    /* Tactical Accent Colors - Enhanced */
-    --accent: 45 85% 55%;            /* Enhanced Tactical Gold */
-    --accent-foreground: 120 15% 6%;
+    --primary: 0 0% 9%;
+    --primary-foreground: 0 0% 98%;
 
-    --muted: 25 30% 18%;
-    --muted-foreground: 45 15% 68%;
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 9%;
 
-    /* Training Division Colors - Enhanced */
-    --handstand: 35 90% 58%;         /* Enhanced Amber Division */
-    --planche: 45 85% 55%;           /* Enhanced Gold Division */
-    --pullup: 120 45% 32%;           /* Enhanced Green Division */
-    --rings: 0 75% 48%;              /* Enhanced Red Division */
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 45%;
 
-    /* Status Colors - Military Grade Enhanced */
-    --success: 120 65% 38%;          /* Enhanced Mission Success Green */
-    --warning: 35 90% 58%;           /* Enhanced Alert Amber */
-    --destructive: 0 90% 58%;        /* Enhanced Danger Red */
-    --destructive-foreground: 45 25% 95%;
+    --accent: 0 0% 96%;
+    --accent-foreground: 0 0% 9%;
 
-    /* Military Glass Effects - Enhanced */
-    --glass: 45 25% 95% / 0.06;
-    --glass-border: 35 90% 58% / 0.25;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
 
-    /* Tactical Shadows & Effects - Enhanced */
-    --shadow-vibrant: 0 30px 60px -15px hsl(var(--primary) / 0.5);
-    --shadow-card: 0 20px 40px -12px hsl(0 0% 0% / 0.8);
-    --shadow-glow: 0 0 35px hsl(var(--accent) / 0.6);
-    --shadow-tactical: inset 0 2px 0 hsl(var(--glass-border)), 0 12px 35px -10px hsl(0 0% 0% / 0.9);
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
+    --ring: 0 0% 3%;
 
-    /* System Colors */
-    --popover: 225 71% 8%;
-    --popover-foreground: 210 40% 98%;
-    --border: 240 48% 20%;
-    --input: 230 60% 12%;
-    --ring: 45 100% 60%;
-    --radius: 1rem;
+    --success: 142 76% 36%;
+    --success-foreground: 0 0% 98%;
+
+    --warning: 38 92% 50%;
+    --warning-foreground: 0 0% 3%;
+
+    --info: 221 83% 53%;
+    --info-foreground: 0 0% 98%;
+
+    --radius: 0.75rem;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 0 0% 15%;
+    --sidebar-primary: 0 0% 9%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 0 0% 96%;
+    --sidebar-accent-foreground: 0 0% 9%;
+    --sidebar-border: 0 0% 90%;
+    --sidebar-ring: 0 0% 3%;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    --background: 0 0% 3%;
+    --background-secondary: 0 0% 5%;
+    --background-tertiary: 0 0% 8%;
+    --foreground: 0 0% 98%;
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+    --card: 0 0% 5%;
+    --card-secondary: 0 0% 8%;
+    --card-foreground: 0 0% 98%;
+    --card-border: 0 0% 15%;
 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 0 0% 5%;
+    --popover-foreground: 0 0% 98%;
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 0 0% 9%;
 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 0 0% 12%;
+    --secondary-foreground: 0 0% 98%;
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 0 0% 12%;
+    --muted-foreground: 0 0% 65%;
 
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 0 0% 12%;
+    --accent-foreground: 0 0% 98%;
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --border: 0 0% 15%;
+    --input: 0 0% 15%;
+    --ring: 0 0% 83%;
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-background: 0 0% 5%;
+    --sidebar-foreground: 0 0% 85%;
+    --sidebar-primary: 0 0% 98%;
+    --sidebar-primary-foreground: 0 0% 9%;
+    --sidebar-accent: 0 0% 12%;
+    --sidebar-accent-foreground: 0 0% 98%;
+    --sidebar-border: 0 0% 15%;
+    --sidebar-ring: 0 0% 83%;
   }
 }
 
@@ -106,117 +104,37 @@
   * {
     @apply border-border;
   }
-
   body {
-    @apply bg-background text-foreground;
-    font-family: 'Rajdhani', sans-serif;
-    background: hsl(var(--background));
-  }
-
-  .tactical-font {
-    font-family: 'Orbitron', monospace;
-  }
-
-  html {
-    @apply dark;
+    @apply bg-background text-foreground font-sans;
+    font-feature-settings: "rlig" 1, "calt" 1;
   }
 }
 
-@layer components {
-  .glass-card {
-    background: hsl(var(--card));
-    border: 1px solid hsl(var(--border));
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  }
+.mobile-safe-area {
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+}
 
-  .tactical-gradient {
-    background: hsl(var(--primary));
-  }
+.clean-gradient {
+  background: linear-gradient(135deg, hsl(var(--background)) 0%, hsl(var(--background-secondary)) 100%);
+}
 
-  .military-gradient {
-    background: hsl(var(--secondary));
-  }
+.clean-border {
+  border: 2px solid hsl(var(--border));
+}
 
-  .mission-gradient {
-    background: hsl(var(--success));
-  }
+.premium-shadow {
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+}
 
-  .tactical-shadow {
-    box-shadow: var(--shadow-tactical);
-  }
+.success-gradient {
+  background: linear-gradient(135deg, hsl(var(--success)) 0%, hsl(var(--success)) 100%);
+}
 
-  .combat-glow {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    border: 1px solid hsl(var(--primary));
-  }
+.info-gradient {
+  background: linear-gradient(135deg, hsl(var(--info)) 0%, hsl(var(--info)) 100%);
+}
 
-  .skeuomorphic-button {
-    background: hsl(var(--card));
-    border: 1px solid hsl(var(--border));
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .skeuomorphic-button:hover {
-    background: hsl(var(--accent) / 0.1);
-    border-color: hsl(var(--primary));
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    transform: translateY(-1px);
-  }
-
-  .skeuomorphic-button:active {
-    transform: translateY(0);
-    box-shadow: 
-      inset 0 2px 4px hsl(0 0% 0% / 0.3),
-      0 2px 8px -2px hsl(0 0% 0% / 0.5);
-  }
-
-  .handstand-theme {
-    background: hsl(var(--card));
-    border-color: hsl(var(--handstand));
-  }
-
-  .planche-theme {
-    background: hsl(var(--card));
-    border-color: hsl(var(--planche));
-  }
-
-  .pullup-theme {
-    background: hsl(var(--card));
-    border-color: hsl(var(--pullup));
-  }
-
-  .rings-theme {
-    background: hsl(var(--card));
-    border-color: hsl(var(--rings));
-  }
-
-  .mobile-safe-area {
-    padding-bottom: env(safe-area-inset-bottom);
-  }
-
-  .tab-animate {
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .bounce-in {
-    animation: bounce-in 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-  }
-
-  @keyframes bounce-in {
-    0% {
-      transform: scale(0.3);
-      opacity: 0;
-    }
-    50% {
-      transform: scale(1.05);
-    }
-    70% {
-      transform: scale(0.9);
-    }
-    100% {
-      transform: scale(1);
-      opacity: 1;
-    }
-  }
+.warning-gradient {
+  background: linear-gradient(135deg, hsl(var(--warning)) 0%, hsl(var(--warning)) 100%);
 }

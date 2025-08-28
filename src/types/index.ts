@@ -16,6 +16,18 @@ export interface Exercise {
   prerequisites?: string[];
   muscleGroups: string[];
   equipment?: string[];
+  musclesWorked?: {
+    primary: string[];
+    secondary: string[];
+    stabilizers: string[];
+  };
+  tendonsInvolved?: string[];
+  recoveryTime?: {
+    muscle: string;
+    tendon: string;
+    nervous: string;
+  };
+  formCues?: string[];
 }
 
 export type ExerciseCategory = 

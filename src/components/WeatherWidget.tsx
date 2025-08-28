@@ -1,136 +1,152 @@
 
 import { useState, useEffect } from "react";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { WeatherService } from "@/services/weatherService";
-import type { WeatherData } from "@/types";
+import { Button } from "@/components/ui/button";
 import { 
-  Sun, 
   Cloud, 
+  Sun, 
   CloudRain, 
-  MapPin, 
-  Thermometer,
-  Wind,
-  Droplets
+  Wind, 
+  Thermometer, 
+  Droplets,
+  MapPin,
+  RefreshCw
 } from "lucide-react";
+import { getWeatherData } from "@/services/weatherService";
+import type { WeatherData } from "@/types";
 
 const WeatherWidget = () => {
   const [weather, setWeather] = useState<WeatherData | null>(null);
-  const [location, setLocation] = useState<string>("Getting location...");
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    loadWeatherData();
-  }, []);
+  const [location, setLocation] = useState<string>("Current Location");
+  const [loading, setLoading] = useState(false);
 
   const loadWeatherData = async () => {
+    setLoading(true);
     try {
-      const weatherService = WeatherService.getInstance();
-      const locationData = await weatherService.getCurrentLocation();
-      
-      if (locationData) {
-        setLocation("Oklahoma City, OK"); // Default to OKC for demo
-        const weatherData = await weatherService.getWeatherData(locationData.lat, locationData.lng);
-        setWeather(weatherData);
-      } else {
-        setLocation("Location unavailable");
-        const weatherData = await weatherService.getWeatherData();
-        setWeather(weatherData);
-      }
+      const data = await getWeatherData();
+      setWeather(data);
     } catch (error) {
-      console.log("Weather data loading error:", error);
+      console.error('Failed to load weather data:', error);
     } finally {
       setLoading(false);
     }
   };
 
+  useEffect(() => {
+    loadWeatherData();
+  }, []);
+
   const getWeatherIcon = (condition: string) => {
-    switch (condition) {
+    switch (condition.toLowerCase()) {
       case 'sunny':
-        return <Sun className="h-4 w-4 text-yellow-500" />;
-      case 'partly-cloudy':
-        return <Cloud className="h-4 w-4 text-blue-400" />;
+      case 'clear':
+        return <Sun className="h-5 w-5 text-warning" />;
       case 'cloudy':
-        return <Cloud className="h-4 w-4 text-gray-500" />;
+      case 'overcast':
+        return <Cloud className="h-5 w-5 text-muted-foreground" />;
       case 'rainy':
-        return <CloudRain className="h-4 w-4 text-blue-600" />;
+      case 'rain':
+        return <CloudRain className="h-5 w-5 text-info" />;
       default:
-        return <Sun className="h-4 w-4 text-yellow-500" />;
+        return <Sun className="h-5 w-5 text-warning" />;
     }
   };
 
   const getSuitabilityColor = (suitability: string) => {
     switch (suitability) {
-      case 'excellent':
-        return 'bg-green-500';
-      case 'good':
-        return 'bg-blue-500';
-      case 'fair':
-        return 'bg-yellow-500';
-      case 'poor':
-        return 'bg-red-500';
-      default:
-        return 'bg-gray-500';
+      case 'excellent': return 'success-gradient';
+      case 'good': return 'info-gradient';
+      case 'fair': return 'warning-gradient';
+      case 'poor': return 'bg-destructive';
+      default: return 'bg-muted';
     }
   };
 
-  if (loading) {
+  if (!weather) {
     return (
-      <Card className="bg-card border border-primary">
-        <CardContent className="p-3">
-          <div className="flex items-center space-x-2">
-            <div className="animate-pulse h-4 w-4 bg-primary rounded"></div>
-            <span className="text-sm text-muted-foreground">Loading weather...</span>
+      <Card className="clean-border premium-shadow bg-card">
+        <CardContent className="p-4">
+          <div className="flex items-center justify-center h-24">
+            <RefreshCw className="h-5 w-5 animate-spin text-muted-foreground" />
           </div>
         </CardContent>
       </Card>
     );
   }
 
-  if (!weather) return null;
-
-  const weatherService = WeatherService.getInstance();
-  const recommendation = weatherService.getWorkoutRecommendation(weather);
-
   return (
-    <Card className="bg-card border border-primary">
-      <CardContent className="p-3">
-        <div className="space-y-2">
+    <Card className="clean-border premium-shadow bg-card">
+      <CardHeader className="pb-3">
+        <div className="flex items-center justify-between">
+          <CardTitle className="text-lg text-foreground flex items-center gap-2">
+            <MapPin className="h-4 w-4 text-primary" />
+            Weather Conditions
+          </CardTitle>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={loadWeatherData}
+            disabled={loading}
+            className="h-8 w-8 p-0"
+          >
+            <RefreshCw className={`h-3 w-3 ${loading ? 'animate-spin' : ''}`} />
+          </Button>
+        </div>
+      </CardHeader>
+      
+      <CardContent className="pt-0">
+        <div className="space-y-4">
+          {/* Main Weather Info */}
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-2">
-              <MapPin className="h-3 w-3 text-muted-foreground" />
-              <span className="text-xs font-medium tactical-font">{location}</span>
-            </div>
-            <div className="flex items-center space-x-1">
+            <div className="flex items-center gap-3">
               {getWeatherIcon(weather.condition)}
-              <span className="text-sm font-bold">{weather.temperature}°F</span>
+              <div>
+                <p className="text-2xl font-bold text-foreground">{weather.temperature}°F</p>
+                <p className="text-sm text-muted-foreground capitalize">{weather.condition}</p>
+              </div>
             </div>
-          </div>
-
-          <div className="grid grid-cols-3 gap-2 text-xs">
-            <div className="flex items-center space-x-1">
-              <Thermometer className="h-3 w-3 text-muted-foreground" />
-              <span>{weather.temperature}°</span>
-            </div>
-            <div className="flex items-center space-x-1">
-              <Droplets className="h-3 w-3 text-muted-foreground" />
-              <span>{weather.humidity}%</span>
-            </div>
-            <div className="flex items-center space-x-1">
-              <Wind className="h-3 w-3 text-muted-foreground" />
-              <span>{weather.windSpeed}mph</span>
-            </div>
-          </div>
-
-          <div className="flex items-center justify-between">
-            <Badge 
-              className={`text-xs text-white ${getSuitabilityColor(weather.workoutSuitability)}`}
-            >
-              {weather.workoutSuitability.toUpperCase()} CONDITIONS
+            
+            <Badge className={`${getSuitabilityColor(weather.workoutSuitability)} text-white`}>
+              {weather.workoutSuitability.toUpperCase()}
             </Badge>
           </div>
 
-          <p className="text-xs text-muted-foreground italic">{recommendation}</p>
+          {/* Weather Details */}
+          <div className="grid grid-cols-2 gap-4">
+            <div className="flex items-center gap-2">
+              <Droplets className="h-4 w-4 text-info" />
+              <div>
+                <p className="text-xs text-muted-foreground">Humidity</p>
+                <p className="text-sm font-medium text-foreground">{weather.humidity}%</p>
+              </div>
+            </div>
+            
+            <div className="flex items-center gap-2">
+              <Wind className="h-4 w-4 text-primary" />
+              <div>
+                <p className="text-xs text-muted-foreground">Wind Speed</p>
+                <p className="text-sm font-medium text-foreground">{weather.windSpeed} mph</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Workout Recommendation */}
+          <div className="bg-background-secondary p-3 rounded-lg clean-border">
+            <p className="text-xs font-medium text-foreground mb-1">Workout Recommendation:</p>
+            <p className="text-xs text-muted-foreground">
+              {weather.workoutSuitability === 'excellent' && "Perfect conditions for outdoor training!"}
+              {weather.workoutSuitability === 'good' && "Good conditions for most exercises."}
+              {weather.workoutSuitability === 'fair' && "Consider indoor alternatives or shorter sessions."}
+              {weather.workoutSuitability === 'poor' && "Indoor training recommended today."}
+            </p>
+          </div>
+
+          {/* Location Info */}
+          <div className="text-center">
+            <p className="text-xs text-muted-foreground">📍 Oklahoma City Area</p>
+            <p className="text-xs text-muted-foreground mt-1">Vasa Trainer Available at Local Facility</p>
+          </div>
         </div>
       </CardContent>
     </Card>
