@@ -19,6 +19,8 @@ import {
   Calendar,
   Flame
 } from "lucide-react";
+import WeatherWidget from "./WeatherWidget";
+import AchievementSystem from "./AchievementSystem";
 
 interface MobileDashboardProps {
   onNavigate: (view: ViewType) => void;
@@ -100,6 +102,12 @@ const MobileDashboard = ({ onNavigate }: MobileDashboardProps) => {
         </p>
       </div>
 
+      {/* Weather Widget */}
+      <WeatherWidget />
+
+      {/* Achievement System */}
+      <AchievementSystem />
+
       {/* Stats Cards */}
       <div className="grid grid-cols-2 gap-2">
         <Card className="bg-card border border-primary">
@@ -142,15 +150,15 @@ const MobileDashboard = ({ onNavigate }: MobileDashboardProps) => {
         </CardContent>
       </Card>
 
-      {/* Training Divisions */}
+      {/* Training Divisions - Reduced to show just top 2 */}
       <div className="space-y-2">
-        <h2 className="text-lg font-bold text-foreground tactical-font tracking-wide">TRAINING DIVISIONS</h2>
+        <h2 className="text-lg font-bold text-foreground tactical-font tracking-wide">TOP DIVISIONS</h2>
         <div className="grid grid-cols-1 gap-2">
-          {trainingPillars.map((pillar) => (
+          {trainingPillars.slice(0, 2).map((pillar) => (
             <Card 
               key={pillar.id}
               className={`bg-card border border-primary transition-all duration-300 hover:border-accent cursor-pointer`}
-              onClick={() => onNavigate('training')}
+              onClick={() => onNavigate('enhanced-library')}
             >
               <CardContent className="p-3">
                 <div className="flex items-center space-x-3 mb-2">
@@ -176,57 +184,36 @@ const MobileDashboard = ({ onNavigate }: MobileDashboardProps) => {
         </div>
       </div>
 
-      {/* Quick Deploy */}
+      {/* Quick Deploy - Reduced items */}
       <div className="space-y-2">
         <h2 className="text-lg font-bold text-foreground tactical-font tracking-wide">QUICK DEPLOY</h2>
-        <div className="grid grid-cols-1 gap-2">
-          {quickActions.map((action, index) => {
-            const Icon = action.icon;
-            return (
-              <Button
-                key={index}
-                className={`h-12 justify-start space-x-3 border bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-300 tactical-font`}
-                onClick={() => onNavigate(action.view)}
-              >
-                <Icon className="h-5 w-5" />
-                <span className="text-sm font-semibold tracking-wide">{action.title.toUpperCase()}</span>
-              </Button>
-            );
-          })}
+        <div className="grid grid-cols-2 gap-2">
+          <Button
+            className="h-12 justify-center space-y-1 flex-col border bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-300 tactical-font"
+            onClick={() => onNavigate('enhanced-library')}
+          >
+            <BookOpen className="h-4 w-4" />
+            <span className="text-xs font-semibold">LIBRARY</span>
+          </Button>
+          <Button
+            className="h-12 justify-center space-y-1 flex-col border bg-secondary text-secondary-foreground hover:bg-secondary/90 transition-all duration-300 tactical-font"
+            onClick={() => onNavigate('ai')}
+          >
+            <Timer className="h-4 w-4" />
+            <span className="text-xs font-semibold">AI ASSIST</span>
+          </Button>
         </div>
       </div>
 
-      {/* Elite Handstand Training Protocol */}
-      <div className="space-y-2">
-        <h2 className="text-lg font-bold text-foreground tactical-font tracking-wide">HANDSTAND INTEL</h2>
-        <Card className="bg-card border border-warning">
-          <CardContent className="p-3">
-            <div className="flex items-center space-x-2 mb-2">
-              <div className="text-lg">🎯</div>
-              <h3 className="font-bold text-warning tactical-font tracking-wide text-sm">PRECISION DRILLS</h3>
-            </div>
-            <div className="space-y-1 text-xs text-muted-foreground">
-              <p className="uppercase tracking-wider text-xs">REFERENCE POINT TRAINING:</p>
-              <div className="grid grid-cols-1 gap-1 ml-2">
-                <span>• Box Supported Tuck Extensions</span>
-                <span>• Stomach to Wall Knee Slides</span>
-                <span>• Back to Wall Leg Extensions</span>
-                <span>• Side Wall Handstand Hold</span>
-                <span>• Dual Prone Parallette Hold</span>
-              </div>
-              <p className="mt-2 italic text-xs">"TOE TAP TO FLOAT builds balance, control, and body awareness"</p>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Mission Brief */}
-      <Card className="bg-card border border-primary">
-        <CardContent className="p-3 text-center">
-          <div className="text-2xl mb-1">⚔️</div>
-          <h3 className="font-bold text-primary mb-1 tactical-font tracking-wide text-sm">MISSION BRIEF</h3>
-          <p className="text-xs text-muted-foreground uppercase tracking-wider">
-            "DISCIPLINE BUILDS WARRIORS"
+      {/* Elite Handstand Training Protocol - Kept compact */}
+      <Card className="bg-card border border-warning">
+        <CardContent className="p-3">
+          <div className="flex items-center space-x-2 mb-2">
+            <div className="text-lg">🎯</div>
+            <h3 className="font-bold text-warning tactical-font tracking-wide text-sm">PRECISION DRILLS</h3>
+          </div>
+          <p className="text-xs text-muted-foreground italic">
+            "TOE TAP TO FLOAT builds balance, control, and body awareness"
           </p>
         </CardContent>
       </Card>

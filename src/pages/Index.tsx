@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import type { ViewType } from "@/types";
 import { Button } from "@/components/ui/button";
@@ -25,16 +26,18 @@ import WeeklyPlan from "@/components/WeeklyPlan";
 import FileManager from "@/components/FileManager";
 import AIAssistant from "@/components/AIAssistant";
 import EnhancedExerciseLibrary from "@/components/EnhancedExerciseLibrary";
+import CompactExerciseLibrary from "@/components/CompactExerciseLibrary";
+import UpdatesTab from "@/components/UpdatesTab";
 
 const Index = () => {
   const [currentView, setCurrentView] = useState<ViewType>('dashboard');
 
   const tabs = [
     { id: 'dashboard' as ViewType, label: 'Home', icon: LayoutDashboard, color: 'text-primary' },
-    { id: 'plan' as ViewType, label: 'Plan', icon: Calendar, color: 'text-accent' },
+    { id: 'enhanced-library' as ViewType, label: 'Library', icon: BookOpen, color: 'text-accent' },
     { id: 'timer' as ViewType, label: 'Timer', icon: Timer, color: 'text-secondary' },
-    { id: 'discipline' as ViewType, label: 'Library', icon: BookOpen, color: 'text-warning' },
-    { id: 'skills' as ViewType, label: 'Skills', icon: Trophy, color: 'text-success' },
+    { id: 'plan' as ViewType, label: 'Plan', icon: Calendar, color: 'text-warning' },
+    { id: 'updates' as ViewType, label: 'Updates', icon: Trophy, color: 'text-success' },
   ];
 
   const renderView = () => {
@@ -62,7 +65,9 @@ const Index = () => {
       case 'ai':
         return <AIAssistant />;
       case 'enhanced-library':
-        return <EnhancedExerciseLibrary />;
+        return <CompactExerciseLibrary />;
+      case 'updates':
+        return <UpdatesTab />;
       default:
         return <MobileDashboard onNavigate={setCurrentView} />;
     }
