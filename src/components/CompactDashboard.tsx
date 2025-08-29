@@ -2,10 +2,10 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { CompactStats } from "./CompactStats";
-import { CompactTrainingFocus } from "./CompactTrainingFocus";
-import { CompactQuickActions } from "./CompactQuickActions";
-import { DetailedWeatherWidget } from "./DetailedWeatherWidget";
+import CompactStats from "./CompactStats";
+import CompactTrainingFocus from "./CompactTrainingFocus";
+import CompactQuickActions from "./CompactQuickActions";
+import DetailedWeatherWidget from "./DetailedWeatherWidget";
 import { 
   Calendar,
   Trophy,

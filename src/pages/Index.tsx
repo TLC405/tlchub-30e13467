@@ -2,12 +2,12 @@
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/AppSidebar";
 import { CompactDashboard } from "@/components/CompactDashboard";
-import { TrainingView } from "@/components/TrainingView";
-import { CompactExerciseLibrary } from "@/components/CompactExerciseLibrary";
-import { TimerView } from "@/components/TimerView";
-import { ProgressView } from "@/components/ProgressView";
+import TrainingView from "@/components/TrainingView";
+import CompactExerciseLibrary from "@/components/CompactExerciseLibrary";
+import TimerView from "@/components/TimerView";
+import ProgressView from "@/components/ProgressView";
 import { ThemeProvider } from "@/components/ThemeProvider";
-import { ThemeSelector } from "@/components/ThemeSelector";
+import ThemeSelector from "@/components/ThemeSelector";
 import { useState } from "react";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 
