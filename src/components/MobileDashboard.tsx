@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -18,7 +17,8 @@ import {
   CircleDot,
   Clock,
   Calendar,
-  Flame
+  Flame,
+  Brain
 } from "lucide-react";
 import CompactWeatherWidget from "./CompactWeatherWidget";
 import TrainingHub from "./TrainingHub";
@@ -190,10 +190,10 @@ const MobileDashboard = ({ onNavigate }: MobileDashboardProps) => {
           </Button>
           <Button
             className="h-16 justify-center space-y-2 flex-col border bg-secondary text-secondary-foreground hover:bg-secondary/90 transition-all duration-300 font-semibold"
-            onClick={() => onNavigate('ai')}
+            onClick={() => onNavigate('agent')}
           >
-            <Timer className="h-5 w-5" />
-            <span className="text-sm font-bold tracking-wide">AI Coach</span>
+            <Brain className="h-5 w-5" />
+            <span className="text-sm font-bold tracking-wide">Agent TLC</span>
           </Button>
         </div>
       </div>

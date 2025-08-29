@@ -356,10 +356,10 @@ const TrainingHub = ({ onNavigate }: TrainingHubProps) => {
         </Button>
         <Button
           className="h-16 flex-col space-y-2"
-          onClick={() => onNavigate('timer')}
+          onClick={() => onNavigate('agent')}
         >
-          <Timer className="h-5 w-5" />
-          <span className="text-sm">Start Workout</span>
+          <Brain className="h-5 w-5" />
+          <span className="text-sm">Agent TLC</span>
         </Button>
       </div>
     </div>

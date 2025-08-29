@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import type { ViewType } from "@/types";
 import { Button } from "@/components/ui/button";
@@ -9,7 +8,8 @@ import {
   BookOpen, 
   Timer,
   Trophy,
-  Calendar
+  Calendar,
+  Brain
 } from "lucide-react";
 
 // Mobile Components
@@ -28,6 +28,7 @@ import AIAssistant from "@/components/AIAssistant";
 import EnhancedExerciseLibrary from "@/components/EnhancedExerciseLibrary";
 import CompactExerciseLibrary from "@/components/CompactExerciseLibrary";
 import UpdatesTab from "@/components/UpdatesTab";
+import AgentTLC from "@/components/AgentTLC";
 
 const Index = () => {
   const [currentView, setCurrentView] = useState<ViewType>('dashboard');
@@ -35,7 +36,7 @@ const Index = () => {
   const tabs = [
     { id: 'dashboard' as ViewType, label: 'Home', icon: LayoutDashboard, color: 'text-primary' },
     { id: 'enhanced-library' as ViewType, label: 'Library', icon: BookOpen, color: 'text-accent' },
-    { id: 'timer' as ViewType, label: 'Timer', icon: Timer, color: 'text-secondary' },
+    { id: 'agent' as ViewType, label: 'Agent', icon: Brain, color: 'text-secondary' },
     { id: 'plan' as ViewType, label: 'Plan', icon: Calendar, color: 'text-warning' },
     { id: 'updates' as ViewType, label: 'Updates', icon: Trophy, color: 'text-success' },
   ];
@@ -46,8 +47,8 @@ const Index = () => {
         return <MobileDashboard onNavigate={setCurrentView} />;
       case 'training':
         return <TrainingView />;
-      case 'timer':
-        return <MobileTimer />;
+      case 'agent':
+        return <AgentTLC />;
       case 'foundation':
         return <FoundationProgram />;
       case 'library':
