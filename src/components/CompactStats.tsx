@@ -1,75 +1,91 @@
 
-import { Card, CardContent } from "@/components/ui/card";
+import React from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
-import { Target, Trophy, Calendar, TrendingUp } from "lucide-react";
+import { 
+  Flame,
+  Target,
+  Clock,
+  Trophy,
+  TrendingUp,
+  Calendar
+} from "lucide-react";
 
-const CompactStats = () => {
-  const stats = {
-    weekStreak: 3,
-    totalWorkouts: 12,
-    thisWeek: { completed: 1, total: 4 },
-    weeklyProgress: 25
-  };
+export default function CompactStats() {
+  const stats = [
+    {
+      title: "Current Streak",
+      value: "12",
+      unit: "days",
+      icon: Flame,
+      trend: "+3 from last week",
+      color: "text-orange-500"
+    },
+    {
+      title: "Weekly Goal",
+      value: "4/5",
+      unit: "workouts",
+      icon: Target,
+      trend: "80% complete",
+      color: "text-blue-500"
+    },
+    {
+      title: "Total Time",
+      value: "45.2",
+      unit: "hours",
+      icon: Clock,
+      trend: "+2.5hrs this month",
+      color: "text-green-500"
+    },
+    {
+      title: "Skills Unlocked",
+      value: "23",
+      unit: "skills",
+      icon: Trophy,
+      trend: "+2 this week",
+      color: "text-purple-500"
+    },
+    {
+      title: "Weight",
+      value: "175",
+      unit: "lbs",
+      icon: TrendingUp,
+      trend: "-2 lbs",
+      color: "text-red-500"
+    },
+    {
+      title: "Height",
+      value: "5'10\"",
+      unit: "",
+      icon: Calendar,
+      trend: "US Imperial",
+      color: "text-gray-500"
+    }
+  ];
 
   return (
-    <div className="grid grid-cols-2 gap-3">
-      <Card className="bg-gradient-to-br from-card to-primary/5 border border-primary/20 hover:border-primary/40 transition-all duration-300">
-        <CardContent className="p-4">
-          <div className="flex items-center gap-3">
-            <div className="p-2 bg-primary/20 rounded-lg">
-              <Target className="h-4 w-4 text-primary" />
-            </div>
-            <div className="flex-1 min-w-0">
-              <div className="text-2xl font-bold text-foreground font-mono">
-                {stats.weekStreak}
+    <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+      {stats.map((stat, index) => (
+        <Card key={index} className="hover:shadow-md transition-shadow cursor-pointer">
+          <CardHeader className="pb-2">
+            <CardTitle className="flex items-center justify-between text-sm font-medium">
+              <span className="truncate">{stat.title}</span>
+              <stat.icon className={`h-4 w-4 ${stat.color}`} />
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="pt-0">
+            <div className="space-y-1">
+              <div className="flex items-baseline space-x-1">
+                <span className="text-2xl font-bold">{stat.value}</span>
+                {stat.unit && <span className="text-sm text-muted-foreground">{stat.unit}</span>}
               </div>
-              <div className="text-xs text-muted-foreground font-medium truncate">
-                Day Streak
-              </div>
+              <Badge variant="secondary" className="text-xs">
+                {stat.trend}
+              </Badge>
             </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      <Card className="bg-gradient-to-br from-card to-accent/5 border border-accent/20 hover:border-accent/40 transition-all duration-300">
-        <CardContent className="p-4">
-          <div className="flex items-center gap-3">
-            <div className="p-2 bg-accent/20 rounded-lg">
-              <Trophy className="h-4 w-4 text-accent" />
-            </div>
-            <div className="flex-1 min-w-0">
-              <div className="text-2xl font-bold text-foreground font-mono">
-                {stats.totalWorkouts}
-              </div>
-              <div className="text-xs text-muted-foreground font-medium truncate">
-                Sessions
-              </div>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      <Card className="col-span-2 bg-gradient-to-br from-card to-secondary/5 border border-primary/20 hover:border-primary/40 transition-all duration-300">
-        <CardContent className="p-4 space-y-3">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Calendar className="h-4 w-4 text-primary" />
-              <span className="text-sm font-semibold text-foreground">Weekly Progress</span>
-            </div>
-            <Badge className="bg-primary/20 text-primary border-primary/30 text-xs">
-              {stats.thisWeek.completed}/{stats.thisWeek.total}
-            </Badge>
-          </div>
-          <Progress value={stats.weeklyProgress} className="h-2" />
-          <div className="flex items-center gap-2 text-xs text-muted-foreground">
-            <TrendingUp className="h-3 w-3" />
-            <span>On track for weekly goal</span>
-          </div>
-        </CardContent>
-      </Card>
+          </CardContent>
+        </Card>
+      ))}
     </div>
   );
-};
-
-export default CompactStats;
+}
