@@ -1,7 +1,5 @@
 
-import { useState } from "react";
-import { NavLink, useLocation } from "react-router-dom";
-import {
+import { 
   Sidebar,
   SidebarContent,
   SidebarGroup,
@@ -10,182 +8,95 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarTrigger,
   useSidebar,
 } from "@/components/ui/sidebar";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-import {
-  LayoutDashboard,
-  BookOpen,
-  Brain,
-  Calendar,
-  Trophy,
+import { 
+  Home,
   Dumbbell,
-  Target,
+  BookOpen,
+  Timer,
   TrendingUp,
   Zap,
-  Settings,
-  ChevronRight,
-  Home,
-  User,
-  Activity
+  Target,
+  Settings
 } from "lucide-react";
-import type { ViewType } from "@/types";
 
 interface AppSidebarProps {
-  onNavigate: (view: ViewType) => void;
-  currentView: ViewType;
+  onNavigate: (view: string) => void;
+  activeView: string;
 }
 
-const AppSidebar = ({ onNavigate, currentView }: AppSidebarProps) => {
-  const { collapsed } = useSidebar();
-  const [openGroups, setOpenGroups] = useState<Record<string, boolean>>({
-    training: true,
-    tools: true,
-    progress: true
-  });
+const menuItems = [
+  { id: "dashboard", title: "Dashboard", icon: Home },
+  { id: "training", title: "Training", icon: Dumbbell },
+  { id: "exercises", title: "Exercise Library", icon: BookOpen },
+  { id: "timer", title: "Timer", icon: Timer },
+  { id: "progress", title: "Progress", icon: TrendingUp },
+];
 
-  const toggleGroup = (groupId: string) => {
-    setOpenGroups(prev => ({
-      ...prev,
-      [groupId]: !prev[groupId]
-    }));
-  };
+const quickActions = [
+  { id: "handstand", title: "Handstand Focus", icon: Target },
+  { id: "strength", title: "Strength Training", icon: Zap },
+  { id: "flexibility", title: "Flexibility", icon: Settings },
+];
 
-  const mainItems = [
-    { id: 'dashboard' as ViewType, title: 'Dashboard', icon: LayoutDashboard, emoji: '🏠' },
-  ];
-
-  const trainingItems = [
-    { id: 'enhanced-library' as ViewType, title: 'Exercise Library', icon: BookOpen, emoji: '📚' },
-    { id: 'training' as ViewType, title: 'Active Training', icon: Dumbbell, emoji: '💪' },
-    { id: 'foundation' as ViewType, title: 'Foundation', icon: Target, emoji: '🎯' },
-    { id: 'skills' as ViewType, title: 'Skills Mastery', icon: Zap, emoji: '⚡' },
-  ];
-
-  const toolItems = [
-    { id: 'agent' as ViewType, title: 'Agent TLC', icon: Brain, emoji: '🤖' },
-    { id: 'plan' as ViewType, title: 'Weekly Plan', icon: Calendar, emoji: '📅' },
-    { id: 'ai' as ViewType, title: 'AI Assistant', icon: Brain, emoji: '🧠' },
-  ];
-
-  const progressItems = [
-    { id: 'progress' as ViewType, title: 'Progress', icon: TrendingUp, emoji: '📈' },
-    { id: 'updates' as ViewType, title: 'Updates', icon: Trophy, emoji: '🏆' },
-  ];
-
-  const renderMenuItem = (item: any) => (
-    <SidebarMenuItem key={item.id}>
-      <SidebarMenuButton
-        asChild
-        className={`${
-          currentView === item.id 
-            ? 'bg-primary text-primary-foreground font-semibold shadow-sm' 
-            : 'hover:bg-accent/50 text-foreground'
-        } transition-all duration-200`}
-      >
-        <button
-          onClick={() => onNavigate(item.id)}
-          className="flex items-center w-full"
-        >
-          <div className="flex items-center gap-3">
-            {collapsed ? (
-              <span className="text-lg">{item.emoji}</span>
-            ) : (
-              <>
-                <item.icon className="h-4 w-4" />
-                <span className="text-sm font-medium">{item.title}</span>
-              </>
-            )}
-          </div>
-        </button>
-      </SidebarMenuButton>
-    </SidebarMenuItem>
-  );
-
-  const renderCollapsibleGroup = (
-    groupId: string,
-    title: string,
-    items: any[],
-    icon: React.ComponentType<any>
-  ) => {
-    const Icon = icon;
-    return (
-      <Collapsible
-        open={openGroups[groupId] && !collapsed}
-        onOpenChange={() => toggleGroup(groupId)}
-      >
-        <SidebarGroup>
-          <CollapsibleTrigger asChild>
-            <SidebarGroupLabel className="hover:bg-accent/30 rounded-md px-2 py-1 cursor-pointer transition-colors">
-              <div className="flex items-center justify-between w-full">
-                <div className="flex items-center gap-2">
-                  <Icon className="h-4 w-4" />
-                  {!collapsed && <span className="font-semibold">{title}</span>}
-                </div>
-                {!collapsed && (
-                  <ChevronRight 
-                    className={`h-4 w-4 transition-transform duration-200 ${
-                      openGroups[groupId] ? 'rotate-90' : ''
-                    }`} 
-                  />
-                )}
-              </div>
-            </SidebarGroupLabel>
-          </CollapsibleTrigger>
-          <CollapsibleContent>
-            <SidebarGroupContent>
-              <SidebarMenu>
-                {items.map(renderMenuItem)}
-              </SidebarMenu>
-            </SidebarGroupContent>
-          </CollapsibleContent>
-        </SidebarGroup>
-      </Collapsible>
-    );
-  };
+export function AppSidebar({ onNavigate, activeView }: AppSidebarProps) {
+  const { state } = useSidebar();
+  const isCollapsed = state === "collapsed";
 
   return (
-    <Sidebar className={`${collapsed ? 'w-16' : 'w-64'} transition-all duration-300 border-r border-border/60`}>
-      <div className="p-4 border-b border-border/60">
-        <div className="flex items-center gap-3">
-          {collapsed ? (
-            <div className="text-2xl font-bold text-primary">C</div>
-          ) : (
-            <div className="text-xl font-black bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
-              CALIXTLC
-            </div>
-          )}
-        </div>
-      </div>
-
-      <SidebarContent className="px-2 py-4">
-        {/* Main Items */}
+    <Sidebar className={`${isCollapsed ? "w-16" : "w-64"} border-r border-border bg-card/50 backdrop-blur-sm`}>
+      <SidebarContent className="p-2">
+        {/* Main Navigation */}
         <SidebarGroup>
-          <SidebarMenu>
-            {mainItems.map(renderMenuItem)}
-          </SidebarMenu>
+          <SidebarGroupLabel className={`${isCollapsed ? "hidden" : "block"} text-xs font-semibold text-muted-foreground uppercase tracking-wider`}>
+            Navigation
+          </SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu className="space-y-1">
+              {menuItems.map((item) => (
+                <SidebarMenuItem key={item.id}>
+                  <SidebarMenuButton
+                    onClick={() => onNavigate(item.id)}
+                    className={`w-full justify-start transition-colors ${
+                      activeView === item.id
+                        ? "bg-primary text-primary-foreground font-medium"
+                        : "hover:bg-accent hover:text-accent-foreground"
+                    }`}
+                  >
+                    <item.icon className={`${isCollapsed ? "mr-0" : "mr-3"} h-5 w-5 flex-shrink-0`} />
+                    {!isCollapsed && <span className="truncate">{item.title}</span>}
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroupContent>
         </SidebarGroup>
 
-        {/* Training Group */}
-        {renderCollapsibleGroup('training', 'Training', trainingItems, Dumbbell)}
-
-        {/* Tools Group */}
-        {renderCollapsibleGroup('tools', 'Tools', toolItems, Settings)}
-
-        {/* Progress Group */}
-        {renderCollapsibleGroup('progress', 'Progress', progressItems, Activity)}
+        {/* Quick Actions */}
+        {!isCollapsed && (
+          <SidebarGroup>
+            <SidebarGroupLabel className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+              Quick Actions
+            </SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu className="space-y-1">
+                {quickActions.map((action) => (
+                  <SidebarMenuItem key={action.id}>
+                    <SidebarMenuButton
+                      onClick={() => onNavigate("training")}
+                      className="w-full justify-start text-sm text-muted-foreground hover:bg-accent hover:text-accent-foreground"
+                    >
+                      <action.icon className="mr-3 h-4 w-4 flex-shrink-0" />
+                      <span className="truncate">{action.title}</span>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                ))}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        )}
       </SidebarContent>
-
-      <div className="mt-auto p-4 border-t border-border/60">
-        <SidebarTrigger className="w-full" />
-      </div>
     </Sidebar>
   );
-};
-
-export default AppSidebar;
+}

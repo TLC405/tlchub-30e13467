@@ -52,6 +52,17 @@ const CompactExerciseLibrary = () => {
     return exercises;
   };
 
+  const getCategoryStats = (categoryId: ExerciseCategory) => {
+    const categoryExercises = exerciseDatabase.filter(ex => ex.category === categoryId);
+    const byDifficulty = {
+      beginner: categoryExercises.filter(ex => ex.difficulty === 'beginner').length,
+      intermediate: categoryExercises.filter(ex => ex.difficulty === 'intermediate').length,
+      advanced: categoryExercises.filter(ex => ex.difficulty === 'advanced').length,
+      elite: categoryExercises.filter(ex => ex.difficulty === 'elite').length
+    };
+    return byDifficulty;
+  };
+
   const handleMarkComplete = (exerciseId: string) => {
     const newCompleted = new Set(completedExercises);
     if (newCompleted.has(exerciseId)) {
@@ -63,13 +74,13 @@ const CompactExerciseLibrary = () => {
   };
 
   return (
-    <div className="p-4 space-y-4 bg-background">
+    <div className="space-y-6 max-w-full">
       {/* Header */}
       <div className="text-center space-y-2">
-        <h1 className="text-2xl font-bold text-foreground tracking-tight">
+        <h1 className="text-3xl font-bold text-foreground tracking-tight">
           Exercise Library
         </h1>
-        <p className="text-sm text-muted-foreground">
+        <p className="text-muted-foreground max-w-2xl mx-auto">
           Complete calisthenics database with detailed anatomy and recovery information
         </p>
       </div>
@@ -90,47 +101,77 @@ const CompactExerciseLibrary = () => {
 
       {/* Category Tabs */}
       <Tabs value={selectedCategory} onValueChange={(value) => setSelectedCategory(value as ExerciseCategory)}>
-        <ScrollArea className="w-full">
-          <TabsList className="grid w-max grid-cols-7 mb-4 bg-background-secondary">
-            {categories.map((cat) => (
-              <TabsTrigger key={cat.id} value={cat.id} className="text-xs px-3 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
-                <span className="mr-1">{cat.emoji}</span>
-                {cat.name}
-              </TabsTrigger>
-            ))}
+        <div className="w-full overflow-x-auto">
+          <TabsList className="grid w-max grid-cols-7 mb-6 bg-card border">
+            {categories.map((cat) => {
+              const stats = getCategoryStats(cat.id);
+              const total = Object.values(stats).reduce((a, b) => a + b, 0);
+              return (
+                <TabsTrigger 
+                  key={cat.id} 
+                  value={cat.id} 
+                  className="text-xs px-4 py-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
+                >
+                  <div className="flex flex-col items-center space-y-1">
+                    <span>{cat.emoji}</span>
+                    <span className="font-medium">{cat.name}</span>
+                    <span className="text-xs opacity-70">{total} exercises</span>
+                  </div>
+                </TabsTrigger>
+              );
+            })}
           </TabsList>
-        </ScrollArea>
+        </div>
 
         {/* Difficulty Filter */}
-        <div className="flex gap-2 mb-4 overflow-x-auto">
-          {difficulties.map((diff) => (
-            <Button
-              key={diff.id}
-              variant={selectedDifficulty === diff.id ? "default" : "outline"}
-              size="sm"
-              onClick={() => setSelectedDifficulty(diff.id as DifficultyLevel | 'all')}
-              className={`text-xs whitespace-nowrap ${
-                selectedDifficulty === diff.id ? 'bg-primary text-primary-foreground' : 'clean-border'
-              }`}
-            >
-              {diff.name}
-            </Button>
-          ))}
+        <div className="flex gap-2 mb-6 overflow-x-auto pb-2">
+          {difficulties.map((diff) => {
+            const currentCategoryStats = getCategoryStats(selectedCategory);
+            const count = diff.id === 'all' 
+              ? Object.values(currentCategoryStats).reduce((a, b) => a + b, 0)
+              : currentCategoryStats[diff.id as keyof typeof currentCategoryStats] || 0;
+            
+            return (
+              <Button
+                key={diff.id}
+                variant={selectedDifficulty === diff.id ? "default" : "outline"}
+                size="sm"
+                onClick={() => setSelectedDifficulty(diff.id as DifficultyLevel | 'all')}
+                className={`text-xs whitespace-nowrap ${
+                  selectedDifficulty === diff.id ? 'bg-primary text-primary-foreground' : ''
+                }`}
+              >
+                {diff.name} ({count})
+              </Button>
+            );
+          })}
         </div>
 
         {categories.map((category) => (
           <TabsContent key={category.id} value={category.id} className="mt-0">
-            <ScrollArea className="h-[600px]">
-              <div className="space-y-3">
-                {getFilteredExercises().map((exercise) => (
-                  <DetailedExerciseCard
-                    key={exercise.id}
-                    exercise={exercise}
-                    onPlayVideo={setSelectedExercise}
-                    onMarkComplete={handleMarkComplete}
-                    isCompleted={completedExercises.has(exercise.id)}
-                  />
-                ))}
+            <ScrollArea className="h-[70vh]">
+              <div className="space-y-4 pr-4">
+                {getFilteredExercises().length > 0 ? (
+                  getFilteredExercises().map((exercise) => (
+                    <DetailedExerciseCard
+                      key={exercise.id}
+                      exercise={exercise}
+                      onPlayVideo={setSelectedExercise}
+                      onMarkComplete={handleMarkComplete}
+                      isCompleted={completedExercises.has(exercise.id)}
+                    />
+                  ))
+                ) : (
+                  <Card className="p-8 text-center">
+                    <div className="text-muted-foreground">
+                      <Activity className="h-12 w-12 mx-auto mb-4 opacity-50" />
+                      <p className="text-lg font-medium mb-2">No exercises found</p>
+                      <p className="text-sm">
+                        Try selecting a different difficulty level or check back later for new exercises.
+                      </p>
+                    </div>
+                  </Card>
+                )}
               </div>
             </ScrollArea>
           </TabsContent>

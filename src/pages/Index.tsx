@@ -1,64 +1,64 @@
 
+import { SidebarProvider } from "@/components/ui/sidebar";
+import { AppSidebar } from "@/components/AppSidebar";
+import { CompactDashboard } from "@/components/CompactDashboard";
+import { TrainingView } from "@/components/TrainingView";
+import { CompactExerciseLibrary } from "@/components/CompactExerciseLibrary";
+import { TimerView } from "@/components/TimerView";
+import { ProgressView } from "@/components/ProgressView";
+import { ThemeProvider } from "@/components/ThemeProvider";
+import { ThemeSelector } from "@/components/ThemeSelector";
 import { useState } from "react";
-import type { ViewType } from "@/types";
-
-// Import all view components
-import CompactDashboard from "@/components/CompactDashboard";
-import TrainingView from "@/components/TrainingView";
-import ProgressView from "@/components/ProgressView";
-import ExerciseLibrary from "@/components/ExerciseLibrary";
-import FoundationProgram from "@/components/FoundationProgram";
-import AdvancedWorkouts from "@/components/AdvancedWorkouts";
-import SkillMastery from "@/components/SkillMastery";
-import DisciplineLibrary from "@/components/DisciplineLibrary";
-import WeeklyPlan from "@/components/WeeklyPlan";
-import FileManager from "@/components/FileManager";
-import AIAssistant from "@/components/AIAssistant";
-import EnhancedExerciseLibrary from "@/components/EnhancedExerciseLibrary";
-import CompactExerciseLibrary from "@/components/CompactExerciseLibrary";
-import UpdatesTab from "@/components/UpdatesTab";
-import AgentTLC from "@/components/AgentTLC";
+import { SidebarTrigger } from "@/components/ui/sidebar";
 
 const Index = () => {
-  const [currentView, setCurrentView] = useState<ViewType>('dashboard');
+  const [activeView, setActiveView] = useState("dashboard");
 
   const renderView = () => {
-    switch (currentView) {
-      case 'dashboard':
-        return <CompactDashboard onNavigate={setCurrentView} currentView={currentView} />;
-      case 'training':
+    switch (activeView) {
+      case "training":
         return <TrainingView />;
-      case 'agent':
-        return <AgentTLC />;
-      case 'foundation':
-        return <FoundationProgram />;
-      case 'library':
-        return <ExerciseLibrary />;
-      case 'progress':
-        return <ProgressView />;
-      case 'skills':
-        return <SkillMastery />;
-      case 'discipline':
-        return <DisciplineLibrary />;
-      case 'plan':
-        return <WeeklyPlan />;
-      case 'files':
-        return <FileManager />;
-      case 'ai':
-        return <AIAssistant />;
-      case 'enhanced-library':
+      case "exercises":
         return <CompactExerciseLibrary />;
-      case 'updates':
-        return <UpdatesTab />;
+      case "timer":
+        return <TimerView />;
+      case "progress":
+        return <ProgressView />;
       default:
-        return <CompactDashboard onNavigate={setCurrentView} currentView={currentView} />;
+        return <CompactDashboard onNavigate={setActiveView} />;
     }
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      {renderView()}
-    </div>
+    <ThemeProvider>
+      <div className="min-h-screen bg-background">
+        <SidebarProvider>
+          <div className="flex min-h-screen w-full">
+            <AppSidebar onNavigate={setActiveView} activeView={activeView} />
+            
+            <div className="flex-1 flex flex-col overflow-hidden">
+              {/* Header */}
+              <header className="h-14 border-b border-border bg-card/50 backdrop-blur-sm sticky top-0 z-40">
+                <div className="flex items-center justify-between h-full px-4">
+                  <div className="flex items-center space-x-2">
+                    <SidebarTrigger className="text-muted-foreground hover:text-foreground" />
+                    <h1 className="text-xl font-bold text-foreground">Calisthenics Pro</h1>
+                  </div>
+                  <ThemeSelector />
+                </div>
+              </header>
+
+              {/* Main Content */}
+              <main className="flex-1 overflow-auto">
+                <div className="container max-w-7xl mx-auto p-4">
+                  {renderView()}
+                </div>
+              </main>
+            </div>
+          </div>
+        </SidebarProvider>
+      </div>
+    </ThemeProvider>
   );
 };
 

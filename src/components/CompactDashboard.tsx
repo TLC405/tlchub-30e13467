@@ -1,81 +1,118 @@
 
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
-import AppSidebar from "./AppSidebar";
-import DetailedWeatherWidget from "./DetailedWeatherWidget";
-import CompactStats from "./CompactStats";
-import CompactTrainingFocus from "./CompactTrainingFocus";
-import CompactQuickActions from "./CompactQuickActions";
-import ThemeSelector from "./ThemeSelector";
-import type { ViewType } from "@/types";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { CompactStats } from "./CompactStats";
+import { CompactTrainingFocus } from "./CompactTrainingFocus";
+import { CompactQuickActions } from "./CompactQuickActions";
+import { DetailedWeatherWidget } from "./DetailedWeatherWidget";
+import { 
+  Calendar,
+  Trophy,
+  Target,
+  TrendingUp,
+  ChevronRight
+} from "lucide-react";
 
 interface CompactDashboardProps {
-  onNavigate: (view: ViewType) => void;
-  currentView: ViewType;
+  onNavigate: (view: string) => void;
 }
 
-const CompactDashboard = ({ onNavigate, currentView }: CompactDashboardProps) => {
+export function CompactDashboard({ onNavigate }: CompactDashboardProps) {
   return (
-    <SidebarProvider>
-      <div className="min-h-screen flex w-full bg-background">
-        <AppSidebar onNavigate={onNavigate} currentView={currentView} />
-        
-        <div className="flex-1 flex flex-col">
-          {/* Top Header */}
-          <header className="h-14 flex items-center justify-between px-4 border-b border-border/60 bg-card/50 backdrop-blur-sm">
-            <div className="flex items-center gap-3">
-              <SidebarTrigger />
-              <div className="hidden sm:block">
-                <div className="text-lg font-bold bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
-                  CALIXTLC Dashboard
-                </div>
-              </div>
-            </div>
-            <ThemeSelector />
-          </header>
-
-          {/* Main Content */}
-          <main className="flex-1 p-4 overflow-auto">
-            <div className="max-w-6xl mx-auto space-y-6">
-              {/* Welcome Section */}
-              <div className="text-center space-y-2 py-4">
-                <h1 className="text-2xl font-bold text-foreground">
-                  Welcome Back, Athlete
-                </h1>
-                <p className="text-sm text-muted-foreground">
-                  Your calisthenics journey continues
-                </p>
-              </div>
-
-              {/* Weather Widget */}
-              <DetailedWeatherWidget />
-
-              {/* Stats Grid */}
-              <CompactStats />
-
-              {/* Training Focus */}
-              <CompactTrainingFocus onNavigate={onNavigate} />
-
-              {/* Quick Actions */}
-              <CompactQuickActions onNavigate={onNavigate} />
-
-              {/* Daily Insight */}
-              <div className="bg-gradient-to-br from-orange-50/50 to-yellow-50/50 dark:from-orange-950/20 dark:to-yellow-950/20 border border-orange-200/50 dark:border-orange-800/50 rounded-lg p-4">
-                <div className="flex items-center gap-3 mb-3">
-                  <span className="text-2xl">💡</span>
-                  <h3 className="font-bold text-orange-700 dark:text-orange-300">
-                    Daily Insight
-                  </h3>
-                </div>
-                <p className="text-sm text-muted-foreground italic leading-relaxed">
-                  "Consistency beats intensity. Small daily improvements compound into extraordinary results over time."
-                </p>
-              </div>
-            </div>
-          </main>
-        </div>
+    <div className="space-y-6 max-w-full">
+      {/* Welcome Section */}
+      <div className="text-center space-y-2 py-4">
+        <h1 className="text-3xl font-bold text-foreground">Welcome Back!</h1>
+        <p className="text-muted-foreground">Ready to push your limits today?</p>
       </div>
-    </SidebarProvider>
-  );
-};
 
-export default CompactDashboard;
+      {/* Top Row - Weather & Quick Stats */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <DetailedWeatherWidget />
+        <CompactStats />
+      </div>
+
+      {/* Middle Row - Training Focus */}
+      <CompactTrainingFocus onNavigate={onNavigate} />
+
+      {/* Bottom Row - Quick Actions & Today's Plan */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <CompactQuickActions onNavigate={onNavigate} />
+        
+        {/* Today's Plan */}
+        <Card className="bg-gradient-to-br from-primary/5 to-primary/10 border-primary/20">
+          <CardHeader className="pb-3">
+            <div className="flex items-center justify-between">
+              <CardTitle className="text-lg font-semibold flex items-center gap-2">
+                <Calendar className="h-5 w-5 text-primary" />
+                Today's Plan
+              </CardTitle>
+              <Badge variant="secondary" className="bg-primary/10 text-primary">
+                3 exercises
+              </Badge>
+            </div>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            <div className="space-y-2">
+              <div className="flex items-center justify-between p-3 bg-background/50 rounded-lg">
+                <div className="flex items-center gap-3">
+                  <div className="h-2 w-2 bg-primary rounded-full" />
+                  <span className="font-medium">Handstand Practice</span>
+                </div>
+                <span className="text-sm text-muted-foreground">15 min</span>
+              </div>
+              <div className="flex items-center justify-between p-3 bg-background/50 rounded-lg">
+                <div className="flex items-center gap-3">
+                  <div className="h-2 w-2 bg-orange-500 rounded-full" />
+                  <span className="font-medium">Pull-up Progression</span>
+                </div>
+                <span className="text-sm text-muted-foreground">20 min</span>
+              </div>
+              <div className="flex items-center justify-between p-3 bg-background/50 rounded-lg">
+                <div className="flex items-center gap-3">
+                  <div className="h-2 w-2 bg-green-500 rounded-full" />
+                  <span className="font-medium">Core Strengthening</span>
+                </div>
+                <span className="text-sm text-muted-foreground">10 min</span>
+              </div>
+            </div>
+            <Button 
+              onClick={() => onNavigate("training")}
+              className="w-full bg-primary hover:bg-primary/90"
+            >
+              Start Today's Workout
+              <ChevronRight className="ml-2 h-4 w-4" />
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Achievement Highlights */}
+      <Card className="bg-gradient-to-r from-amber-50 to-orange-50 dark:from-amber-950/20 dark:to-orange-950/20 border-amber-200 dark:border-amber-800">
+        <CardHeader className="pb-3">
+          <CardTitle className="text-lg font-semibold flex items-center gap-2">
+            <Trophy className="h-5 w-5 text-amber-600" />
+            Recent Achievements
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="text-center p-3 bg-background/50 rounded-lg">
+              <div className="text-2xl font-bold text-foreground">7</div>
+              <div className="text-sm text-muted-foreground">Day Streak</div>
+            </div>
+            <div className="text-center p-3 bg-background/50 rounded-lg">
+              <div className="text-2xl font-bold text-foreground">12</div>
+              <div className="text-sm text-muted-foreground">New PRs</div>
+            </div>
+            <div className="text-center p-3 bg-background/50 rounded-lg">
+              <div className="text-2xl font-bold text-foreground">85%</div>
+              <div className="text-sm text-muted-foreground">Goal Progress</div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
