@@ -4,7 +4,8 @@ import {
   Dumbbell,
   BookOpen,
   Timer,
-  TrendingUp,
+  Calendar,
+  Info,
 } from "lucide-react";
 
 interface BottomNavBarProps {
@@ -17,7 +18,8 @@ const menuItems = [
   { id: "training", title: "Training", icon: Dumbbell },
   { id: "exercises", title: "Exercises", icon: BookOpen },
   { id: "timer", title: "Timer", icon: Timer },
-  { id: "calendar", title: "Calendar", icon: TrendingUp },
+  { id: "calendar", title: "Calendar", icon: Calendar },
+  { id: "updates", title: "Updates", icon: Info },
 ];
 
 export function BottomNavBar({ onNavigate, activeView }: BottomNavBarProps) {

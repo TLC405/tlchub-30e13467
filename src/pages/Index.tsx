@@ -6,6 +6,7 @@ import CompactExerciseLibrary from "@/components/CompactExerciseLibrary";
 import TimerView from "@/components/TimerView";
 import ProgressView from "@/components/ProgressView";
 import WorkoutCalendar from "@/components/WorkoutCalendar";
+import UpdatesTab from "@/components/UpdatesTab";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import ThemeSelector from "@/components/ThemeSelector";
 import { BottomNavBar } from "@/components/BottomNavBar";
@@ -32,6 +33,16 @@ const Index = () => {
               <p className="text-muted-foreground">Track and log your daily workouts</p>
             </div>
             <WorkoutCalendar />
+          </div>
+        );
+      case "updates":
+        return (
+          <div className="p-6">
+            <div className="space-y-2 mb-6">
+              <h1 className="text-3xl font-bold text-card-foreground">App Updates</h1>
+              <p className="text-muted-foreground">Latest features and improvements</p>
+            </div>
+            <UpdatesTab />
           </div>
         );
       default:
