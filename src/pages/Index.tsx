@@ -5,6 +5,7 @@ import TrainingView from "@/components/TrainingView";
 import CompactExerciseLibrary from "@/components/CompactExerciseLibrary";
 import TimerView from "@/components/TimerView";
 import ProgressView from "@/components/ProgressView";
+import WorkoutCalendar from "@/components/WorkoutCalendar";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import ThemeSelector from "@/components/ThemeSelector";
 import { BottomNavBar } from "@/components/BottomNavBar";
@@ -23,6 +24,16 @@ const Index = () => {
         return <TimerView />;
       case "progress":
         return <ProgressView />;
+      case "calendar":
+        return (
+          <div className="p-6">
+            <div className="space-y-2 mb-6">
+              <h1 className="text-3xl font-bold text-card-foreground">Workout Calendar</h1>
+              <p className="text-muted-foreground">Track and log your daily workouts</p>
+            </div>
+            <WorkoutCalendar />
+          </div>
+        );
       default:
         return <CompactDashboard onNavigate={setActiveView} />;
     }

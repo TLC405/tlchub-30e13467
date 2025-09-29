@@ -121,8 +121,9 @@ const TrainingView = () => {
             <Button 
               variant="outline" 
               onClick={() => setSelectedPillar(null)}
+              className="hover:bg-primary/10 border-primary/20"
             >
-              ← Back
+              ← Back to Training
             </Button>
             <div className="flex items-center space-x-3">
               <div className="h-12 w-12 primary-gradient rounded-lg flex items-center justify-center gold-shadow">

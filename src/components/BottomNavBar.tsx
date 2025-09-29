@@ -17,7 +17,7 @@ const menuItems = [
   { id: "training", title: "Training", icon: Dumbbell },
   { id: "exercises", title: "Exercises", icon: BookOpen },
   { id: "timer", title: "Timer", icon: Timer },
-  { id: "progress", title: "Progress", icon: TrendingUp },
+  { id: "calendar", title: "Calendar", icon: TrendingUp },
 ];
 
 export function BottomNavBar({ onNavigate, activeView }: BottomNavBarProps) {
