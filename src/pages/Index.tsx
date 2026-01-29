@@ -1,4 +1,3 @@
-
 import React from "react";
 import { CompactDashboard } from "@/components/CompactDashboard";
 import TrainingView from "@/components/TrainingView";
@@ -7,6 +6,7 @@ import TimerView from "@/components/TimerView";
 import ProgressView from "@/components/ProgressView";
 import WorkoutCalendar from "@/components/WorkoutCalendar";
 import UpdatesTab from "@/components/UpdatesTab";
+import SkillTreeView from "@/components/SkillTreeView";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import ThemeSelector from "@/components/ThemeSelector";
 import { BottomNavBar } from "@/components/BottomNavBar";
@@ -19,6 +19,8 @@ const Index = () => {
     switch (activeView) {
       case "training":
         return <TrainingView />;
+      case "skills":
+        return <SkillTreeView />;
       case "exercises":
         return <CompactExerciseLibrary />;
       case "timer":

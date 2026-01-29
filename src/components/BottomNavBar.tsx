@@ -1,4 +1,3 @@
-
 import { 
   Home,
   Dumbbell,
@@ -6,6 +5,7 @@ import {
   Timer,
   Calendar,
   Info,
+  GitBranch,
 } from "lucide-react";
 
 interface BottomNavBarProps {
@@ -16,6 +16,7 @@ interface BottomNavBarProps {
 const menuItems = [
   { id: "dashboard", title: "Home", icon: Home },
   { id: "training", title: "Training", icon: Dumbbell },
+  { id: "skills", title: "Skills", icon: GitBranch },
   { id: "exercises", title: "Exercises", icon: BookOpen },
   { id: "timer", title: "Timer", icon: Timer },
   { id: "calendar", title: "Calendar", icon: Calendar },
