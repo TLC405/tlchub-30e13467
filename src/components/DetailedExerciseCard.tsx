@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { 
   Play, 
   ChevronDown, 
@@ -13,9 +14,11 @@ import {
   Zap,
   Target,
   Activity,
-  AlertCircle
+  AlertCircle,
+  BookOpen
 } from "lucide-react";
 import type { Exercise } from "@/types";
+import LearnTab from "@/components/learn/LearnTab";
 
 interface DetailedExerciseCardProps {
   exercise: Exercise;
@@ -31,6 +34,7 @@ const DetailedExerciseCard = ({
   isCompleted 
 }: DetailedExerciseCardProps) => {
   const [showDetails, setShowDetails] = useState(false);
+  const [activeTab, setActiveTab] = useState("details");
 
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
@@ -97,131 +101,151 @@ const DetailedExerciseCard = ({
       <Collapsible open={showDetails} onOpenChange={setShowDetails}>
         <CollapsibleTrigger asChild>
           <Button variant="ghost" className="w-full justify-between px-6">
-            <span className="text-sm font-medium">Exercise Details</span>
+            <span className="text-sm font-medium">More Details</span>
             <ChevronDown className={`h-4 w-4 transition-transform ${showDetails ? 'rotate-180' : ''}`} />
           </Button>
         </CollapsibleTrigger>
         
         <CollapsibleContent>
           <CardContent className="pt-0">
-            <div className="space-y-4">
-              {/* Muscles Worked */}
-              {exercise.musclesWorked && (
-                <div>
-                  <h4 className="text-sm font-semibold text-foreground mb-2 flex items-center gap-1">
-                    <Activity className="h-3 w-3" />
-                    Muscles Worked
-                  </h4>
-                  <div className="space-y-2">
-                    <div>
-                      <p className="text-xs font-medium text-muted-foreground mb-1">Primary:</p>
-                      <div className="flex flex-wrap gap-1">
-                        {exercise.musclesWorked.primary.map((muscle, idx) => (
-                          <Badge key={idx} variant="default" className="text-xs">
-                            {muscle}
-                          </Badge>
-                        ))}
+            <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+              <TabsList className="grid w-full grid-cols-2 mb-4">
+                <TabsTrigger value="details" className="text-xs">
+                  <Activity className="h-3 w-3 mr-1" />
+                  Details
+                </TabsTrigger>
+                <TabsTrigger value="learn" className="text-xs">
+                  <BookOpen className="h-3 w-3 mr-1" />
+                  Learn
+                </TabsTrigger>
+              </TabsList>
+
+              <TabsContent value="details" className="space-y-4">
+                {/* Muscles Worked */}
+                {exercise.musclesWorked && (
+                  <div>
+                    <h4 className="text-sm font-semibold text-foreground mb-2 flex items-center gap-1">
+                      <Activity className="h-3 w-3" />
+                      Muscles Worked
+                    </h4>
+                    <div className="space-y-2">
+                      <div>
+                        <p className="text-xs font-medium text-muted-foreground mb-1">Primary:</p>
+                        <div className="flex flex-wrap gap-1">
+                          {exercise.musclesWorked.primary.map((muscle, idx) => (
+                            <Badge key={idx} variant="default" className="text-xs">
+                              {muscle}
+                            </Badge>
+                          ))}
+                        </div>
                       </div>
-                    </div>
-                    <div>
-                      <p className="text-xs font-medium text-muted-foreground mb-1">Secondary:</p>
-                      <div className="flex flex-wrap gap-1">
-                        {exercise.musclesWorked.secondary.map((muscle, idx) => (
-                          <Badge key={idx} variant="secondary" className="text-xs">
-                            {muscle}
-                          </Badge>
-                        ))}
+                      <div>
+                        <p className="text-xs font-medium text-muted-foreground mb-1">Secondary:</p>
+                        <div className="flex flex-wrap gap-1">
+                          {exercise.musclesWorked.secondary.map((muscle, idx) => (
+                            <Badge key={idx} variant="secondary" className="text-xs">
+                              {muscle}
+                            </Badge>
+                          ))}
+                        </div>
                       </div>
-                    </div>
-                    <div>
-                      <p className="text-xs font-medium text-muted-foreground mb-1">Stabilizers:</p>
-                      <div className="flex flex-wrap gap-1">
-                        {exercise.musclesWorked.stabilizers.map((muscle, idx) => (
-                          <Badge key={idx} variant="outline" className="text-xs">
-                            {muscle}
-                          </Badge>
-                        ))}
+                      <div>
+                        <p className="text-xs font-medium text-muted-foreground mb-1">Stabilizers:</p>
+                        <div className="flex flex-wrap gap-1">
+                          {exercise.musclesWorked.stabilizers.map((muscle, idx) => (
+                            <Badge key={idx} variant="outline" className="text-xs">
+                              {muscle}
+                            </Badge>
+                          ))}
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              )}
+                )}
 
-              <Separator />
+                <Separator />
 
-              {/* Tendons & Recovery */}
-              {(exercise.tendonsInvolved || exercise.recoveryTime) && (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {exercise.tendonsInvolved && (
-                    <div>
-                      <h4 className="text-sm font-semibold text-foreground mb-2 flex items-center gap-1">
-                        <Zap className="h-3 w-3" />
-                        Tendons Involved
-                      </h4>
-                      <div className="flex flex-wrap gap-1">
-                        {exercise.tendonsInvolved.map((tendon, idx) => (
-                          <Badge key={idx} variant="outline" className="text-xs warning-gradient text-warning-foreground">
-                            {tendon}
-                          </Badge>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
-                  {exercise.recoveryTime && (
-                    <div>
-                      <h4 className="text-sm font-semibold text-foreground mb-2 flex items-center gap-1">
-                        <Clock className="h-3 w-3" />
-                        Recovery Times
-                      </h4>
-                      <div className="space-y-1 text-xs">
-                        <div className="flex justify-between">
-                          <span className="text-muted-foreground">Muscle:</span>
-                          <span className="text-foreground">{exercise.recoveryTime.muscle}</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-muted-foreground">Tendon:</span>
-                          <span className="text-foreground">{exercise.recoveryTime.tendon}</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-muted-foreground">Nervous:</span>
-                          <span className="text-foreground">{exercise.recoveryTime.nervous}</span>
+                {/* Tendons & Recovery */}
+                {(exercise.tendonsInvolved || exercise.recoveryTime) && (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {exercise.tendonsInvolved && (
+                      <div>
+                        <h4 className="text-sm font-semibold text-foreground mb-2 flex items-center gap-1">
+                          <Zap className="h-3 w-3" />
+                          Tendons Involved
+                        </h4>
+                        <div className="flex flex-wrap gap-1">
+                          {exercise.tendonsInvolved.map((tendon, idx) => (
+                            <Badge key={idx} variant="outline" className="text-xs warning-gradient text-warning-foreground">
+                              {tendon}
+                            </Badge>
+                          ))}
                         </div>
                       </div>
-                    </div>
-                  )}
-                </div>
-              )}
+                    )}
 
-              <Separator />
+                    {exercise.recoveryTime && (
+                      <div>
+                        <h4 className="text-sm font-semibold text-foreground mb-2 flex items-center gap-1">
+                          <Clock className="h-3 w-3" />
+                          Recovery Times
+                        </h4>
+                        <div className="space-y-1 text-xs">
+                          <div className="flex justify-between">
+                            <span className="text-muted-foreground">Muscle:</span>
+                            <span className="text-foreground">{exercise.recoveryTime.muscle}</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-muted-foreground">Tendon:</span>
+                            <span className="text-foreground">{exercise.recoveryTime.tendon}</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-muted-foreground">Nervous:</span>
+                            <span className="text-foreground">{exercise.recoveryTime.nervous}</span>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
 
-              {/* Form Cues */}
-              {exercise.formCues && (
-                <div>
-                  <h4 className="text-sm font-semibold text-foreground mb-2 flex items-center gap-1">
-                    <AlertCircle className="h-3 w-3" />
-                    Form Cues
-                  </h4>
-                  <ul className="space-y-1">
-                    {exercise.formCues.map((cue, idx) => (
-                      <li key={idx} className="text-xs text-muted-foreground flex items-start gap-2">
-                        <span className="text-accent-foreground">•</span>
-                        {cue}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
+                <Separator />
 
-              {/* Progression */}
-              {exercise.progression && (
-                <div className="bg-background-secondary p-3 rounded-lg">
-                  <p className="text-xs font-medium text-foreground">
-                    Next Level: <span className="text-primary">{exercise.progression}</span>
-                  </p>
-                </div>
-              )}
-            </div>
+                {/* Form Cues */}
+                {exercise.formCues && (
+                  <div>
+                    <h4 className="text-sm font-semibold text-foreground mb-2 flex items-center gap-1">
+                      <AlertCircle className="h-3 w-3" />
+                      Form Cues
+                    </h4>
+                    <ul className="space-y-1">
+                      {exercise.formCues.map((cue, idx) => (
+                        <li key={idx} className="text-xs text-muted-foreground flex items-start gap-2">
+                          <span className="text-accent-foreground">•</span>
+                          {cue}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {/* Progression */}
+                {exercise.progression && (
+                  <div className="bg-background-secondary p-3 rounded-lg">
+                    <p className="text-xs font-medium text-foreground">
+                      Next Level: <span className="text-primary">{exercise.progression}</span>
+                    </p>
+                  </div>
+                )}
+              </TabsContent>
+
+              <TabsContent value="learn">
+                <LearnTab 
+                  exerciseName={exercise.name}
+                  difficulty={exercise.difficulty}
+                />
+              </TabsContent>
+            </Tabs>
           </CardContent>
         </CollapsibleContent>
       </Collapsible>

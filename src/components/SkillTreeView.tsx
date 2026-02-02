@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
 import {
   ChevronLeft,
@@ -24,9 +25,11 @@ import {
   Minus,
   TrendingDown,
   AlertCircle,
-  Info
+  Info,
+  BookOpen
 } from "lucide-react";
 import { skillProgressions, type SkillTree, type ProgressionStep } from "@/data/skillProgressions";
+import LearnTab from "@/components/learn/LearnTab";
 
 // Local storage key for progress
 const PROGRESS_KEY = 'calisthenics_skill_progress';
@@ -244,124 +247,146 @@ const SkillTreeView = () => {
           <CardContent className="space-y-6">
             <p className="text-muted-foreground">{selectedStep.description}</p>
 
-            {/* Training Parameters */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-              <div className="bg-card border rounded-lg p-3 text-center">
-                <p className="text-xs text-muted-foreground mb-1">Sets</p>
-                <p className="font-bold text-lg">{selectedStep.sets}</p>
-              </div>
-              <div className="bg-card border rounded-lg p-3 text-center">
-                <p className="text-xs text-muted-foreground mb-1">Reps</p>
-                <p className="font-bold text-lg">{selectedStep.reps}</p>
-              </div>
-              <div className="bg-card border rounded-lg p-3 text-center">
-                <p className="text-xs text-muted-foreground mb-1">Rest</p>
-                <p className="font-bold text-lg">{selectedStep.restTime}</p>
-              </div>
-              {selectedStep.holdTime && (
-                <div className="bg-card border rounded-lg p-3 text-center">
-                  <p className="text-xs text-muted-foreground mb-1">Hold</p>
-                  <p className="font-bold text-lg">{selectedStep.holdTime}</p>
+            <Tabs defaultValue="training" className="w-full">
+              <TabsList className="grid w-full grid-cols-2 mb-4">
+                <TabsTrigger value="training" className="text-xs">
+                  <Target className="h-3 w-3 mr-1" />
+                  Training
+                </TabsTrigger>
+                <TabsTrigger value="learn" className="text-xs">
+                  <BookOpen className="h-3 w-3 mr-1" />
+                  Learn
+                </TabsTrigger>
+              </TabsList>
+
+              <TabsContent value="training" className="space-y-6">
+                {/* Training Parameters */}
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                  <div className="bg-card border rounded-lg p-3 text-center">
+                    <p className="text-xs text-muted-foreground mb-1">Sets</p>
+                    <p className="font-bold text-lg">{selectedStep.sets}</p>
+                  </div>
+                  <div className="bg-card border rounded-lg p-3 text-center">
+                    <p className="text-xs text-muted-foreground mb-1">Reps</p>
+                    <p className="font-bold text-lg">{selectedStep.reps}</p>
+                  </div>
+                  <div className="bg-card border rounded-lg p-3 text-center">
+                    <p className="text-xs text-muted-foreground mb-1">Rest</p>
+                    <p className="font-bold text-lg">{selectedStep.restTime}</p>
+                  </div>
+                  {selectedStep.holdTime && (
+                    <div className="bg-card border rounded-lg p-3 text-center">
+                      <p className="text-xs text-muted-foreground mb-1">Hold</p>
+                      <p className="font-bold text-lg">{selectedStep.holdTime}</p>
+                    </div>
+                  )}
                 </div>
-              )}
-            </div>
 
-            {/* Form Cues */}
-            <div className="space-y-2">
-              <h4 className="font-semibold flex items-center gap-2">
-                <CheckCircle className="h-4 w-4 text-green-500" />
-                Form Cues
-              </h4>
-              <ul className="space-y-1">
-                {selectedStep.formCues.map((cue, i) => (
-                  <li key={i} className="text-sm text-muted-foreground flex items-start gap-2">
-                    <span className="text-green-500 mt-1">✓</span>
-                    {cue}
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Common Mistakes */}
-            <div className="space-y-2">
-              <h4 className="font-semibold flex items-center gap-2">
-                <AlertCircle className="h-4 w-4 text-red-500" />
-                Common Mistakes to Avoid
-              </h4>
-              <ul className="space-y-1">
-                {selectedStep.commonMistakes.map((mistake, i) => (
-                  <li key={i} className="text-sm text-muted-foreground flex items-start gap-2">
-                    <span className="text-red-500 mt-1">✗</span>
-                    {mistake}
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Muscles Worked */}
-            <div className="space-y-2">
-              <h4 className="font-semibold flex items-center gap-2">
-                <Dumbbell className="h-4 w-4" />
-                Muscles Worked
-              </h4>
-              <div className="space-y-2">
-                <div>
-                  <p className="text-xs text-muted-foreground mb-1">Primary</p>
-                  <div className="flex flex-wrap gap-1">
-                    {selectedStep.musclesWorked.primary.map((muscle, i) => (
-                      <Badge key={i} variant="secondary" className="text-xs">{muscle}</Badge>
+                {/* Form Cues */}
+                <div className="space-y-2">
+                  <h4 className="font-semibold flex items-center gap-2">
+                    <CheckCircle className="h-4 w-4 text-green-500" />
+                    Form Cues
+                  </h4>
+                  <ul className="space-y-1">
+                    {selectedStep.formCues.map((cue, i) => (
+                      <li key={i} className="text-sm text-muted-foreground flex items-start gap-2">
+                        <span className="text-green-500 mt-1">✓</span>
+                        {cue}
+                      </li>
                     ))}
+                  </ul>
+                </div>
+
+                {/* Common Mistakes */}
+                <div className="space-y-2">
+                  <h4 className="font-semibold flex items-center gap-2">
+                    <AlertCircle className="h-4 w-4 text-red-500" />
+                    Common Mistakes to Avoid
+                  </h4>
+                  <ul className="space-y-1">
+                    {selectedStep.commonMistakes.map((mistake, i) => (
+                      <li key={i} className="text-sm text-muted-foreground flex items-start gap-2">
+                        <span className="text-red-500 mt-1">✗</span>
+                        {mistake}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* Muscles Worked */}
+                <div className="space-y-2">
+                  <h4 className="font-semibold flex items-center gap-2">
+                    <Dumbbell className="h-4 w-4" />
+                    Muscles Worked
+                  </h4>
+                  <div className="space-y-2">
+                    <div>
+                      <p className="text-xs text-muted-foreground mb-1">Primary</p>
+                      <div className="flex flex-wrap gap-1">
+                        {selectedStep.musclesWorked.primary.map((muscle, i) => (
+                          <Badge key={i} variant="secondary" className="text-xs">{muscle}</Badge>
+                        ))}
+                      </div>
+                    </div>
+                    <div>
+                      <p className="text-xs text-muted-foreground mb-1">Secondary</p>
+                      <div className="flex flex-wrap gap-1">
+                        {selectedStep.musclesWorked.secondary.map((muscle, i) => (
+                          <Badge key={i} variant="outline" className="text-xs">{muscle}</Badge>
+                        ))}
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <div>
-                  <p className="text-xs text-muted-foreground mb-1">Secondary</p>
-                  <div className="flex flex-wrap gap-1">
-                    {selectedStep.musclesWorked.secondary.map((muscle, i) => (
-                      <Badge key={i} variant="outline" className="text-xs">{muscle}</Badge>
-                    ))}
+
+                {/* Prerequisites */}
+                {selectedStep.prerequisites.length > 0 && (
+                  <div className="space-y-2">
+                    <h4 className="font-semibold flex items-center gap-2">
+                      <Lock className="h-4 w-4" />
+                      Prerequisites
+                    </h4>
+                    <div className="flex flex-wrap gap-2">
+                      {selectedStep.prerequisites.map((prereqId) => {
+                        const prereq = selectedTree.progressions.find(p => p.id === prereqId);
+                        const prereqCompleted = isStepCompleted(selectedTree.id, prereqId);
+                        return prereq ? (
+                          <Badge 
+                            key={prereqId} 
+                            variant={prereqCompleted ? "default" : "outline"}
+                            className={prereqCompleted ? "bg-green-600" : ""}
+                          >
+                            {prereqCompleted && <CheckCircle className="h-3 w-3 mr-1" />}
+                            {prereq.name}
+                          </Badge>
+                        ) : null;
+                      })}
+                    </div>
                   </div>
-                </div>
-              </div>
-            </div>
+                )}
 
-            {/* Prerequisites */}
-            {selectedStep.prerequisites.length > 0 && (
-              <div className="space-y-2">
-                <h4 className="font-semibold flex items-center gap-2">
-                  <Lock className="h-4 w-4" />
-                  Prerequisites
-                </h4>
-                <div className="flex flex-wrap gap-2">
-                  {selectedStep.prerequisites.map((prereqId) => {
-                    const prereq = selectedTree.progressions.find(p => p.id === prereqId);
-                    const prereqCompleted = isStepCompleted(selectedTree.id, prereqId);
-                    return prereq ? (
-                      <Badge 
-                        key={prereqId} 
-                        variant={prereqCompleted ? "default" : "outline"}
-                        className={prereqCompleted ? "bg-green-600" : ""}
-                      >
-                        {prereqCompleted && <CheckCircle className="h-3 w-3 mr-1" />}
-                        {prereq.name}
-                      </Badge>
-                    ) : null;
-                  })}
-                </div>
-              </div>
-            )}
+                {/* Next Progression */}
+                {selectedStep.nextProgression && (
+                  <div className="space-y-2">
+                    <h4 className="font-semibold flex items-center gap-2">
+                      <ChevronRight className="h-4 w-4" />
+                      Next Progression
+                    </h4>
+                    <Badge variant="outline" className="text-sm">
+                      {selectedTree.progressions.find(p => p.id === selectedStep.nextProgression)?.name}
+                    </Badge>
+                  </div>
+                )}
+              </TabsContent>
 
-            {/* Next Progression */}
-            {selectedStep.nextProgression && (
-              <div className="space-y-2">
-                <h4 className="font-semibold flex items-center gap-2">
-                  <ChevronRight className="h-4 w-4" />
-                  Next Progression
-                </h4>
-                <Badge variant="outline" className="text-sm">
-                  {selectedTree.progressions.find(p => p.id === selectedStep.nextProgression)?.name}
-                </Badge>
-              </div>
-            )}
+              <TabsContent value="learn">
+                <LearnTab 
+                  exerciseName={selectedStep.name}
+                  difficulty={selectedStep.level}
+                />
+              </TabsContent>
+            </Tabs>
 
             {/* Action Button */}
             <Button 
