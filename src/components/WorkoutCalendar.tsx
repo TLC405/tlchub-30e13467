@@ -76,7 +76,7 @@ const WorkoutCalendar = () => {
     return workouts.some(workout => isSameDay(workout.date, date));
   };
 
-  const handleAddWorkout = () => {
+  const handleAddWorkout = async () => {
     if (!newWorkout.exercises.trim()) {
       toast({
         title: "Error",
@@ -98,6 +98,29 @@ const WorkoutCalendar = () => {
     setWorkouts(prev => [...prev, workout]);
     setNewWorkout({ exercises: "", duration: "", notes: "" });
     setIsDialogOpen(false);
+
+    // Show learn bite toast after logging
+    const { showLearnBiteToast } = await import('@/components/learn/LearnBiteToast');
+    const { principlesMap } = await import('@/data/learningPrinciples');
+    
+    // Use default principles for logged exercises
+    const defaultSlugs = ['distributed_practice', 'external_focus', 'feedback_dosing'];
+    
+    // Show a learn bite for the first exercise logged
+    if (workout.exercises.length > 0) {
+      showLearnBiteToast(
+        workout.id,
+        workout.exercises[0],
+        defaultSlugs,
+        (id, slugs) => {
+          const key = `learn_rotation_${id}`;
+          const lastIndex = parseInt(localStorage.getItem(key) || '0', 10);
+          const nextIndex = (lastIndex + 1) % slugs.length;
+          localStorage.setItem(key, nextIndex.toString());
+          return principlesMap[slugs[nextIndex]];
+        }
+      );
+    }
 
     toast({
       title: "Workout Logged! 💪",
