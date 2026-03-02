@@ -1,4 +1,3 @@
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -15,197 +14,114 @@ import {
 const UpdatesTab = () => {
   const updates: AppUpdate[] = [
     {
-      id: "v2.1.0",
-      version: "2.1.0",
-      date: new Date("2025-01-28"),
-      title: "Clean Design & Enhanced Exercise Details",
-      description: "Complete UI redesign with white/black theme, detailed muscle anatomy, tendon involvement, and recovery times for each exercise",
+      id: "v3.0.0",
+      version: "3.0.0",
+      date: new Date("2026-03-02"),
+      title: "CONTROL by TLC — Full Rebrand",
+      description: "Complete transformation to brutalist design system, STACKED training cycle, Learn Mode with motor-learning research, Integrity blocks, and skill path navigation.",
       type: "feature"
     },
     {
-      id: "v2.0.0",
-      version: "2.0.0",
-      date: new Date("2025-01-28"),
-      title: "Major CALIXTLC Transformation",
-      description: "Complete app overhaul with advanced calisthenics database, video integration, and comprehensive features",
+      id: "learn-mode",
+      version: "3.0.0",
+      date: new Date("2026-03-02"),
+      title: "Learn Mode Integration",
+      description: "Research-backed coaching layer with 8 motor-learning principles, learn cards, and post-workout learn bites.",
       type: "feature"
     },
     {
-      id: "exercise-anatomy",
-      version: "2.1.0",
-      date: new Date("2025-01-28"),
-      title: "Detailed Exercise Anatomy",
-      description: "Added comprehensive muscle groups, tendon involvement, and specific recovery times for optimal training planning",
+      id: "stacked-cycle",
+      version: "3.0.0",
+      date: new Date("2026-03-02"),
+      title: "STACKED Training Cycle",
+      description: "4-day auto-rotating training cycle: Leverage, Pull+Grip, Inversions, Legs+Mobility — plus optional skill play.",
       type: "feature"
     },
     {
-      id: "clean-design",
-      version: "2.1.0",
-      date: new Date("2025-01-28"),
-      title: "Clean White/Black Design System",
-      description: "Professional design overhaul with clean white backgrounds, black outlines, and premium shadows throughout",
+      id: "integrity-blocks",
+      version: "3.0.0",
+      date: new Date("2026-03-02"),
+      title: "Integrity Blocks",
+      description: "Standalone mobility and yoga sequences: wrist prep, thoracic mobility, hip opening, pancake progression, ankle work.",
+      type: "feature"
+    },
+    {
+      id: "brutalist-design",
+      version: "3.0.0",
+      date: new Date("2026-03-02"),
+      title: "Brutalist Design System",
+      description: "Clean newspaper typography, 3px ink borders, 24px radius, and flat premium shadows throughout.",
       type: "improvement"
     },
     {
-      id: "exercise-db",
-      version: "2.0.0",
-      date: new Date("2025-01-28"),
-      title: "Advanced Exercise Database",
-      description: "Added 30+ elite calisthenics moves including advanced progressions and flow combinations",
+      id: "non-negotiables",
+      version: "3.0.0",
+      date: new Date("2026-03-02"),
+      title: "Global Non-Negotiables",
+      description: "Ribs Down, Glutes 30%, Shoulders Tall, Active Legs — persistent coaching cues on every screen.",
       type: "feature"
     },
-    {
-      id: "video-integration",
-      version: "2.0.0", 
-      date: new Date("2025-01-28"),
-      title: "YouTube Video Player Integration",
-      description: "Embedded video tutorials for every exercise with series support and progress tracking",
-      type: "feature"
-    },
-    {
-      id: "weather-location",
-      version: "2.0.0",
-      date: new Date("2025-01-28"), 
-      title: "Weather & Location Services",
-      description: "Real-time weather conditions, workout suitability recommendations, and GPS location detection",
-      type: "feature"
-    },
-    {
-      id: "achievement-system",
-      version: "2.0.0",
-      date: new Date("2025-01-28"),
-      title: "Achievement System", 
-      description: "Motivational achievement system with daily completion tracking and streak counters",
-      type: "feature"
-    },
-    {
-      id: "mobility-yoga",
-      version: "2.0.0",
-      date: new Date("2025-01-28"),
-      title: "Yoga & Mobility Integration",
-      description: "Complete yoga flow sequences, mobility exercises, and flexibility progression tracking",
-      type: "feature"
-    },
-    {
-      id: "swimming-cardio",
-      version: "2.0.0",
-      date: new Date("2025-01-28"),
-      title: "Swimming & Cardio Tracking",
-      description: "Swimming lap counter, cardio workout library, and cross-training metrics",
-      type: "feature"
-    },
-    {
-      id: "compact-ui",
-      version: "2.0.0", 
-      date: new Date("2025-01-28"),
-      title: "Compact UI & Better Navigation",
-      description: "Redesigned interface with tabbed navigation, collapsible sections, and optimized mobile experience",
-      type: "improvement"
-    },
-    {
-      id: "architecture-polish",
-      version: "2.0.0",
-      date: new Date("2025-01-28"),
-      title: "Architecture & Code Quality", 
-      description: "Enhanced TypeScript definitions, improved state management, and better component organization",
-      type: "improvement"
-    }
   ];
 
   const getUpdateIcon = (type: string) => {
     switch (type) {
-      case 'feature':
-        return <Star className="h-4 w-4 text-success" />;
-      case 'improvement':
-        return <Zap className="h-4 w-4 text-info" />;
-      case 'bugfix':
-        return <Bug className="h-4 w-4 text-destructive" />;
-      default:
-        return <Wrench className="h-4 w-4 text-muted-foreground" />;
-    }
-  };
-
-  const getBadgeColor = (type: string) => {
-    switch (type) {
-      case 'feature':
-        return 'bg-success text-success-foreground';
-      case 'improvement': 
-        return 'bg-info text-info-foreground';
-      case 'bugfix':
-        return 'bg-destructive text-destructive-foreground';
-      default:
-        return 'bg-muted text-muted-foreground';
+      case 'feature': return <Star className="h-4 w-4 text-primary" />;
+      case 'improvement': return <Zap className="h-4 w-4 text-muted-foreground" />;
+      case 'bugfix': return <Bug className="h-4 w-4 text-destructive" />;
+      default: return <Wrench className="h-4 w-4 text-muted-foreground" />;
     }
   };
 
   const formatDate = (date: Date) => {
-    return date.toLocaleDateString('en-US', { 
-      month: 'short', 
-      day: 'numeric', 
-      year: 'numeric' 
-    });
+    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
   };
 
   return (
-    <div className="p-3 space-y-4 mobile-safe-area">
-      {/* Header */}
-      <div className="text-center space-y-1 py-3">
-        <div className="text-2xl font-black text-primary tracking-wider">
-          UPDATE LOG
-        </div>
-        <div className="text-xs font-medium text-muted-foreground tracking-wide">
-          [ SYSTEM UPDATES & IMPROVEMENTS ]
-        </div>
+    <div className="space-y-6">
+      <div className="text-center py-4 space-y-2">
+        <h1 className="font-serif text-3xl font-black text-foreground tracking-tight">
+          Updates
+        </h1>
+        <p className="text-sm text-muted-foreground">System changelog</p>
       </div>
 
-      {/* Version Summary */}
-      <Card className="bg-card border border-primary">
-        <CardContent className="p-3">
-          <div className="flex items-center space-x-3 mb-2">
-            <CheckCircle className="h-5 w-5 text-success" />
+      <Card className="border-[3px] border-foreground rounded-[24px]">
+        <CardHeader className="pb-2">
+          <div className="flex items-center gap-3">
+            <CheckCircle className="h-5 w-5 text-primary" />
             <div>
-              <h3 className="font-bold text-sm">CURRENT VERSION: 2.1.0</h3>
-              <p className="text-xs text-muted-foreground">Released: January 28, 2025</p>
+              <CardTitle className="font-serif text-sm font-bold">CURRENT: v3.0.0</CardTitle>
+              <p className="text-xs text-muted-foreground">March 2, 2026</p>
             </div>
           </div>
-          <p className="text-xs text-muted-foreground">
-            Enhanced design with detailed exercise anatomy, muscle groups, tendon involvement, 
-            and recovery time tracking for optimal training.
-          </p>
-        </CardContent>
+        </CardHeader>
       </Card>
 
-      {/* Updates List */}
-      <Card className="bg-card border border-primary">
-        <CardHeader className="pb-2">
-          <CardTitle className="text-sm">RECENT UPDATES</CardTitle>
-        </CardHeader>
-        <CardContent className="p-3 pt-0">
+      <Card className="border-[3px] border-foreground rounded-[24px]">
+        <CardContent className="p-4">
           <ScrollArea className="h-96">
             <div className="space-y-3">
               {updates.map((update) => (
                 <div 
                   key={update.id}
-                  className="border border-muted rounded-lg p-3 hover:bg-muted/20 transition-colors"
+                  className="border-[2px] border-border rounded-[16px] p-3"
                 >
-                  <div className="flex items-start space-x-3">
-                    <div className="mt-0.5">
-                      {getUpdateIcon(update.type)}
-                    </div>
+                  <div className="flex items-start gap-3">
+                    <div className="mt-0.5">{getUpdateIcon(update.type)}</div>
                     <div className="flex-1 space-y-1">
                       <div className="flex items-center justify-between">
-                        <h4 className="font-semibold text-sm">{update.title}</h4>
-                        <Badge className={`text-xs ${getBadgeColor(update.type)}`}>
+                        <h4 className="font-semibold text-sm text-foreground">{update.title}</h4>
+                        <Badge variant="outline" className="text-[10px] border-foreground/30 rounded-full">
                           {update.type.toUpperCase()}
                         </Badge>
                       </div>
                       <p className="text-xs text-muted-foreground leading-relaxed">
                         {update.description}
                       </p>
-                      <div className="flex items-center space-x-2 text-xs text-muted-foreground">
+                      <div className="flex items-center gap-2 text-[10px] text-muted-foreground">
                         <Calendar className="h-3 w-3" />
                         <span>{formatDate(update.date)}</span>
-                        <span>•</span>
+                        <span>·</span>
                         <span>v{update.version}</span>
                       </div>
                     </div>
@@ -216,28 +132,6 @@ const UpdatesTab = () => {
           </ScrollArea>
         </CardContent>
       </Card>
-
-      {/* Stats */}
-      <div className="grid grid-cols-3 gap-2">
-        <Card className="bg-card border border-success">
-          <CardContent className="p-2 text-center">
-            <div className="text-lg font-bold text-success">9</div>
-            <div className="text-xs text-muted-foreground">NEW FEATURES</div>
-          </CardContent>
-        </Card>
-        <Card className="bg-card border border-info">
-          <CardContent className="p-2 text-center">
-            <div className="text-lg font-bold text-info">4</div>
-            <div className="text-xs text-muted-foreground">IMPROVEMENTS</div>
-          </CardContent>
-        </Card>
-        <Card className="bg-card border border-primary">
-          <CardContent className="p-2 text-center">
-            <div className="text-lg font-bold text-primary">30+</div>
-            <div className="text-xs text-muted-foreground">NEW EXERCISES</div>
-          </CardContent>
-        </Card>
-      </div>
     </div>
   );
 };
