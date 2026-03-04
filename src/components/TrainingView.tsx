@@ -47,6 +47,7 @@ const TrainingView = () => {
   const { toast } = useToast();
   const [selectedDay, setSelectedDay] = useState<number | null>(null);
   const [completedBlocks, setCompletedBlocks] = useState<Record<string, boolean[]>>({});
+  const [painFlags, setPainFlags] = useState<Record<string, boolean[]>>({});
   const todayIndex = getTodayDay();
 
   const toggleBlock = (dayId: string, blockIndex: number) => {
