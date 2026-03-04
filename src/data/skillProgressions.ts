@@ -319,7 +319,9 @@ export const skillProgressions: SkillTree[] = [
           primary: ['Anterior Deltoid', 'Serratus Anterior', 'Core'],
           secondary: ['Chest', 'Triceps', 'Biceps Tendon']
         },
-        estimatedWeeksToMaster: 12
+        estimatedWeeksToMaster: 12,
+        videoUrl: 'https://www.youtube.com/watch?v=LgPG0MZPI84',
+        videoSource: 'FitnessFAQs'
       },
       {
         id: 'advanced-tuck-planche',
