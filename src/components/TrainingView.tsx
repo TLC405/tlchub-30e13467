@@ -62,6 +62,23 @@ const TrainingView = () => {
     });
   };
 
+  const flagPain = (dayId: string, blockIndex: number, e: React.MouseEvent) => {
+    e.stopPropagation();
+    setPainFlags((prev) => {
+      const flags = [...(prev[dayId] || [])];
+      flags[blockIndex] = !flags[blockIndex];
+      // Persist pain flags
+      const updated = { ...prev, [dayId]: flags };
+      try { localStorage.setItem("control_pain_flags", JSON.stringify(updated)); } catch {}
+      return updated;
+    });
+    toast({
+      title: "Pain flagged",
+      description: "Consider a regression. Listen to your body.",
+      variant: "destructive",
+    });
+  };
+
   // Day detail view
   if (selectedDay !== null) {
     const day = stackedWeek[selectedDay];
