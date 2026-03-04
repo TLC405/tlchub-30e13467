@@ -183,8 +183,8 @@ const SkillTreeView = () => {
                   <p className="text-sm text-muted-foreground">{tree.description}</p>
                   
                   <div className="flex items-center gap-2">
-                    <Badge className={`${levelColors[currentLevel]} text-white`}>
-                      {currentLevel.charAt(0).toUpperCase() + currentLevel.slice(1)}
+                    <Badge className={`${levelColors[currentLevel]} text-primary-foreground`}>
+                      {levelLabels[currentLevel]}
                     </Badge>
                     <span className="text-xs text-muted-foreground">Current Level</span>
                   </div>
