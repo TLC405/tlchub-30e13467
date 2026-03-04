@@ -491,8 +491,8 @@ const SkillTreeView = () => {
             return (
               <div key={level} className="space-y-2">
                 <div className="flex items-center gap-2">
-                  <Badge className={`${levelColors[level]} text-white`}>
-                    {level.charAt(0).toUpperCase() + level.slice(1)}
+                  <Badge className={`${levelColors[level]} text-primary-foreground`}>
+                    {levelLabels[level]}
                   </Badge>
                   <span className="text-xs text-muted-foreground">
                     {levelSteps.filter(s => isStepCompleted(selectedTree.id, s.id)).length}/{levelSteps.length} completed
