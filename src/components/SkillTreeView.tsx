@@ -259,6 +259,18 @@ const SkillTreeView = () => {
           <CardContent className="space-y-6">
             <p className="text-muted-foreground">{selectedStep.description}</p>
 
+            {/* Watch Demo */}
+            {selectedStep.videoUrl && (
+              <Button
+                variant="outline"
+                className="border-[2px] border-foreground rounded-[16px] w-full"
+                onClick={() => window.open(selectedStep.videoUrl, '_blank', 'noopener')}
+              >
+                <Play className="h-4 w-4 mr-2" />
+                Watch Demo — {selectedStep.videoSource || 'Video'}
+              </Button>
+            )}
+
             <Tabs defaultValue="training" className="w-full">
               <TabsList className="grid w-full grid-cols-2 mb-4">
                 <TabsTrigger value="training" className="text-xs">
