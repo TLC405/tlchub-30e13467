@@ -15,6 +15,7 @@ import {
   CheckCircle,
   Clock,
   ChevronLeft,
+  CircleDot,
 } from "lucide-react";
 
 const iconMap: Record<string, React.ReactNode> = {
