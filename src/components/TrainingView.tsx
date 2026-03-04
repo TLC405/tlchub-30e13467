@@ -112,14 +112,19 @@ const TrainingView = () => {
 
         <NonNegotiables />
 
-        <div className="space-y-3">
+        <div className="space-y-3 stagger-children">
           {day.typicalBlocks.map((block, i) => {
             const isDone = blocks[i] || false;
+            const isPainFlagged = (painFlags[day.id] || [])[i] || false;
             return (
               <Card
                 key={i}
-                className={`border-[3px] rounded-[24px] transition-colors cursor-pointer ${
-                  isDone ? "border-primary/50 bg-primary/5" : "border-foreground"
+                className={`border-[3px] rounded-[24px] transition-colors cursor-pointer card-lift ${
+                  isPainFlagged
+                    ? "border-destructive/60 bg-destructive/5"
+                    : isDone
+                    ? "border-primary/50 bg-primary/5"
+                    : "border-foreground"
                 }`}
                 onClick={() => toggleBlock(day.id, i)}
               >
@@ -139,6 +144,17 @@ const TrainingView = () => {
                         {block}
                       </span>
                     </div>
+                    <button
+                      onClick={(e) => flagPain(day.id, i, e)}
+                      className={`h-6 w-6 rounded-full flex items-center justify-center transition-colors ${
+                        isPainFlagged
+                          ? "bg-destructive text-destructive-foreground"
+                          : "hover:bg-destructive/10 text-muted-foreground"
+                      }`}
+                      title="Flag pain"
+                    >
+                      <CircleDot className="h-3.5 w-3.5" />
+                    </button>
                   </div>
                 </CardContent>
               </Card>
