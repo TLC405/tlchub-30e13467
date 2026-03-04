@@ -239,9 +239,14 @@ const SkillTreeView = () => {
                 <div>
                   <CardTitle className="text-xl">{selectedStep.name}</CardTitle>
                   <div className="flex items-center gap-2 mt-1">
-                    <Badge className={`${levelColors[selectedStep.level]} text-white`}>
-                      {selectedStep.level.charAt(0).toUpperCase() + selectedStep.level.slice(1)}
+                    <Badge className={`${levelColors[selectedStep.level]} text-primary-foreground`}>
+                      {levelLabels[selectedStep.level]}
                     </Badge>
+                    {selectedStep.level === 'elite' && (
+                      <Badge variant="outline" className="text-[10px] border-dashed border-destructive/40 rounded-full font-mono">
+                        Coming Soon
+                      </Badge>
+                    )}
                     <span className="text-sm text-muted-foreground">
                       ~{selectedStep.estimatedWeeksToMaster} weeks to master
                     </span>
