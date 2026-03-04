@@ -78,6 +78,13 @@ const levelColors: Record<string, string> = {
   elite: "bg-red-600"
 };
 
+const levelLabels: Record<string, string> = {
+  beginner: "L1 Beginner",
+  intermediate: "L2 Intermediate",
+  advanced: "L3 Advanced",
+  elite: "L4 Elite"
+};
+
 const SkillTreeView = () => {
   const { toast } = useToast();
   const [selectedTree, setSelectedTree] = useState<SkillTree | null>(null);

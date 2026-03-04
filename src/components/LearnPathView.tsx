@@ -1,6 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { skillPaths, comingSoon, APP_PHILOSOPHY } from "@/data/controlContent";
 import { NonNegotiables } from "./NonNegotiables";
 import { ChevronRight, Lock, BookOpen } from "lucide-react";
@@ -8,6 +7,13 @@ import { ChevronRight, Lock, BookOpen } from "lucide-react";
 interface LearnPathViewProps {
   onNavigate: (view: string) => void;
 }
+
+const levelLabel: Record<string, string> = {
+  "L1": "L1 Beginner",
+  "L2": "L2 Intermediate",
+  "L3": "L3 Advanced",
+  "L4": "L4 Elite",
+};
 
 const LearnPathView = ({ onNavigate }: LearnPathViewProps) => {
   return (
@@ -25,16 +31,16 @@ const LearnPathView = ({ onNavigate }: LearnPathViewProps) => {
       <NonNegotiables compact />
 
       {/* Skill Paths */}
-      <div className="space-y-4">
+      <div className="space-y-4 stagger-children">
         {skillPaths.map((path) => (
           <Card
             key={path.id}
-            className="border-[3px] border-foreground rounded-[24px] hover:bg-muted/30 transition-colors cursor-pointer"
+            className="border-[3px] border-foreground rounded-[24px] hover:bg-muted/30 transition-colors cursor-pointer card-lift"
             onClick={() => onNavigate("skills")}
           >
             <CardHeader className="pb-2">
               <div className="flex items-center justify-between">
-                <CardTitle className="font-serif text-lg font-bold text-foreground">
+                <CardTitle className="font-serif text-lg font-bold text-foreground blueprint-underline">
                   {path.title}
                 </CardTitle>
                 <ChevronRight className="h-5 w-5 text-muted-foreground" />
@@ -42,17 +48,26 @@ const LearnPathView = ({ onNavigate }: LearnPathViewProps) => {
               <p className="text-sm text-muted-foreground">{path.description}</p>
             </CardHeader>
             <CardContent className="space-y-3">
-              {/* Gates */}
+              {/* Gates with L1-L4 badges */}
               <div className="flex flex-wrap gap-2">
-                {path.gates.map((gate, i) => (
-                  <Badge
-                    key={i}
-                    variant="outline"
-                    className="text-xs border-[2px] border-foreground/30 rounded-full font-mono"
-                  >
-                    {gate}
-                  </Badge>
-                ))}
+                {path.gates.map((gate, i) => {
+                  const level = `L${i + 1}`;
+                  const isElite = i === 3;
+                  return (
+                    <Badge
+                      key={i}
+                      variant="outline"
+                      className={`text-xs border-[2px] rounded-full font-mono ${
+                        isElite
+                          ? "border-dashed border-destructive/40 text-muted-foreground"
+                          : "border-foreground/30"
+                      }`}
+                    >
+                      <span className="font-bold mr-1">{level}</span>
+                      {gate.replace(/^L\d:\s*/, "")}
+                    </Badge>
+                  );
+                })}
               </div>
 
               {/* Why */}
@@ -67,19 +82,36 @@ const LearnPathView = ({ onNavigate }: LearnPathViewProps) => {
         ))}
       </div>
 
-      {/* Coming Soon */}
-      {comingSoon.map((item) => (
-        <Card
-          key={item.title}
-          className="border-[3px] border-dashed border-muted-foreground/30 rounded-[24px] opacity-60"
-        >
-          <CardContent className="py-6 text-center space-y-2">
-            <Lock className="h-5 w-5 text-muted-foreground mx-auto" />
-            <p className="font-serif font-bold text-foreground">{item.title}</p>
-            <p className="text-xs text-muted-foreground">{item.description}</p>
-          </CardContent>
-        </Card>
-      ))}
+      {/* Coming Soon — individual cards */}
+      <div className="space-y-3 stagger-children">
+        <h2 className="font-serif text-lg font-bold text-muted-foreground text-center">
+          Coming Soon
+        </h2>
+        {comingSoon.map((item) => (
+          <Card
+            key={item.title}
+            className="border-[3px] border-dashed border-muted-foreground/30 rounded-[24px] opacity-70 card-lift"
+          >
+            <CardContent className="py-5 px-5">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <Lock className="h-4 w-4 text-muted-foreground flex-shrink-0" />
+                  <div>
+                    <p className="font-serif font-bold text-foreground">{item.title}</p>
+                    <p className="text-xs text-muted-foreground mt-0.5">{item.description}</p>
+                  </div>
+                </div>
+                <div className="flex flex-col items-end gap-1">
+                  <Badge variant="outline" className="text-[10px] border-dashed border-destructive/40 rounded-full font-mono">
+                    {item.level}
+                  </Badge>
+                  <span className="text-[10px] text-muted-foreground font-mono">{item.eta}</span>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
     </div>
   );
 };
