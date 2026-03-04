@@ -78,6 +78,13 @@ const levelColors: Record<string, string> = {
   elite: "bg-red-600"
 };
 
+const levelLabels: Record<string, string> = {
+  beginner: "L1 Beginner",
+  intermediate: "L2 Intermediate",
+  advanced: "L3 Advanced",
+  elite: "L4 Elite"
+};
+
 const SkillTreeView = () => {
   const { toast } = useToast();
   const [selectedTree, setSelectedTree] = useState<SkillTree | null>(null);
@@ -176,8 +183,8 @@ const SkillTreeView = () => {
                   <p className="text-sm text-muted-foreground">{tree.description}</p>
                   
                   <div className="flex items-center gap-2">
-                    <Badge className={`${levelColors[currentLevel]} text-white`}>
-                      {currentLevel.charAt(0).toUpperCase() + currentLevel.slice(1)}
+                    <Badge className={`${levelColors[currentLevel]} text-primary-foreground`}>
+                      {levelLabels[currentLevel]}
                     </Badge>
                     <span className="text-xs text-muted-foreground">Current Level</span>
                   </div>
@@ -232,9 +239,14 @@ const SkillTreeView = () => {
                 <div>
                   <CardTitle className="text-xl">{selectedStep.name}</CardTitle>
                   <div className="flex items-center gap-2 mt-1">
-                    <Badge className={`${levelColors[selectedStep.level]} text-white`}>
-                      {selectedStep.level.charAt(0).toUpperCase() + selectedStep.level.slice(1)}
+                    <Badge className={`${levelColors[selectedStep.level]} text-primary-foreground`}>
+                      {levelLabels[selectedStep.level]}
                     </Badge>
+                    {selectedStep.level === 'elite' && (
+                      <Badge variant="outline" className="text-[10px] border-dashed border-destructive/40 rounded-full font-mono">
+                        Coming Soon
+                      </Badge>
+                    )}
                     <span className="text-sm text-muted-foreground">
                       ~{selectedStep.estimatedWeeksToMaster} weeks to master
                     </span>
@@ -246,6 +258,18 @@ const SkillTreeView = () => {
 
           <CardContent className="space-y-6">
             <p className="text-muted-foreground">{selectedStep.description}</p>
+
+            {/* Watch Demo */}
+            {selectedStep.videoUrl && (
+              <Button
+                variant="outline"
+                className="border-[2px] border-foreground rounded-[16px] w-full"
+                onClick={() => window.open(selectedStep.videoUrl, '_blank', 'noopener')}
+              >
+                <Play className="h-4 w-4 mr-2" />
+                Watch Demo — {selectedStep.videoSource || 'Video'}
+              </Button>
+            )}
 
             <Tabs defaultValue="training" className="w-full">
               <TabsList className="grid w-full grid-cols-2 mb-4">
@@ -467,8 +491,8 @@ const SkillTreeView = () => {
             return (
               <div key={level} className="space-y-2">
                 <div className="flex items-center gap-2">
-                  <Badge className={`${levelColors[level]} text-white`}>
-                    {level.charAt(0).toUpperCase() + level.slice(1)}
+                  <Badge className={`${levelColors[level]} text-primary-foreground`}>
+                    {levelLabels[level]}
                   </Badge>
                   <span className="text-xs text-muted-foreground">
                     {levelSteps.filter(s => isStepCompleted(selectedTree.id, s.id)).length}/{levelSteps.length} completed

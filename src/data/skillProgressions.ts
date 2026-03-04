@@ -18,6 +18,8 @@ export interface ProgressionStep {
     secondary: string[];
   };
   estimatedWeeksToMaster: number;
+  videoUrl?: string;
+  videoSource?: string;
 }
 
 export interface SkillTree {
@@ -259,7 +261,9 @@ export const skillProgressions: SkillTree[] = [
           primary: ['Anterior Deltoid', 'Serratus Anterior', 'Core'],
           secondary: ['Chest', 'Triceps', 'Wrist Flexors']
         },
-        estimatedWeeksToMaster: 8
+        estimatedWeeksToMaster: 8,
+        videoUrl: 'https://www.youtube.com/watch?v=tMyO7id-lKM',
+        videoSource: 'Tom Merrick'
       },
       {
         id: 'frog-stand',
@@ -315,7 +319,9 @@ export const skillProgressions: SkillTree[] = [
           primary: ['Anterior Deltoid', 'Serratus Anterior', 'Core'],
           secondary: ['Chest', 'Triceps', 'Biceps Tendon']
         },
-        estimatedWeeksToMaster: 12
+        estimatedWeeksToMaster: 12,
+        videoUrl: 'https://www.youtube.com/watch?v=LgPG0MZPI84',
+        videoSource: 'FitnessFAQs'
       },
       {
         id: 'advanced-tuck-planche',

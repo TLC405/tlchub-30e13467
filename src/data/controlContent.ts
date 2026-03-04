@@ -134,7 +134,34 @@ export const stackedWeek: StackedDay[] = [
 ];
 
 export const comingSoon = [
-  { title: "Barre + Pilates", description: "Premium movement disciplines — coming soon." },
+  {
+    title: "Barre",
+    description: "Isometric pliés with ribs down + turnout. Integrates into Day D.",
+    level: "L1",
+    eta: "Q3 2026",
+    stackedDay: "day-d",
+  },
+  {
+    title: "Pilates",
+    description: "Mat breathwork + core alignment. Ribs Down mandatory.",
+    level: "L1",
+    eta: "Q3 2026",
+    stackedDay: "day-d",
+  },
+  {
+    title: "Ballet",
+    description: "Pointed-toe balances + ankle lines. Pairs with Legs path.",
+    level: "L1",
+    eta: "Q4 2026",
+    stackedDay: "day-d",
+  },
+  {
+    title: "Endurance",
+    description: "EMOM straight-arm/leg holds. Adds to any day without volume bloat.",
+    level: "L1",
+    eta: "Q4 2026",
+    stackedDay: "any",
+  },
 ];
 
 export const integrityBlocks = [

@@ -15,6 +15,7 @@ import {
   CheckCircle,
   Clock,
   ChevronLeft,
+  CircleDot,
 } from "lucide-react";
 
 const iconMap: Record<string, React.ReactNode> = {
@@ -46,6 +47,7 @@ const TrainingView = () => {
   const { toast } = useToast();
   const [selectedDay, setSelectedDay] = useState<number | null>(null);
   const [completedBlocks, setCompletedBlocks] = useState<Record<string, boolean[]>>({});
+  const [painFlags, setPainFlags] = useState<Record<string, boolean[]>>({});
   const todayIndex = getTodayDay();
 
   const toggleBlock = (dayId: string, blockIndex: number) => {
@@ -57,6 +59,23 @@ const TrainingView = () => {
     toast({
       title: "Block updated",
       description: stackedWeek[selectedDay!].typicalBlocks[blockIndex],
+    });
+  };
+
+  const flagPain = (dayId: string, blockIndex: number, e: React.MouseEvent) => {
+    e.stopPropagation();
+    setPainFlags((prev) => {
+      const flags = [...(prev[dayId] || [])];
+      flags[blockIndex] = !flags[blockIndex];
+      // Persist pain flags
+      const updated = { ...prev, [dayId]: flags };
+      try { localStorage.setItem("control_pain_flags", JSON.stringify(updated)); } catch {}
+      return updated;
+    });
+    toast({
+      title: "Pain flagged",
+      description: "Consider a regression. Listen to your body.",
+      variant: "destructive",
     });
   };
 
@@ -93,14 +112,19 @@ const TrainingView = () => {
 
         <NonNegotiables />
 
-        <div className="space-y-3">
+        <div className="space-y-3 stagger-children">
           {day.typicalBlocks.map((block, i) => {
             const isDone = blocks[i] || false;
+            const isPainFlagged = (painFlags[day.id] || [])[i] || false;
             return (
               <Card
                 key={i}
-                className={`border-[3px] rounded-[24px] transition-colors cursor-pointer ${
-                  isDone ? "border-primary/50 bg-primary/5" : "border-foreground"
+                className={`border-[3px] rounded-[24px] transition-colors cursor-pointer card-lift ${
+                  isPainFlagged
+                    ? "border-destructive/60 bg-destructive/5"
+                    : isDone
+                    ? "border-primary/50 bg-primary/5"
+                    : "border-foreground"
                 }`}
                 onClick={() => toggleBlock(day.id, i)}
               >
@@ -120,6 +144,17 @@ const TrainingView = () => {
                         {block}
                       </span>
                     </div>
+                    <button
+                      onClick={(e) => flagPain(day.id, i, e)}
+                      className={`h-6 w-6 rounded-full flex items-center justify-center transition-colors ${
+                        isPainFlagged
+                          ? "bg-destructive text-destructive-foreground"
+                          : "hover:bg-destructive/10 text-muted-foreground"
+                      }`}
+                      title="Flag pain"
+                    >
+                      <CircleDot className="h-3.5 w-3.5" />
+                    </button>
                   </div>
                 </CardContent>
               </Card>
