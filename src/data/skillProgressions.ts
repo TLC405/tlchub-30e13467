@@ -18,6 +18,8 @@ export interface ProgressionStep {
     secondary: string[];
   };
   estimatedWeeksToMaster: number;
+  videoUrl?: string;
+  videoSource?: string;
 }
 
 export interface SkillTree {
