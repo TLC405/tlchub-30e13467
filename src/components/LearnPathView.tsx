@@ -8,13 +8,6 @@ interface LearnPathViewProps {
   onNavigate: (view: string) => void;
 }
 
-const levelLabel: Record<string, string> = {
-  "L1": "L1 Beginner",
-  "L2": "L2 Intermediate",
-  "L3": "L3 Advanced",
-  "L4": "L4 Elite",
-};
-
 const LearnPathView = ({ onNavigate }: LearnPathViewProps) => {
   return (
     <div className="space-y-6">
@@ -36,7 +29,11 @@ const LearnPathView = ({ onNavigate }: LearnPathViewProps) => {
           <Card
             key={path.id}
             className="border-[3px] border-foreground rounded-[24px] hover:bg-muted/30 transition-colors cursor-pointer card-lift"
-            onClick={() => onNavigate("skills")}
+            onClick={() =>
+              path.skillTreeId
+                ? onNavigate(`skills:${path.skillTreeId}`)
+                : onNavigate("skills")
+            }
           >
             <CardHeader className="pb-2">
               <div className="flex items-center justify-between">

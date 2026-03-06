@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -6,8 +6,22 @@ import { integrityBlocks } from "@/data/controlContent";
 import { NonNegotiables } from "./NonNegotiables";
 import { Clock, Play, ChevronDown, ChevronUp, Heart } from "lucide-react";
 
-const IntegrityView = () => {
-  const [expandedBlock, setExpandedBlock] = useState<string | null>(null);
+interface IntegrityViewProps {
+  initialBlockId?: string;
+}
+
+const IntegrityView = ({ initialBlockId }: IntegrityViewProps) => {
+  const [expandedBlock, setExpandedBlock] = useState<string | null>(initialBlockId || null);
+
+  useEffect(() => {
+    if (initialBlockId) {
+      setExpandedBlock(initialBlockId);
+      // Scroll to the block after render
+      setTimeout(() => {
+        document.getElementById(`integrity-${initialBlockId}`)?.scrollIntoView({ behavior: "smooth", block: "center" });
+      }, 100);
+    }
+  }, [initialBlockId]);
 
   return (
     <div className="space-y-6">
@@ -28,7 +42,10 @@ const IntegrityView = () => {
           return (
             <Card
               key={block.id}
-              className="border-[3px] border-foreground rounded-[24px] overflow-hidden"
+              id={`integrity-${block.id}`}
+              className={`border-[3px] rounded-[24px] overflow-hidden ${
+                isExpanded && initialBlockId === block.id ? "border-primary" : "border-foreground"
+              }`}
             >
               <CardHeader
                 className="cursor-pointer hover:bg-muted/30 transition-colors pb-3"
