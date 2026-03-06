@@ -51,12 +51,23 @@ export const nonNegotiables: NonNegotiable[] = [
   },
 ];
 
+export interface BlockAction {
+  type: 'skill' | 'integrity';
+  treeId?: string;
+  blockId?: string;
+}
+
+export interface TrainingBlock {
+  label: string;
+  action?: BlockAction;
+}
+
 export interface StackedDay {
   id: string;
   label: string;
   title: string;
   emphasis: string;
-  typicalBlocks: string[];
+  blocks: TrainingBlock[];
   icon: string;
   optional?: boolean;
 }
