@@ -1,244 +1,91 @@
 
-# Learn Mode Upgrade Plan
 
-## Overview
+# Connect Learn → Skills + Restyle Skills + Training Drill Launcher
 
-This plan adds a **Learn Mode** feature to the calisthenics app that applies motor-learning research to help users learn skills faster. The implementation is additive-only (no breaking changes), premium in design, and delivers value in ~10 seconds with optional deep dives.
+## Three problems to solve
 
----
-
-## Architecture
-
-### Data Layer (New Files)
-
-**1. Create `src/data/learningPrinciples.ts`**
-
-A static data file containing 8 research-backed learning principles:
-
-| Slug | Title | When to Use |
-|------|-------|-------------|
-| distributed_practice | Distributed Practice | Always |
-| external_focus | External Focus Cues | Always |
-| variability | Small Variation Practice | Intermediate |
-| autonomy | Autonomy Support | Always |
-| feedback_dosing | Feedback Dosing | Always |
-| retention_test | Retention Test | Intermediate |
-| sleep_consolidation | Sleep & Consolidation | Always |
-| interleaving | Interleaving | Intermediate |
-
-Each principle includes:
-- `micro_summary` (140 chars) - quick value
-- `why_it_works` (280 chars) - expandable science
-- `how_to_apply_template` with placeholders (`{exercise}`, `{sets}`)
-- `caution` - safety note
-- `sources[]` - research URLs
-
-**2. Create `src/types/learning.ts`**
-
-New TypeScript interfaces:
-- `LearningPrinciple` - principle definition
-- `LearnConfig` - per-exercise learn mapping
-- `LearnDefaultRecipe` - frequency/dose structure
-- `LearnModeIntensity` - user preference setting
-
-**3. Extend existing exercise data**
-
-Update `src/data/exerciseDatabase.ts` to add learn mapping for each exercise:
-- `learn_principle_slugs: string[]` (2-4 principles)
-- `learn_apply_notes: Record<string, string>` (optional overrides)
-- `learn_default_recipe` (frequency, sets, rest ranges)
-- `learn_coach_tip: string` (optional, tasteful humor)
-
-Auto-assignment rules:
-- Skills/static holds (Planche, Handstand, Lever) → `distributed_practice`, `external_focus`, `feedback_dosing`, `retention_test`
-- Mobility/compression → `distributed_practice`, `variability`, `autonomy`, `sleep_consolidation`
-- Strength reps → `distributed_practice`, `external_focus`, `feedback_dosing`
+1. **Learn → Skills link**: Tapping a skill path in Learn just navigates to generic Skills tab. It should open the matching skill tree directly.
+2. **Skills tab has old UI**: Still uses gradients, shadows, `scale-[1.02]` hover — doesn't match the brutalist design system.
+3. **Train blocks are static**: Tapping "Planche leans" or "Warm-up" just toggles a checkbox. Should open the relevant exercise detail.
 
 ---
 
-## UI Components
+## 1. Learn Path → Filtered Skill Tree
 
-### New Components
+**File: `src/data/controlContent.ts`**
+- Add `skillTreeId` field to each `skillPaths` entry mapping to the `skillProgressions` IDs:
+  - `planche` → `planche-progression`
+  - `handstand` → `handstand-progression`
+  - `front-lever` → `front-lever-progression`
+  - `muscle-up` → `muscle-up-progression`
+  - `pistol` → `null` (no matching tree yet)
 
-**1. `src/components/learn/LearnCard.tsx`**
+**File: `src/pages/Index.tsx`**
+- Change `activeView` from a simple string to support passing a parameter (e.g. `skills:planche-progression`).
+- Parse the view string: if it starts with `skills:`, extract the tree ID and pass it as a prop to `SkillTreeView`.
 
-A premium, minimal card showing:
-- Icon + title (e.g., "Practice Recipe")
-- Micro summary (quick value)
-- "Apply to {exercise}" line
-- Tiny caution
-- "Show more" expander for `why_it_works` + sources
+**File: `src/components/LearnPathView.tsx`**
+- Update `onClick` to call `onNavigate("skills:planche-progression")` instead of `onNavigate("skills")`.
 
-Design: shadcn Card with subtle border, clean hierarchy, 10-second value.
-
-**2. `src/components/learn/LearnTab.tsx`**
-
-Displays exactly 3 LearnCards:
-1. **Practice Recipe** - distributed practice + weekly frequency
-2. **Focus Cue** - external focus + one apply line  
-3. **Progress Smarter** - variability OR retention test
-
-Uses existing Tabs component pattern.
-
-**3. `src/components/learn/LearnBiteToast.tsx`**
-
-Post-workout logging micro nudge:
-- One principle per log (rotates across sessions)
-- Example: "Next time: 4×10s instead of 1×40s. Same work, better learning."
-- Uses existing toast/sonner system
-
-**4. `src/components/learn/LearnModeSettings.tsx`**
-
-Coach controls for learn intensity:
-- `low` - micro_summary only
-- `standard` - micro + apply line (default)
-- `nerdy` - includes why_it_works + sources
-
-Stored in localStorage.
+**File: `src/components/SkillTreeView.tsx`**
+- Accept optional `initialTreeId?: string` prop.
+- On mount, if `initialTreeId` is provided, auto-select that tree from `skillProgressions`.
 
 ---
 
-## Integration Points
+## 2. Restyle Skills Tab (Brutalist)
 
-### 1. Exercise Detail Enhancement
+**File: `src/components/SkillTreeView.tsx`**
 
-Update `src/components/DetailedExerciseCard.tsx`:
-- Add **Learn** tab alongside existing Exercise Details collapsible
-- Shows 3 LearnCards when expanded
-- Lazy-loaded for performance
-
-### 2. Skill Tree Enhancement
-
-Update `src/components/SkillTreeView.tsx`:
-- Add **Learn** tab in exercise detail view
-- Same 3-card pattern
-
-### 3. Workout Logging Integration
-
-Update `src/components/WorkoutCalendar.tsx`:
-- After logging workout, show LearnBiteToast
-- Rotate principles based on logged exercises
-- Store last shown principle per exercise in localStorage
-
-### 4. Learn Mode Context
-
-Create `src/contexts/LearnModeContext.tsx`:
-- Manages learn intensity preference
-- Provides helper functions for principle lookup
-- Memoizes merged learn content per exercise
+Replace the old gradient/shadow UI with brutalist design:
+- **Grid view**: Replace gradient icon circles with 3px ink border + 24px radius cards. Remove `bg-gradient-to-br` and `shadow-lg`.
+- **Header**: Use `font-serif font-black` for titles, matching Learn/Train tabs.
+- **Level badges**: Keep the L1-L4 color-coded badges but remove gradient backgrounds from step circles — use solid ink borders instead.
+- **Progression list**: Replace `hover:scale-[1.02]` with `card-lift` class. Use `border-[3px] border-foreground rounded-[24px]` on cards.
+- **Detail view**: Same brutalist card styling with ink borders.
+- Add `NonNegotiables compact` banner at top of skill tree list.
+- Add `stagger-children` class to progression lists.
 
 ---
 
-## File Changes Summary
+## 3. Training Drill Launcher
+
+**File: `src/data/controlContent.ts`**
+- Add `drillMapping` to each `typicalBlocks` entry — a lookup from block name to skill tree ID + exercise filter:
+  - "Planche leans / tucks / straddle" → `{ treeId: "planche-progression", filter: "planche" }`
+  - "Warm-up (wrists + shoulders)" → `{ type: "integrity", blockId: "wrist-prep" }` (opens integrity block)
+  - Blocks without mappings stay as simple checkboxes.
+
+**File: `src/components/TrainingView.tsx`**
+- Change block data from `string[]` to `Array<{ label: string; action?: { type: 'skill' | 'integrity'; treeId?: string; blockId?: string } }>`.
+- When a block has an `action`, tapping it navigates: skill type → `onNavigate("skills:treeId")`, integrity type → `onNavigate("integrity:blockId")`.
+- Add `onNavigate` prop to `TrainingView` (currently missing).
+- Keep the checkbox toggle on long-press or a separate check icon; primary tap navigates.
+
+**File: `src/pages/Index.tsx`**
+- Pass `onNavigate={setActiveView}` to `TrainingView`.
+- Handle `integrity:blockId` the same way as `skills:treeId`.
+
+**File: `src/components/IntegrityView.tsx`**
+- Accept optional `initialBlockId?: string` prop to auto-expand a specific block.
+
+---
+
+## Files Summary
 
 | File | Action | Description |
 |------|--------|-------------|
-| `src/data/learningPrinciples.ts` | Create | 8 principles with premium copy |
-| `src/types/learning.ts` | Create | TypeScript interfaces |
-| `src/types/index.ts` | Modify | Add learn fields to Exercise interface |
-| `src/data/exerciseDatabase.ts` | Modify | Add learn mappings to all exercises |
-| `src/components/learn/LearnCard.tsx` | Create | Premium learn card component |
-| `src/components/learn/LearnTab.tsx` | Create | 3-card learn tab |
-| `src/components/learn/LearnBiteToast.tsx` | Create | Post-log toast component |
-| `src/components/learn/LearnModeSettings.tsx` | Create | Intensity toggle |
-| `src/contexts/LearnModeContext.tsx` | Create | Context for learn preferences |
-| `src/components/DetailedExerciseCard.tsx` | Modify | Add Learn tab |
-| `src/components/SkillTreeView.tsx` | Modify | Add Learn tab to detail view |
-| `src/components/WorkoutCalendar.tsx` | Modify | Add post-log toast |
-| `src/App.tsx` | Modify | Wrap with LearnModeProvider |
-
----
-
-## Technical Details
-
-### Performance Considerations
-- Fetch principles once at app load (static import)
-- Index principles by slug for O(1) lookup
-- Memoize merged learn content per exercise with `useMemo`
-- Lazy-load Learn tab content
-
-### Data Structure Example
-
-```typescript
-// LearningPrinciple
-{
-  id: "distributed_practice",
-  slug: "distributed_practice",
-  title: "Distributed Practice",
-  micro_summary: "More short exposures beats one long grind.",
-  why_it_works: "Spacing practice across days improves retention and skill stability versus cramming.",
-  how_to_apply_template: "Do {exercise} 3-5x/week as 8-12 minute micro-sessions (not 1 marathon).",
-  when_to_use: "always",
-  caution: "If joints feel irritated, keep frequency but lower intensity.",
-  sources: [
-    "https://www.sciencedirect.com/...",
-    "https://pmc.ncbi.nlm.nih.gov/..."
-  ]
-}
-
-// Exercise learn config
-{
-  learn_principle_slugs: ["distributed_practice", "external_focus", "feedback_dosing"],
-  learn_apply_notes: {
-    external_focus: "Think: 'push the floor away' during lean"
-  },
-  learn_default_recipe: {
-    frequency_per_week: 4,
-    dose_type: "microdose",
-    set_count_range: [3, 6],
-    hold_or_rep_range: [15, 30],
-    rest_range_sec: [60, 120]
-  },
-  learn_coach_tip: "Your wrists will thank you for the short sessions."
-}
-```
-
-### Toast Rotation Logic
-
-```typescript
-// Get next principle to show (rotates per exercise)
-const getNextPrinciple = (exerciseId: string): LearningPrinciple => {
-  const key = `learn_rotation_${exerciseId}`;
-  const lastIndex = parseInt(localStorage.getItem(key) || "0");
-  const principles = exercise.learn_principle_slugs;
-  const nextIndex = (lastIndex + 1) % principles.length;
-  localStorage.setItem(key, nextIndex.toString());
-  return principlesMap[principles[nextIndex]];
-}
-```
-
----
-
-## Quality Bar
-
-### Design Principles
-- Premium hierarchy, spacing, clean microcopy
-- Never imply failure - always give an easier next action
-- Personal, light, empathetic tone (never corny)
-- 10 seconds of value, expandable for deeper reading
-- Follows existing design patterns (clean-border, premium-shadow, glass-effect)
-
-### Accessibility
-- Proper focus management in expandable sections
-- Screen reader friendly labels
-- Keyboard navigation for Learn tabs
-
-### Mobile-First
-- Cards stack cleanly on mobile
-- Touch-friendly expand/collapse
-- Toast positioned for mobile viewing
-
----
+| `src/data/controlContent.ts` | Modify | Add skillTreeId to paths, add drill mappings to blocks |
+| `src/pages/Index.tsx` | Modify | Support parameterized view routing |
+| `src/components/LearnPathView.tsx` | Modify | Navigate to specific skill tree |
+| `src/components/SkillTreeView.tsx` | Modify | Accept initialTreeId + full brutalist restyle |
+| `src/components/TrainingView.tsx` | Modify | Add drill navigation + onNavigate prop |
+| `src/components/IntegrityView.tsx` | Modify | Accept initialBlockId prop |
 
 ## Implementation Order
+1. Data updates (skill tree mappings + block actions)
+2. Index routing (parameterized views)
+3. Restyle SkillTreeView (brutalist)
+4. Wire Learn → Skills navigation
+5. Wire Train → Skills/Integrity navigation
 
-1. Create types and data files (principles + exercise mappings)
-2. Create LearnModeContext provider
-3. Build LearnCard component
-4. Build LearnTab component  
-5. Integrate into DetailedExerciseCard
-6. Integrate into SkillTreeView
-7. Build LearnBiteToast
-8. Integrate into WorkoutCalendar
-9. Add LearnModeSettings
-10. Polish and test all integrations
