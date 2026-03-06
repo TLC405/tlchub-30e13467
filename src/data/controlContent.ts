@@ -215,6 +215,7 @@ export const skillPaths = [
     gates: ["L1: Planche Lean 30s", "L2: Tuck Planche 15s", "L3: Adv. Tuck 10s", "L4: Straddle Planche"],
     why: "The planche teaches total-body tension, scapular control, and straight-arm strength. It builds real pushing power that transfers to everything.",
     stackedDay: "day-a",
+    skillTreeId: "planche-progression",
   },
   {
     id: "handstand",
@@ -223,6 +224,7 @@ export const skillPaths = [
     gates: ["L1: Wall Hold 60s", "L2: Kick-up + 10s Hold", "L3: Freestanding 20s", "L4: Press to Handstand"],
     why: "Inversions rewire your proprioception, build bulletproof shoulders, and teach you to control your body in space.",
     stackedDay: "day-c",
+    skillTreeId: "handstand-progression",
   },
   {
     id: "front-lever",
@@ -231,6 +233,7 @@ export const skillPaths = [
     gates: ["L1: Tuck FL 15s", "L2: Adv. Tuck FL 10s", "L3: Straddle FL 8s", "L4: Full Front Lever"],
     why: "The front lever builds pulling strength, lat power, and teaches you to maintain a rigid body under load.",
     stackedDay: "day-b",
+    skillTreeId: "front-lever-progression",
   },
   {
     id: "muscle-up",
@@ -239,6 +242,7 @@ export const skillPaths = [
     gates: ["L1: High Pull-up", "L2: Slow Negative MU", "L3: Strict Bar MU", "L4: Ring Muscle-Up"],
     why: "The muscle-up connects pulling to pushing — it's the gateway to advanced ring work.",
     stackedDay: "day-b",
+    skillTreeId: "muscle-up-progression",
   },
   {
     id: "pistol",
@@ -247,5 +251,6 @@ export const skillPaths = [
     gates: ["L1: Assisted Pistol", "L2: Full Pistol", "L3: Weighted Pistol", "L4: Pistol + Nordic combo"],
     why: "Single-leg strength protects your knees, builds real-world balance, and fixes left/right imbalances.",
     stackedDay: "day-d",
+    skillTreeId: null,
   },
 ];
