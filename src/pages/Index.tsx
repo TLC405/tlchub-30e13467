@@ -13,16 +13,20 @@ import { APP_NAME, APP_TAGLINE } from "@/data/controlContent";
 const Index = () => {
   const [activeView, setActiveView] = useState("learn");
 
+  // Parse parameterized views like "skills:planche-progression" or "integrity:wrist-prep"
+  const baseView = activeView.split(":")[0];
+  const viewParam = activeView.includes(":") ? activeView.split(":")[1] : undefined;
+
   const renderView = () => {
-    switch (activeView) {
+    switch (baseView) {
       case "learn":
         return <LearnPathView onNavigate={setActiveView} />;
       case "training":
-        return <TrainingView />;
+        return <TrainingView onNavigate={setActiveView} />;
       case "skills":
-        return <SkillTreeView />;
+        return <SkillTreeView initialTreeId={viewParam} onNavigate={setActiveView} />;
       case "integrity":
-        return <IntegrityView />;
+        return <IntegrityView initialBlockId={viewParam} />;
       case "progress":
         return <ProgressView />;
       default:
@@ -59,7 +63,7 @@ const Index = () => {
         </main>
 
         {/* Bottom Navigation */}
-        <BottomNavBar onNavigate={setActiveView} activeView={activeView} />
+        <BottomNavBar onNavigate={setActiveView} activeView={baseView} />
       </div>
     </ThemeProvider>
   );

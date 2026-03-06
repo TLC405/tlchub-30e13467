@@ -51,12 +51,23 @@ export const nonNegotiables: NonNegotiable[] = [
   },
 ];
 
+export interface BlockAction {
+  type: 'skill' | 'integrity';
+  treeId?: string;
+  blockId?: string;
+}
+
+export interface TrainingBlock {
+  label: string;
+  action?: BlockAction;
+}
+
 export interface StackedDay {
   id: string;
   label: string;
   title: string;
   emphasis: string;
-  typicalBlocks: string[];
+  blocks: TrainingBlock[];
   icon: string;
   optional?: boolean;
 }
@@ -67,12 +78,12 @@ export const stackedWeek: StackedDay[] = [
     label: "Day A",
     title: "Leverage",
     emphasis: "Planche Path / Straight-arm push",
-    typicalBlocks: [
-      "Warm-up (wrists + shoulders)",
-      "Planche leans / tucks / straddle",
-      "Accessory scap work",
-      "Integrity (wrists + shoulders)",
-      "Cool-down",
+    blocks: [
+      { label: "Warm-up (wrists + shoulders)", action: { type: "integrity", blockId: "wrist-prep" } },
+      { label: "Planche leans / tucks / straddle", action: { type: "skill", treeId: "planche-progression" } },
+      { label: "Accessory scap work" },
+      { label: "Integrity (wrists + shoulders)", action: { type: "integrity", blockId: "wrist-prep" } },
+      { label: "Cool-down" },
     ],
     icon: "Dumbbell",
   },
@@ -81,12 +92,12 @@ export const stackedWeek: StackedDay[] = [
     label: "Day B",
     title: "Pull + Grip",
     emphasis: "Rings dominant",
-    typicalBlocks: [
-      "Warm-up (shoulders + lats)",
-      "Ring support / rows / dips",
-      "Grip hangs + dead hangs",
-      "Integrity (thoracic + shoulders)",
-      "Cool-down",
+    blocks: [
+      { label: "Warm-up (shoulders + lats)", action: { type: "integrity", blockId: "thoracic-mobility" } },
+      { label: "Ring support / rows / dips", action: { type: "skill", treeId: "pullup-progression" } },
+      { label: "Grip hangs + dead hangs", action: { type: "skill", treeId: "pullup-progression" } },
+      { label: "Integrity (thoracic + shoulders)", action: { type: "integrity", blockId: "thoracic-mobility" } },
+      { label: "Cool-down" },
     ],
     icon: "ArrowUp",
   },
@@ -95,12 +106,12 @@ export const stackedWeek: StackedDay[] = [
     label: "Day C",
     title: "Inversions",
     emphasis: "Handstand / Forearm / Elbow / Headstand",
-    typicalBlocks: [
-      "Warm-up (wrists + neck + shoulders)",
-      "Wall / freestanding drills",
-      "Shoulder prehab",
-      "Integrity (wrists + thoracic)",
-      "Cool-down",
+    blocks: [
+      { label: "Warm-up (wrists + neck + shoulders)", action: { type: "integrity", blockId: "wrist-prep" } },
+      { label: "Wall / freestanding drills", action: { type: "skill", treeId: "handstand-progression" } },
+      { label: "Shoulder prehab" },
+      { label: "Integrity (wrists + thoracic)", action: { type: "integrity", blockId: "thoracic-mobility" } },
+      { label: "Cool-down" },
     ],
     icon: "Zap",
   },
@@ -109,12 +120,12 @@ export const stackedWeek: StackedDay[] = [
     label: "Day D",
     title: "Legs + Mobility",
     emphasis: "Pistols, lunges, nordics, cossacks + mobility",
-    typicalBlocks: [
-      "Warm-up (hips + ankles)",
-      "Pistols / nordics / cossacks",
-      "Compression work",
-      "Full integrity block (hips + pancake + ankles)",
-      "Cool-down",
+    blocks: [
+      { label: "Warm-up (hips + ankles)", action: { type: "integrity", blockId: "hip-opening" } },
+      { label: "Pistols / nordics / cossacks" },
+      { label: "Compression work" },
+      { label: "Full integrity block (hips + pancake + ankles)", action: { type: "integrity", blockId: "pancake" } },
+      { label: "Cool-down" },
     ],
     icon: "Target",
   },
@@ -123,10 +134,10 @@ export const stackedWeek: StackedDay[] = [
     label: "Day E",
     title: "Skill Play",
     emphasis: "Light skill practice / recovery",
-    typicalBlocks: [
-      "Freestyle skill practice",
-      "Full integrity session",
-      "No prescribed volume",
+    blocks: [
+      { label: "Freestyle skill practice" },
+      { label: "Full integrity session", action: { type: "integrity", blockId: "hip-opening" } },
+      { label: "No prescribed volume" },
     ],
     icon: "Star",
     optional: true,
@@ -215,6 +226,7 @@ export const skillPaths = [
     gates: ["L1: Planche Lean 30s", "L2: Tuck Planche 15s", "L3: Adv. Tuck 10s", "L4: Straddle Planche"],
     why: "The planche teaches total-body tension, scapular control, and straight-arm strength. It builds real pushing power that transfers to everything.",
     stackedDay: "day-a",
+    skillTreeId: "planche-progression",
   },
   {
     id: "handstand",
@@ -223,6 +235,7 @@ export const skillPaths = [
     gates: ["L1: Wall Hold 60s", "L2: Kick-up + 10s Hold", "L3: Freestanding 20s", "L4: Press to Handstand"],
     why: "Inversions rewire your proprioception, build bulletproof shoulders, and teach you to control your body in space.",
     stackedDay: "day-c",
+    skillTreeId: "handstand-progression",
   },
   {
     id: "front-lever",
@@ -231,6 +244,7 @@ export const skillPaths = [
     gates: ["L1: Tuck FL 15s", "L2: Adv. Tuck FL 10s", "L3: Straddle FL 8s", "L4: Full Front Lever"],
     why: "The front lever builds pulling strength, lat power, and teaches you to maintain a rigid body under load.",
     stackedDay: "day-b",
+    skillTreeId: "front-lever-progression",
   },
   {
     id: "muscle-up",
@@ -239,6 +253,7 @@ export const skillPaths = [
     gates: ["L1: High Pull-up", "L2: Slow Negative MU", "L3: Strict Bar MU", "L4: Ring Muscle-Up"],
     why: "The muscle-up connects pulling to pushing — it's the gateway to advanced ring work.",
     stackedDay: "day-b",
+    skillTreeId: "muscle-up-progression",
   },
   {
     id: "pistol",
@@ -247,5 +262,6 @@ export const skillPaths = [
     gates: ["L1: Assisted Pistol", "L2: Full Pistol", "L3: Weighted Pistol", "L4: Pistol + Nordic combo"],
     why: "Single-leg strength protects your knees, builds real-world balance, and fixes left/right imbalances.",
     stackedDay: "day-d",
+    skillTreeId: null,
   },
 ];
