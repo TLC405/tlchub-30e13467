@@ -13,7 +13,7 @@ export const muscleRegions: MuscleRegion[] = [
   {
     id: "anterior-deltoid",
     name: "Anterior Deltoid",
-    aliases: ["Anterior Deltoid", "Front Delt", "Front Deltoid", "Deltoid Complex", "shoulders"],
+    aliases: ["Anterior Deltoid", "Front Delt", "Front Deltoid", "Deltoid Complex", "Deltoids"],
     view: "front",
     svgPath: "M 62,92 Q 52,88 48,98 Q 46,108 54,112 Q 62,114 66,106 Z M 138,92 Q 148,88 152,98 Q 154,108 146,112 Q 138,114 134,106 Z",
     center: { x: 57, y: 102 },
@@ -103,7 +103,7 @@ export const muscleRegions: MuscleRegion[] = [
   {
     id: "posterior-deltoid",
     name: "Posterior Deltoid",
-    aliases: ["Posterior Deltoid", "Rear Delt", "Deltoid Complex", "Deltoids", "shoulders"],
+    aliases: ["Posterior Deltoid", "Rear Delt", "Rear Deltoid", "Deltoid Complex", "Deltoids"],
     view: "back",
     svgPath: "M 62,92 Q 50,88 46,100 Q 44,110 54,114 Q 62,116 66,108 Z M 138,92 Q 150,88 154,100 Q 156,110 146,114 Q 138,116 134,108 Z",
     center: { x: 55, y: 103 },
