@@ -1,0 +1,210 @@
+#!/usr/bin/env bash
+# TLC Command Station — Main CLI Hub
+# Men of Purpose OKC · v1.0
+
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+# ── Colors & Styles ─────────────────────────────────────────────────────────
+RESET='\033[0m'
+BOLD='\033[1m'
+DIM='\033[2m'
+
+BLACK='\033[0;30m'
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[0;33m'
+BLUE='\033[0;34m'
+MAGENTA='\033[0;35m'
+CYAN='\033[0;36m'
+WHITE='\033[0;37m'
+
+BRIGHT_RED='\033[1;31m'
+BRIGHT_GREEN='\033[1;32m'
+BRIGHT_YELLOW='\033[1;33m'
+BRIGHT_BLUE='\033[1;34m'
+BRIGHT_MAGENTA='\033[1;35m'
+BRIGHT_CYAN='\033[1;36m'
+BRIGHT_WHITE='\033[1;37m'
+
+BG_BLACK='\033[40m'
+
+# ── Banner ───────────────────────────────────────────────────────────────────
+print_banner() {
+  echo -e "${BRIGHT_CYAN}"
+  echo -e "  ╔════════════════════════════════════════╗"
+  echo -e "  ║   _____ _      ____                   ║"
+  echo -e "  ║  |_   _| |    / ___|                  ║"
+  echo -e "  ║    | | | |   | |                      ║"
+  echo -e "  ║    | | | |___| |___                   ║"
+  echo -e "  ║    |_| |_____|\____|                  ║"
+  echo -e "  ║                                       ║"
+  echo -e "  ║  Men of Purpose OKC                   ║"
+  echo -e "  ║  Command Station v1.0                 ║"
+  echo -e "  ╚════════════════════════════════════════╝"
+  echo -e "${RESET}"
+}
+
+# ── Main Menu ────────────────────────────────────────────────────────────────
+print_menu() {
+  echo -e "${BRIGHT_WHITE}  ─────────────────────────────────────────${RESET}"
+  echo -e ""
+  echo -e "  ${BRIGHT_CYAN}[1]${RESET} 🤖 ${BOLD}AI Chat${RESET}        — Talk to Claude (chat + run commands)"
+  echo -e "  ${BRIGHT_CYAN}[2]${RESET} 🧹 ${BOLD}Optimize${RESET}       — Clean cache, free storage, boost speed"
+  echo -e "  ${BRIGHT_CYAN}[3]${RESET} 🌐 ${BOLD}Net Check${RESET}      — Speed test, DNS, WiFi diagnostics"
+  echo -e "  ${BRIGHT_CYAN}[4]${RESET} 📊 ${BOLD}Monitor${RESET}        — CPU, RAM, battery, storage dashboard"
+  echo -e "  ${BRIGHT_CYAN}[5]${RESET} 🐙 ${BOLD}GitHub${RESET}         — Copilot, repos, push, pull, status"
+  echo -e "  ${BRIGHT_CYAN}[6]${RESET} 📦 ${BOLD}Apps${RESET}           — Install/manage Termux packages"
+  echo -e "  ${BRIGHT_CYAN}[7]${RESET} ⚙️  ${BOLD}Settings${RESET}       — API keys, theme, font, config"
+  echo -e "  ${BRIGHT_CYAN}[0]${RESET} 🚪 ${BOLD}Exit${RESET}"
+  echo -e ""
+  echo -e "  ${BRIGHT_WHITE}─────────────────────────────────────────${RESET}"
+}
+
+# ── Settings ─────────────────────────────────────────────────────────────────
+run_settings() {
+  local config_file="${HOME}/.tlc/config.env"
+  echo -e "\n${BRIGHT_CYAN}⚙️  Settings${RESET}\n"
+  echo -e "  Config file: ${YELLOW}${config_file}${RESET}\n"
+
+  if [[ ! -f "${config_file}" ]]; then
+    echo -e "  ${YELLOW}Config file not found. Creating from example...${RESET}"
+    mkdir -p "${HOME}/.tlc"
+    cp "${SCRIPT_DIR}/config.example.env" "${config_file}"
+    echo -e "  ${GREEN}✓ Created ${config_file}${RESET}"
+  fi
+
+  echo -e "  ${DIM}[1] Edit config file${RESET}"
+  echo -e "  ${DIM}[2] Show current config (keys masked)${RESET}"
+  echo -e "  ${DIM}[0] Back${RESET}\n"
+  read -rp "  Choose: " choice
+  case "${choice}" in
+    1)
+      local editor="${EDITOR:-nano}"
+      "${editor}" "${config_file}"
+      ;;
+    2)
+      echo -e "\n${DIM}Current config:${RESET}"
+      # Mask key values for security
+      sed 's/=sk-ant-.*/=sk-ant-***MASKED***/' "${config_file}" | \
+        sed 's/=ghp_.*/=ghp_***MASKED***/'
+      ;;
+  esac
+}
+
+# ── App Manager ──────────────────────────────────────────────────────────────
+run_apps() {
+  echo -e "\n${BRIGHT_CYAN}📦 App Manager${RESET}\n"
+  echo -e "  ${DIM}[1] Update all packages${RESET}"
+  echo -e "  ${DIM}[2] Search package${RESET}"
+  echo -e "  ${DIM}[3] Install package${RESET}"
+  echo -e "  ${DIM}[4] Remove package${RESET}"
+  echo -e "  ${DIM}[5] List installed packages${RESET}"
+  echo -e "  ${DIM}[0] Back${RESET}\n"
+  read -rp "  Choose: " choice
+  case "${choice}" in
+    1) pkg update && pkg upgrade ;;
+    2)
+      read -rp "  Search for: " pkg_name
+      pkg search "${pkg_name}"
+      ;;
+    3)
+      read -rp "  Package to install: " pkg_name
+      pkg install "${pkg_name}"
+      ;;
+    4)
+      read -rp "  Package to remove: " pkg_name
+      read -rp "  Are you sure? [y/N] " confirm
+      [[ "${confirm}" =~ ^[Yy]$ ]] && pkg uninstall "${pkg_name}"
+      ;;
+    5) pkg list-installed | less ;;
+  esac
+}
+
+# ── Dispatch ─────────────────────────────────────────────────────────────────
+run_subcommand() {
+  local cmd="${1}"
+  shift || true
+
+  case "${cmd}" in
+    ai)
+      python3 "${SCRIPT_DIR}/ai.py" "$@"
+      ;;
+    clean|optimize)
+      bash "${SCRIPT_DIR}/optimizer.sh" "$@"
+      ;;
+    net|netcheck)
+      bash "${SCRIPT_DIR}/netcheck.sh" "$@"
+      ;;
+    mon|monitor)
+      bash "${SCRIPT_DIR}/monitor.sh" "$@"
+      ;;
+    gh|github)
+      bash "${SCRIPT_DIR}/ghcop.sh" "$@"
+      ;;
+    apps)
+      run_apps
+      ;;
+    config|settings)
+      run_settings
+      ;;
+    help|-h|--help)
+      print_banner
+      echo -e "  ${BOLD}Usage:${RESET} tlc [command] [args]\n"
+      echo -e "  ${BRIGHT_CYAN}Commands:${RESET}"
+      echo -e "    ${BOLD}ai${RESET} [\"question\"]   — AI chat (optional inline query)"
+      echo -e "    ${BOLD}clean${RESET}             — Phone optimizer"
+      echo -e "    ${BOLD}net${RESET}               — Network diagnostics"
+      echo -e "    ${BOLD}mon${RESET}               — System monitor"
+      echo -e "    ${BOLD}gh${RESET}                — GitHub tools"
+      echo -e "    ${BOLD}apps${RESET}              — Package manager"
+      echo -e "    ${BOLD}config${RESET}            — Edit settings"
+      echo -e ""
+      ;;
+    *)
+      echo -e "  ${RED}Unknown command: ${cmd}${RESET}"
+      echo -e "  Run ${CYAN}tlc help${RESET} for usage."
+      exit 1
+      ;;
+  esac
+}
+
+# ── Interactive Loop ─────────────────────────────────────────────────────────
+interactive_menu() {
+  while true; do
+    clear
+    print_banner
+    print_menu
+    read -rp "  Choose [0-7]: " choice
+    echo ""
+
+    case "${choice}" in
+      1) python3 "${SCRIPT_DIR}/ai.py" ;;
+      2) bash "${SCRIPT_DIR}/optimizer.sh" ;;
+      3) bash "${SCRIPT_DIR}/netcheck.sh" ;;
+      4) bash "${SCRIPT_DIR}/monitor.sh" ;;
+      5) bash "${SCRIPT_DIR}/ghcop.sh" ;;
+      6) run_apps ;;
+      7) run_settings ;;
+      0|q|Q|exit|quit)
+        echo -e "  ${BRIGHT_CYAN}✌️  Stay purposeful. — TLC${RESET}\n"
+        exit 0
+        ;;
+      *)
+        echo -e "  ${RED}Invalid choice. Press Enter to continue...${RESET}"
+        read -r
+        ;;
+    esac
+
+    echo -e "\n  ${DIM}Press Enter to return to menu...${RESET}"
+    read -r
+  done
+}
+
+# ── Entry Point ───────────────────────────────────────────────────────────────
+if [[ $# -eq 0 ]]; then
+  interactive_menu
+else
+  run_subcommand "$@"
+fi
