@@ -265,7 +265,7 @@ const MobileDashboard = ({ onNavigate }: MobileDashboardProps) => {
               onClick={() => onNavigate('agent')}
             >
               <Brain className="h-6 w-6" />
-              <span className="text-sm font-bold tracking-wide">Agent TLC</span>
+              <span className="text-sm font-bold tracking-wide">Coach Care</span>
             </Button>
           </div>
         </div>

@@ -26,7 +26,7 @@ const CompactQuickActions = ({ onNavigate }: CompactQuickActionsProps) => {
     },
     {
       id: 'agent' as ViewType,
-      title: 'Agent TLC',
+      title: 'Coach Care',
       icon: Brain,
       color: 'bg-gradient-to-br from-accent to-accent/80 hover:from-accent/90 hover:to-accent/70',
       textColor: 'text-accent-foreground'

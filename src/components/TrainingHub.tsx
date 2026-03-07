@@ -359,7 +359,7 @@ const TrainingHub = ({ onNavigate }: TrainingHubProps) => {
           onClick={() => onNavigate('agent')}
         >
           <Brain className="h-5 w-5" />
-          <span className="text-sm">Agent TLC</span>
+          <span className="text-sm">Coach Care</span>
         </Button>
       </div>
     </div>
