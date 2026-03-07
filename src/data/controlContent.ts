@@ -1,8 +1,8 @@
-export const APP_NAME = "CONTROL";
-export const APP_TAGLINE = "Olympic Mastery";
-export const APP_POWERED_BY = "Powered by TLC";
-export const APP_FOUNDATION = "Men of Purpose OKC Foundation";
-export const APP_PHILOSOPHY = "If you cannot control the position, you do not earn the movement.";
+export const APP_NAME = "Tender Loving Care";
+export const APP_TAGLINE = "Train · Track · Transform";
+export const APP_POWERED_BY = "Tender Loving Care";
+export const APP_FOUNDATION = "Every rep is an act of self-care";
+export const APP_PHILOSOPHY = "Master your body with patience, discipline, and love. Every rep is an act of self-care.";
 
 export interface NonNegotiable {
   id: string;

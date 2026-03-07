@@ -25,6 +25,7 @@ import {
 import DetailedWeatherWidget from "./DetailedWeatherWidget";
 import TrainingHub from "./TrainingHub";
 import ThemeSelector from "./ThemeSelector";
+import { APP_NAME } from "@/data/controlContent";
 
 interface MobileDashboardProps {
   onNavigate: (view: ViewType) => void;
@@ -94,7 +95,7 @@ const MobileDashboard = ({ onNavigate }: MobileDashboardProps) => {
           
           <div className="space-y-3">
             <div className="text-4xl font-black bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent tracking-wider font-serif">
-              CALIX<span className="text-accent">TLC</span>
+              {APP_NAME}
             </div>
             <div className="text-sm font-bold text-muted-foreground tracking-widest font-mono uppercase">
               Elite Calisthenics Training System
@@ -264,7 +265,7 @@ const MobileDashboard = ({ onNavigate }: MobileDashboardProps) => {
               onClick={() => onNavigate('agent')}
             >
               <Brain className="h-6 w-6" />
-              <span className="text-sm font-bold tracking-wide">Agent TLC</span>
+              <span className="text-sm font-bold tracking-wide">Coach Care</span>
             </Button>
           </div>
         </div>

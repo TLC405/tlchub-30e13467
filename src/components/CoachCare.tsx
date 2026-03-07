@@ -34,7 +34,7 @@ interface ChatMessage {
   type?: 'text' | 'analysis' | 'image' | 'summary' | 'research' | 'recommendation';
 }
 
-const AgentTLC = () => {
+const CoachCare = () => {
   const [activeTab, setActiveTab] = useState("chat");
   const [chatInput, setChatInput] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
@@ -45,7 +45,7 @@ const AgentTLC = () => {
     {
       id: "welcome",
       role: "agent",
-      content: "I'm Coach TLC — your master trainer, life coach, and psychology expert. I analyze social media fitness videos, find classes near you, create workout slides, and help you master your mindset. What do you need today?",
+      content: "I'm Coach Care — your master trainer, life coach, and psychology expert. I analyze social media fitness videos, find classes near you, create workout slides, and help you master your mindset. What do you need today?",
       timestamp: new Date().toLocaleTimeString(),
       type: "text"
     }
@@ -56,7 +56,7 @@ const AgentTLC = () => {
     const input = userInput.toLowerCase();
     
     if (input.includes('handstand') || input.includes('balance')) {
-      return `🤸 **Handstand Analysis — Coach TLC**
+      return `🤸 **Handstand Analysis — Coach Care**
 
 **Current Assessment:**
 - Handstands require 3-6 months of consistent practice for basic hold
@@ -72,7 +72,7 @@ const AgentTLC = () => {
     }
     
     if (input.includes('pull') || input.includes('chin')) {
-      return `💪 **Pull-up Protocol — Coach TLC**
+      return `💪 **Pull-up Protocol — Coach Care**
 
 **Muscle Activation:** Lats (70%), Rhomboids (60%), Biceps (45%)
 
@@ -87,7 +87,7 @@ const AgentTLC = () => {
     }
 
     if (input.includes('mindset') || input.includes('motivation') || input.includes('mental') || input.includes('psychology')) {
-      return `🧠 **Mindset Protocol — Coach TLC**
+      return `🧠 **Mindset Protocol — Coach Care**
 
 **The truth:** Discipline > motivation. Every single time.
 
@@ -101,7 +101,7 @@ const AgentTLC = () => {
 *${APP_POWERED_BY} · ${APP_FOUNDATION}*`;
     }
 
-    return `🧠 **Coach TLC Analysis:**
+    return `🧠 **Coach Care Analysis:**
 
 I've analyzed "${userInput}" — here's what I see:
 
@@ -152,13 +152,13 @@ I've analyzed "${userInput}" — here's what I see:
   const handleVideoSummary = () => {
     if (!videoUrl.trim()) return;
     setIsProcessing(true);
-    toast({ title: "Coach TLC Video Analysis", description: "Breaking down movement patterns..." });
+    toast({ title: "Coach Care Video Analysis", description: "Breaking down movement patterns..." });
 
     setTimeout(() => {
       const summary: ChatMessage = {
         id: Date.now().toString(),
         role: 'agent',
-        content: `🎥 **Video Breakdown — Coach TLC**
+        content: `🎥 **Video Breakdown — Coach Care**
 
 **Source:** ${videoUrl}
 
@@ -186,13 +186,13 @@ I've analyzed "${userInput}" — here's what I see:
   const handleWebSearch = () => {
     if (!searchQuery.trim()) return;
     setIsProcessing(true);
-    toast({ title: "Coach TLC Research", description: `Researching "${searchQuery}"...` });
+    toast({ title: "Coach Care Research", description: `Researching "${searchQuery}"...` });
 
     setTimeout(() => {
       const result: ChatMessage = {
         id: Date.now().toString(),
         role: 'agent',
-        content: `📊 **Research Report — Coach TLC**
+        content: `📊 **Research Report — Coach Care**
 
 **Query:** "${searchQuery}"
 
@@ -223,7 +223,7 @@ I've analyzed "${userInput}" — here's what I see:
           </div>
           <div className="text-left">
             <h1 className="font-serif text-2xl font-black text-foreground tracking-tight">
-              Coach TLC
+              Coach Care
             </h1>
             <p className="text-[10px] text-primary font-bold tracking-wider uppercase">
               {APP_POWERED_BY}
@@ -291,7 +291,7 @@ I've analyzed "${userInput}" — here's what I see:
                       <div className="bg-muted border-[2px] border-foreground/10 p-3 rounded-[16px]">
                         <div className="flex items-center gap-2">
                           <div className="animate-spin h-4 w-4 border-2 border-primary border-t-transparent rounded-full" />
-                          <span className="text-sm text-muted-foreground">Coach TLC thinking...</span>
+                          <span className="text-sm text-muted-foreground">Coach Care thinking...</span>
                         </div>
                       </div>
                     </div>
@@ -301,7 +301,7 @@ I've analyzed "${userInput}" — here's what I see:
               
               <div className="flex gap-2">
                 <Input
-                  placeholder="Ask Coach TLC anything..."
+                  placeholder="Ask Coach Care anything..."
                   value={chatInput}
                   onChange={(e) => setChatInput(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && handleChatSubmit()}
@@ -385,7 +385,7 @@ I've analyzed "${userInput}" — here's what I see:
                 </Button>
               </div>
               <div className="bg-muted/50 rounded-[16px] p-4 border border-border space-y-2">
-                <p className="text-xs font-bold text-foreground">Coach TLC can analyze:</p>
+                <p className="text-xs font-bold text-foreground">Coach Care can analyze:</p>
                 <div className="grid grid-cols-2 gap-1 text-xs text-muted-foreground">
                   <div className="flex items-center gap-1"><Target className="h-3 w-3" /> Form & technique</div>
                   <div className="flex items-center gap-1"><Activity className="h-3 w-3" /> Muscle activation</div>
@@ -418,7 +418,7 @@ I've analyzed "${userInput}" — here's what I see:
               <Button
                 onClick={() => {
                   if (!imagePrompt.trim()) return;
-                  toast({ title: "Coach TLC", description: "Generating your workout slide..." });
+                  toast({ title: "Coach Care", description: "Generating your workout slide..." });
                   setImagePrompt("");
                 }}
                 className="w-full rounded-[12px]"
@@ -452,4 +452,4 @@ I've analyzed "${userInput}" — here's what I see:
   );
 };
 
-export default AgentTLC;
+export default CoachCare;

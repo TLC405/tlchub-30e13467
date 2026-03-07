@@ -3,7 +3,7 @@ import LearnPathView from "@/components/LearnPathView";
 import TrainingView from "@/components/TrainingView";
 import SkillTreeView from "@/components/SkillTreeView";
 import IntegrityView from "@/components/IntegrityView";
-import AgentTLC from "@/components/AgentTLC";
+import CoachCare from "@/components/CoachCare";
 import GymsClassesView from "@/components/GymsClassesView";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import ThemeSelector from "@/components/ThemeSelector";
@@ -29,7 +29,7 @@ const Index = () => {
       case "integrity":
         return <IntegrityView initialBlockId={viewParam} />;
       case "coach":
-        return <AgentTLC />;
+        return <CoachCare />;
       case "gyms":
         return <GymsClassesView />;
       default:

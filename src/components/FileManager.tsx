@@ -112,7 +112,7 @@ const FileManager = () => {
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = `gravitas-fit-files-${new Date().toISOString().split('T')[0]}.txt`;
+    a.download = `tender-loving-care-files-${new Date().toISOString().split('T')[0]}.txt`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -127,9 +127,9 @@ const FileManager = () => {
   const handleDownloadAll = () => {
     // Create a comprehensive project export
     const projectData = {
-      name: "Gravitas Fit",
-      version: "2.0.0",
-      description: "Complete calisthenics training app",
+      name: "Tender Loving Care",
+      version: "4.0.0",
+      description: "Elite bodyweight training platform",
       files: projectFiles,
       exportDate: new Date().toISOString(),
       components: [
@@ -150,7 +150,7 @@ const FileManager = () => {
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = `gravitas-fit-complete-${new Date().toISOString().split('T')[0]}.json`;
+    a.download = `tender-loving-care-complete-${new Date().toISOString().split('T')[0]}.json`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
