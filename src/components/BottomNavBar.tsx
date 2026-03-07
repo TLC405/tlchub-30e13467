@@ -1,9 +1,9 @@
 import { 
+  Home,
   BookOpen,
-  Dumbbell,
-  GitBranch,
+  Flame,
   Brain,
-  MapPin,
+  User,
 } from "lucide-react";
 
 interface BottomNavBarProps {
@@ -12,11 +12,11 @@ interface BottomNavBarProps {
 }
 
 const menuItems = [
-  { id: "learn", title: "Learn", icon: BookOpen },
-  { id: "training", title: "Train", icon: Dumbbell },
-  { id: "skills", title: "Skills", icon: GitBranch },
-  { id: "coach", title: "Coach", icon: Brain },
-  { id: "gyms", title: "Gyms", icon: MapPin },
+  { id: "training", title: "Home", icon: Home },
+  { id: "library", title: "Library", icon: BookOpen },
+  { id: "discover", title: "Discover", icon: Flame },
+  { id: "learn", title: "Learn", icon: Brain },
+  { id: "profile", title: "Profile", icon: User },
 ];
 
 export function BottomNavBar({ onNavigate, activeView }: BottomNavBarProps) {
@@ -27,9 +27,9 @@ export function BottomNavBar({ onNavigate, activeView }: BottomNavBarProps) {
           <button
             key={item.id}
             onClick={() => onNavigate(item.id)}
-            className={`flex flex-col items-center justify-center min-w-0 flex-1 py-2 px-1 rounded-[16px] transition-colors ${
+            className={`flex flex-col items-center justify-center min-w-0 flex-1 py-2 px-1 rounded-[16px] transition-all duration-200 ${
               activeView === item.id
-                ? "text-primary bg-primary/10"
+                ? "text-primary bg-primary/10 scale-105"
                 : "text-muted-foreground hover:text-foreground"
             }`}
           >
@@ -40,7 +40,7 @@ export function BottomNavBar({ onNavigate, activeView }: BottomNavBarProps) {
       </div>
       <div className="text-center pb-1">
         <span className="text-[8px] text-muted-foreground tracking-widest uppercase">
-          Powered by TLC · Men of Purpose OKC
+          Powered by TLC · Every rep is an act of self-care
         </span>
       </div>
     </nav>

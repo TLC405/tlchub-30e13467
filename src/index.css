@@ -208,3 +208,68 @@
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: hsl(var(--foreground) / 0.15); border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: hsl(var(--foreground) / 0.3); }
+
+/* ── TLC v4.0 Utility Classes ─────────────────────────────────────────────── */
+
+/* Glassmorphism cards */
+.glass-card-premium {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Gradient text for headings */
+.gradient-text-tlc {
+  background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Smooth page transitions */
+.page-enter {
+  animation: fadeInUp 0.3s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Muscle map glow effect */
+.muscle-highlight-primary {
+  fill: rgba(239, 68, 68, 0.7);
+  filter: drop-shadow(0 0 8px rgba(239, 68, 68, 0.5));
+  transition: all 0.3s ease;
+}
+
+.muscle-highlight-secondary {
+  fill: rgba(251, 191, 36, 0.5);
+  filter: drop-shadow(0 0 4px rgba(251, 191, 36, 0.3));
+  transition: all 0.3s ease;
+}
+
+.muscle-highlight-stabilizer {
+  stroke: rgba(59, 130, 246, 0.6);
+  stroke-width: 2;
+  fill: rgba(59, 130, 246, 0.1);
+  transition: all 0.3s ease;
+}
+
+/* Discovery card styles */
+.discovery-card {
+  border-radius: 24px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.discovery-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+}

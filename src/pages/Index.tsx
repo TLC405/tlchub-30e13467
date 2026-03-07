@@ -3,16 +3,23 @@ import LearnPathView from "@/components/LearnPathView";
 import TrainingView from "@/components/TrainingView";
 import SkillTreeView from "@/components/SkillTreeView";
 import IntegrityView from "@/components/IntegrityView";
-import AgentTLC from "@/components/AgentTLC";
+import CoachCare from "@/components/CoachCare";
 import GymsClassesView from "@/components/GymsClassesView";
+import DiscoveryFeed from "@/components/Discovery/DiscoveryFeed";
+import StatsView from "@/components/Stats/StatsView";
+import OnboardingFlow from "@/components/Onboarding/OnboardingFlow";
+import CompactExerciseLibrary from "@/components/CompactExerciseLibrary";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import ThemeSelector from "@/components/ThemeSelector";
 import { DownloadProject } from "@/components/DownloadProject";
 import { BottomNavBar } from "@/components/BottomNavBar";
-import { APP_NAME, APP_TAGLINE, APP_POWERED_BY } from "@/data/controlContent";
+import { APP_NAME, APP_TAGLINE, APP_POWERED_BY } from "@/data/appContent";
 
 const Index = () => {
   const [activeView, setActiveView] = useState("training");
+  const [showOnboarding, setShowOnboarding] = useState(() => {
+    return !localStorage.getItem('tlc_user_profile');
+  });
 
   // Parse parameterized views like "skills:planche-progression" or "integrity:wrist-prep"
   const baseView = activeView.split(":")[0];
@@ -29,13 +36,29 @@ const Index = () => {
       case "integrity":
         return <IntegrityView initialBlockId={viewParam} />;
       case "coach":
-        return <AgentTLC />;
+        return <CoachCare />;
       case "gyms":
         return <GymsClassesView />;
+      case "library":
+        return <CompactExerciseLibrary />;
+      case "discover":
+        return <DiscoveryFeed onNavigate={setActiveView} />;
+      case "stats":
+        return <StatsView />;
+      case "profile":
+        return <StatsView />;
       default:
         return <TrainingView onNavigate={setActiveView} />;
     }
   };
+
+  if (showOnboarding) {
+    return (
+      <ThemeProvider>
+        <OnboardingFlow onComplete={() => setShowOnboarding(false)} />
+      </ThemeProvider>
+    );
+  }
 
   return (
     <ThemeProvider>

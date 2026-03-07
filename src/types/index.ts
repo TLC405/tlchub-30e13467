@@ -36,7 +36,11 @@ export type ExerciseCategory =
   | 'rings-dynamic'
   | 'dynamic-showstoppers'
   | 'mobility-yoga'
-  | 'swimming-cardio';
+  | 'swimming-cardio'
+  | 'yoga-flow'
+  | 'mobility-corrective'
+  | 'endurance-conditioning'
+  | 'longevity-recovery';
 
 export type DifficultyLevel = 'beginner' | 'intermediate' | 'advanced' | 'elite';
 

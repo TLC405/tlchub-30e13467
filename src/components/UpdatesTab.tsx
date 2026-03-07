@@ -14,6 +14,61 @@ import {
 const UpdatesTab = () => {
   const updates: AppUpdate[] = [
     {
+      id: "v4.0.0",
+      version: "4.0.0",
+      date: new Date("2026-03-07"),
+      description: "Complete rebrand to Tender Loving Care. New MuscleMap, Discovery Feed, Onboarding, Stats dashboard, Active Workout mode, Yoga/Mobility/Endurance/Longevity categories, Coach Care AI.",
+      type: "feature"
+    },
+    {
+      id: "muscle-map",
+      version: "4.0.0",
+      date: new Date("2026-03-07"),
+      title: "Interactive Muscle Map",
+      description: "SVG-based anatomical muscle diagram with front/back views, exercise-linked highlights, and muscle tooltip info.",
+      type: "feature"
+    },
+    {
+      id: "new-categories",
+      version: "4.0.0",
+      date: new Date("2026-03-07"),
+      title: "New Exercise Categories",
+      description: "Added Yoga Flow, Mobility Corrective, Endurance Conditioning, and Longevity Recovery — 32+ new exercises with full muscle/tendon/recovery data.",
+      type: "feature"
+    },
+    {
+      id: "discovery-feed",
+      version: "4.0.0",
+      date: new Date("2026-03-07"),
+      title: "Discovery Feed",
+      description: "Instagram-style vertical discovery cards: exercise spotlights, learn bites, skill milestones, recovery reminders, and weekly challenges.",
+      type: "feature"
+    },
+    {
+      id: "onboarding",
+      version: "4.0.0",
+      date: new Date("2026-03-07"),
+      title: "3-Step Onboarding Flow",
+      description: "Personalized onboarding: choose your focus areas, identify weak/tight muscles on the body map, get your first auto-generated training day.",
+      type: "feature"
+    },
+    {
+      id: "active-workout",
+      version: "4.0.0",
+      date: new Date("2026-03-07"),
+      title: "Active Workout Mode",
+      description: "Immersive full-screen workout view with rest timer, block-by-block progression, pain flags, and muscle map mini-view.",
+      type: "feature"
+    },
+    {
+      id: "stats-view",
+      version: "4.0.0",
+      date: new Date("2026-03-07"),
+      title: "Stats Dashboard",
+      description: "Streak counter, weekly muscle heat map, category breakdown donut chart, personal records, and consistency calendar.",
+      type: "feature"
+    },
+    {
       id: "v3.0.0",
       version: "3.0.0",
       date: new Date("2026-03-02"),
@@ -90,8 +145,8 @@ const UpdatesTab = () => {
           <div className="flex items-center gap-3">
             <CheckCircle className="h-5 w-5 text-primary" />
             <div>
-              <CardTitle className="font-serif text-sm font-bold">CURRENT: v3.0.0</CardTitle>
-              <p className="text-xs text-muted-foreground">March 2, 2026</p>
+              <CardTitle className="font-serif text-sm font-bold">CURRENT: v4.0.0</CardTitle>
+              <p className="text-xs text-muted-foreground">March 7, 2026</p>
             </div>
           </div>
         </CardHeader>
