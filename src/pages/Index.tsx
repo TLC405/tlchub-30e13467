@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, lazy, Suspense } from "react";
 import LearnPathView from "@/components/LearnPathView";
 import TrainingView from "@/components/TrainingView";
 import SkillTreeView from "@/components/SkillTreeView";
@@ -10,6 +10,8 @@ import ThemeSelector from "@/components/ThemeSelector";
 import { DownloadProject } from "@/components/DownloadProject";
 import { BottomNavBar } from "@/components/BottomNavBar";
 import { APP_NAME, APP_TAGLINE, APP_POWERED_BY } from "@/data/controlContent";
+
+const CoachCareStudio = lazy(() => import("@/components/coach/CoachCareStudio"));
 
 const Index = () => {
   const [activeView, setActiveView] = useState("training");
@@ -29,7 +31,11 @@ const Index = () => {
       case "integrity":
         return <IntegrityView initialBlockId={viewParam} />;
       case "coach":
-        return <AgentTLC />;
+        return (
+          <Suspense fallback={<div className="flex items-center justify-center h-64 text-muted-foreground text-sm">Loading Coach Care Studio...</div>}>
+            <CoachCareStudio />
+          </Suspense>
+        );
       case "gyms":
         return <GymsClassesView />;
       default:
@@ -63,9 +69,15 @@ const Index = () => {
 
         {/* Main Content */}
         <main className="flex-1 overflow-auto">
-          <div className="container max-w-3xl mx-auto p-4">
-            {renderView()}
-          </div>
+          {baseView === "coach" ? (
+            <div className="px-4">
+              {renderView()}
+            </div>
+          ) : (
+            <div className="container max-w-3xl mx-auto p-4">
+              {renderView()}
+            </div>
+          )}
         </main>
 
         {/* Bottom Navigation */}
