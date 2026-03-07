@@ -1,73 +1,35 @@
-# Welcome to your Lovable project
+# Tender Loving Care
 
-## Project info
+**Train · Track · Transform**
 
-**URL**: https://lovable.dev/projects/3720c491-a725-4985-95a0-01529fdb9460
+*Every rep is an act of self-care.*
 
-## How can I edit this code?
+---
 
-There are several ways of editing your application.
+## About
 
-**Use Lovable**
+Tender Loving Care (TLC) is a full-stack calisthenics and wellness training platform. It combines skill-based progression, mobility work, yoga, endurance conditioning, and longevity practices — all in one place.
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/3720c491-a725-4985-95a0-01529fdb9460) and start prompting.
+### Features
 
-Changes made via Lovable will be committed automatically to this repo.
+- 🤸 **Skill Tree Progressions** — Handstand, Planche, Front Lever, Muscle-Up, Pistol Squat paths
+- 🏋️ **STACKED Training Cycle** — Auto-rotating 4-day program: Leverage, Pull+Grip, Inversions, Legs+Mobility
+- 🔒 **Integrity Blocks** — Wrist prep, thoracic mobility, hip opening, pancake progression, ankle work
+- 📚 **Learn Mode** — Research-backed motor-learning coaching layer
+- 🧘 **Yoga & Mobility** — Sun Salutations, FRC CARs, PNF Stretching, Jefferson Curls
+- 🔥 **Endurance Conditioning** — Tabata, EMOM, Burpee Ladders, Jump Rope Intervals
+- 🌿 **Longevity & Recovery** — Zone 2, Breathwork, Cold Exposure, Meditation Movement
+- 🏋️ **Interactive Muscle Map** — SVG-based body diagram with exercise muscle highlights
+- 🧠 **Coach Care** — AI coach for chat, video analysis, research, and workout slides
 
-**Use your preferred IDE**
+### Tech Stack
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
-
-**Edit a file directly in GitHub**
-
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
+- React 18 + TypeScript
 - Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+- Tailwind CSS + shadcn/ui
+- Recharts
+- React Router
 
-## How can I deploy this project?
+---
 
-Simply open [Lovable](https://lovable.dev/projects/3720c491-a725-4985-95a0-01529fdb9460) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+**Powered by TLC** · *Master your body with patience, discipline, and love.*

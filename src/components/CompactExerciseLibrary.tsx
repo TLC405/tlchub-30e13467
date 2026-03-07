@@ -15,7 +15,9 @@ import {
   Heart,
   Waves,
   Star,
-  Activity
+  Activity,
+  Flame,
+  Leaf,
 } from "lucide-react";
 
 const CompactExerciseLibrary = () => {
@@ -31,7 +33,11 @@ const CompactExerciseLibrary = () => {
     { id: 'rings-dynamic' as ExerciseCategory, name: 'Rings', icon: Target, emoji: '💍' },
     { id: 'dynamic-showstoppers' as ExerciseCategory, name: 'Elite', icon: Star, emoji: '⭐' },
     { id: 'mobility-yoga' as ExerciseCategory, name: 'Mobility', icon: Heart, emoji: '🧘' },
-    { id: 'swimming-cardio' as ExerciseCategory, name: 'Cardio', icon: Waves, emoji: '🏊' }
+    { id: 'swimming-cardio' as ExerciseCategory, name: 'Cardio', icon: Waves, emoji: '🏊' },
+    { id: 'yoga-flow' as ExerciseCategory, name: 'Yoga', icon: Heart, emoji: '🧘' },
+    { id: 'mobility-corrective' as ExerciseCategory, name: 'Corrective', icon: Activity, emoji: '🔧' },
+    { id: 'endurance-conditioning' as ExerciseCategory, name: 'Endurance', icon: Flame, emoji: '🔥' },
+    { id: 'longevity-recovery' as ExerciseCategory, name: 'Longevity', icon: Leaf, emoji: '🌿' },
   ];
 
   const difficulties = [
