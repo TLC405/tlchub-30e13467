@@ -2,8 +2,8 @@ import {
   BookOpen,
   Dumbbell,
   GitBranch,
-  Heart,
-  TrendingUp,
+  Brain,
+  MapPin,
 } from "lucide-react";
 
 interface BottomNavBarProps {
@@ -15,14 +15,14 @@ const menuItems = [
   { id: "learn", title: "Learn", icon: BookOpen },
   { id: "training", title: "Train", icon: Dumbbell },
   { id: "skills", title: "Skills", icon: GitBranch },
-  { id: "integrity", title: "Integrity", icon: Heart },
-  { id: "progress", title: "Progress", icon: TrendingUp },
+  { id: "coach", title: "Coach", icon: Brain },
+  { id: "gyms", title: "Gyms", icon: MapPin },
 ];
 
 export function BottomNavBar({ onNavigate, activeView }: BottomNavBarProps) {
   return (
     <nav className="fixed bottom-0 left-0 right-0 z-50 bg-card border-t-[3px] border-foreground">
-      <div className="flex justify-around items-center py-2 px-2">
+      <div className="flex justify-around items-center py-1 px-2">
         {menuItems.map((item) => (
           <button
             key={item.id}
@@ -37,6 +37,11 @@ export function BottomNavBar({ onNavigate, activeView }: BottomNavBarProps) {
             <span className="text-[10px] font-semibold tracking-wide">{item.title}</span>
           </button>
         ))}
+      </div>
+      <div className="text-center pb-1">
+        <span className="text-[8px] text-muted-foreground tracking-widest uppercase">
+          Powered by TLC · Men of Purpose OKC
+        </span>
       </div>
     </nav>
   );
