@@ -1,244 +1,138 @@
 
-# Learn Mode Upgrade Plan
 
-## Overview
+# Major App Overhaul — Rebrand, New Layout, Coach TLC AI, Gyms & Classes
 
-This plan adds a **Learn Mode** feature to the calisthenics app that applies motor-learning research to help users learn skills faster. The implementation is additive-only (no breaking changes), premium in design, and delivers value in ~10 seconds with optional deep dives.
+## Summary
 
----
-
-## Architecture
-
-### Data Layer (New Files)
-
-**1. Create `src/data/learningPrinciples.ts`**
-
-A static data file containing 8 research-backed learning principles:
-
-| Slug | Title | When to Use |
-|------|-------|-------------|
-| distributed_practice | Distributed Practice | Always |
-| external_focus | External Focus Cues | Always |
-| variability | Small Variation Practice | Intermediate |
-| autonomy | Autonomy Support | Always |
-| feedback_dosing | Feedback Dosing | Always |
-| retention_test | Retention Test | Intermediate |
-| sleep_consolidation | Sleep & Consolidation | Always |
-| interleaving | Interleaving | Intermediate |
-
-Each principle includes:
-- `micro_summary` (140 chars) - quick value
-- `why_it_works` (280 chars) - expandable science
-- `how_to_apply_template` with placeholders (`{exercise}`, `{sets}`)
-- `caution` - safety note
-- `sources[]` - research URLs
-
-**2. Create `src/types/learning.ts`**
-
-New TypeScript interfaces:
-- `LearningPrinciple` - principle definition
-- `LearnConfig` - per-exercise learn mapping
-- `LearnDefaultRecipe` - frequency/dose structure
-- `LearnModeIntensity` - user preference setting
-
-**3. Extend existing exercise data**
-
-Update `src/data/exerciseDatabase.ts` to add learn mapping for each exercise:
-- `learn_principle_slugs: string[]` (2-4 principles)
-- `learn_apply_notes: Record<string, string>` (optional overrides)
-- `learn_default_recipe` (frequency, sets, rest ranges)
-- `learn_coach_tip: string` (optional, tasteful humor)
-
-Auto-assignment rules:
-- Skills/static holds (Planche, Handstand, Lever) → `distributed_practice`, `external_focus`, `feedback_dosing`, `retention_test`
-- Mobility/compression → `distributed_practice`, `variability`, `autonomy`, `sleep_consolidation`
-- Strength reps → `distributed_practice`, `external_focus`, `feedback_dosing`
+This is a significant restructuring: rename the app, change the tagline, replace the Integrity tab with a Coach TLC AI assistant, rename Progress to "Gyms & Classes", redesign the landing experience to be day-selection-first, remove all Lovable branding, and add "Powered by TLC" + "Men of Purpose OKC" branding throughout.
 
 ---
 
-## UI Components
+## 1. Rebrand — Name & Tagline
 
-### New Components
+**Files: `src/data/controlContent.ts`, `src/pages/Index.tsx`, `index.html`**
 
-**1. `src/components/learn/LearnCard.tsx`**
-
-A premium, minimal card showing:
-- Icon + title (e.g., "Practice Recipe")
-- Micro summary (quick value)
-- "Apply to {exercise}" line
-- Tiny caution
-- "Show more" expander for `why_it_works` + sources
-
-Design: shadcn Card with subtle border, clean hierarchy, 10-second value.
-
-**2. `src/components/learn/LearnTab.tsx`**
-
-Displays exactly 3 LearnCards:
-1. **Practice Recipe** - distributed practice + weekly frequency
-2. **Focus Cue** - external focus + one apply line  
-3. **Progress Smarter** - variability OR retention test
-
-Uses existing Tabs component pattern.
-
-**3. `src/components/learn/LearnBiteToast.tsx`**
-
-Post-workout logging micro nudge:
-- One principle per log (rotates across sessions)
-- Example: "Next time: 4×10s instead of 1×40s. Same work, better learning."
-- Uses existing toast/sonner system
-
-**4. `src/components/learn/LearnModeSettings.tsx`**
-
-Coach controls for learn intensity:
-- `low` - micro_summary only
-- `standard` - micro + apply line (default)
-- `nerdy` - includes why_it_works + sources
-
-Stored in localStorage.
+- App name: **CONTROL** (keep)
+- Tagline change: `"Calisthenics · Yoga · Balance · Mobility"` → `"Olympic Mastery"`
+- Remove all Lovable references from `index.html` (OG images, twitter:site, meta author)
+- Replace with "CONTROL — Powered by TLC" and "Men of Purpose OKC Foundation"
 
 ---
 
-## Integration Points
+## 2. Remove Lovable Branding Everywhere
 
-### 1. Exercise Detail Enhancement
+**Files: `index.html`, `vite.config.ts`**
 
-Update `src/components/DetailedExerciseCard.tsx`:
-- Add **Learn** tab alongside existing Exercise Details collapsible
-- Shows 3 LearnCards when expanded
-- Lazy-loaded for performance
-
-### 2. Skill Tree Enhancement
-
-Update `src/components/SkillTreeView.tsx`:
-- Add **Learn** tab in exercise detail view
-- Same 3-card pattern
-
-### 3. Workout Logging Integration
-
-Update `src/components/WorkoutCalendar.tsx`:
-- After logging workout, show LearnBiteToast
-- Rotate principles based on logged exercises
-- Store last shown principle per exercise in localStorage
-
-### 4. Learn Mode Context
-
-Create `src/contexts/LearnModeContext.tsx`:
-- Manages learn intensity preference
-- Provides helper functions for principle lookup
-- Memoizes merged learn content per exercise
+- Remove `lovable-tagger` import from vite config (or keep but it's cosmetic)
+- Replace OG image URLs and twitter:site with TLC/Men of Purpose branding
+- Update page title to "CONTROL — Olympic Mastery | Powered by TLC"
 
 ---
 
-## File Changes Summary
+## 3. Navigation Restructure
+
+**File: `src/components/BottomNavBar.tsx`**
+
+New 5-tab layout:
+
+| Tab | Label | Icon | View ID |
+|-----|-------|------|---------|
+| 1 | Learn | BookOpen | learn |
+| 2 | Train | Dumbbell | training |
+| 3 | Skills | GitBranch | skills |
+| 4 | Coach TLC | Brain | coach |
+| 5 | Gyms | MapPin | gyms |
+
+- "Integrity" tab → **Coach TLC** (AI assistant)
+- "Progress" tab → **Gyms & Classes** (find fitness in your area)
+
+---
+
+## 4. Landing Experience — "What kind of day do you want?"
+
+**File: `src/pages/Index.tsx`**
+
+Instead of defaulting to Learn tab, the app opens to the **Train** tab showing the STACKED day selector. The user immediately chooses what kind of day they want (Leverage, Pull+Grip, Inversions, Legs, Skill Play).
+
+Set `activeView` default to `"training"` instead of `"learn"`.
+
+---
+
+## 5. Coach TLC — Replace Integrity Tab
+
+**File: `src/components/IntegrityView.tsx` → repurpose or new `CoachTLC.tsx`**
+
+Restyle the existing `AgentTLC.tsx` component with brutalist design to serve as the Coach TLC tab. This is the AI that:
+- Chats about training, nutrition, psychology, life coaching
+- Analyzes social media fitness videos (YouTube, Instagram, TikTok)
+- Finds gyms, classes, and fitness in user's area
+- Creates workout slides and visual content
+- Master trainer + life coach + psychology expert persona
+
+Restyle `AgentTLC.tsx` to match brutalist design (remove gradients, shadows — use 3px ink borders, 24px radius, font-serif headers). Add "Powered by TLC" badge prominently.
+
+**File: `src/pages/Index.tsx`**
+
+Route `coach` view to the restyled AgentTLC component.
+
+---
+
+## 6. Gyms & Classes — Replace Progress Tab
+
+**New file: `src/components/GymsClassesView.tsx`**
+
+A new view replacing Progress that helps users find fitness in their area:
+- Search input for location/zip code
+- Categories: Calisthenics Parks, Yoga Studios, CrossFit, Martial Arts, Open Gyms, Group Classes
+- Placeholder cards for nearby results (mock data — real API integration later)
+- "Powered by TLC" badge
+- "Men of Purpose OKC Foundation" featured section at bottom
+
+---
+
+## 7. "Powered by TLC" Branding
+
+**Files: `src/pages/Index.tsx`, `src/components/BottomNavBar.tsx`, multiple views**
+
+Add branding throughout:
+- Header: "CONTROL" with "Olympic Mastery" underneath, small "Powered by TLC" badge
+- Footer area above bottom nav: "Powered by TLC · Men of Purpose OKC Foundation"
+- Coach TLC tab header: prominent TLC branding
+- Gyms tab: "Powered by TLC" on search results
+- Learn tab: subtle "Powered by TLC" at bottom
+
+---
+
+## 8. Move Integrity Blocks
+
+Since the Integrity tab is being replaced by Coach TLC, the integrity mobility blocks (wrist prep, thoracic, etc.) need a new home. Move them into the **Train** tab as an expandable "Integrity Blocks" section at the bottom of the day selector, so users can still access standalone mobility work.
+
+**File: `src/components/TrainingView.tsx`**
+
+Add a collapsible "Integrity Blocks" section below the STACKED day cards.
+
+---
+
+## Files Summary
 
 | File | Action | Description |
 |------|--------|-------------|
-| `src/data/learningPrinciples.ts` | Create | 8 principles with premium copy |
-| `src/types/learning.ts` | Create | TypeScript interfaces |
-| `src/types/index.ts` | Modify | Add learn fields to Exercise interface |
-| `src/data/exerciseDatabase.ts` | Modify | Add learn mappings to all exercises |
-| `src/components/learn/LearnCard.tsx` | Create | Premium learn card component |
-| `src/components/learn/LearnTab.tsx` | Create | 3-card learn tab |
-| `src/components/learn/LearnBiteToast.tsx` | Create | Post-log toast component |
-| `src/components/learn/LearnModeSettings.tsx` | Create | Intensity toggle |
-| `src/contexts/LearnModeContext.tsx` | Create | Context for learn preferences |
-| `src/components/DetailedExerciseCard.tsx` | Modify | Add Learn tab |
-| `src/components/SkillTreeView.tsx` | Modify | Add Learn tab to detail view |
-| `src/components/WorkoutCalendar.tsx` | Modify | Add post-log toast |
-| `src/App.tsx` | Modify | Wrap with LearnModeProvider |
-
----
-
-## Technical Details
-
-### Performance Considerations
-- Fetch principles once at app load (static import)
-- Index principles by slug for O(1) lookup
-- Memoize merged learn content per exercise with `useMemo`
-- Lazy-load Learn tab content
-
-### Data Structure Example
-
-```typescript
-// LearningPrinciple
-{
-  id: "distributed_practice",
-  slug: "distributed_practice",
-  title: "Distributed Practice",
-  micro_summary: "More short exposures beats one long grind.",
-  why_it_works: "Spacing practice across days improves retention and skill stability versus cramming.",
-  how_to_apply_template: "Do {exercise} 3-5x/week as 8-12 minute micro-sessions (not 1 marathon).",
-  when_to_use: "always",
-  caution: "If joints feel irritated, keep frequency but lower intensity.",
-  sources: [
-    "https://www.sciencedirect.com/...",
-    "https://pmc.ncbi.nlm.nih.gov/..."
-  ]
-}
-
-// Exercise learn config
-{
-  learn_principle_slugs: ["distributed_practice", "external_focus", "feedback_dosing"],
-  learn_apply_notes: {
-    external_focus: "Think: 'push the floor away' during lean"
-  },
-  learn_default_recipe: {
-    frequency_per_week: 4,
-    dose_type: "microdose",
-    set_count_range: [3, 6],
-    hold_or_rep_range: [15, 30],
-    rest_range_sec: [60, 120]
-  },
-  learn_coach_tip: "Your wrists will thank you for the short sessions."
-}
-```
-
-### Toast Rotation Logic
-
-```typescript
-// Get next principle to show (rotates per exercise)
-const getNextPrinciple = (exerciseId: string): LearningPrinciple => {
-  const key = `learn_rotation_${exerciseId}`;
-  const lastIndex = parseInt(localStorage.getItem(key) || "0");
-  const principles = exercise.learn_principle_slugs;
-  const nextIndex = (lastIndex + 1) % principles.length;
-  localStorage.setItem(key, nextIndex.toString());
-  return principlesMap[principles[nextIndex]];
-}
-```
-
----
-
-## Quality Bar
-
-### Design Principles
-- Premium hierarchy, spacing, clean microcopy
-- Never imply failure - always give an easier next action
-- Personal, light, empathetic tone (never corny)
-- 10 seconds of value, expandable for deeper reading
-- Follows existing design patterns (clean-border, premium-shadow, glass-effect)
-
-### Accessibility
-- Proper focus management in expandable sections
-- Screen reader friendly labels
-- Keyboard navigation for Learn tabs
-
-### Mobile-First
-- Cards stack cleanly on mobile
-- Touch-friendly expand/collapse
-- Toast positioned for mobile viewing
-
----
+| `src/data/controlContent.ts` | Modify | Update tagline to "Olympic Mastery" |
+| `index.html` | Modify | Remove Lovable branding, update meta |
+| `src/pages/Index.tsx` | Modify | Default to Train, route coach/gyms, add TLC branding |
+| `src/components/BottomNavBar.tsx` | Modify | New 5 tabs (Coach TLC, Gyms) |
+| `src/components/AgentTLC.tsx` | Modify | Brutalist restyle + Coach TLC persona |
+| `src/components/GymsClassesView.tsx` | Create | New Gyms & Classes view |
+| `src/components/TrainingView.tsx` | Modify | Add integrity blocks section, default landing |
+| `src/components/IntegrityView.tsx` | Keep | Still used when navigating from Train blocks |
 
 ## Implementation Order
 
-1. Create types and data files (principles + exercise mappings)
-2. Create LearnModeContext provider
-3. Build LearnCard component
-4. Build LearnTab component  
-5. Integrate into DetailedExerciseCard
-6. Integrate into SkillTreeView
-7. Build LearnBiteToast
-8. Integrate into WorkoutCalendar
-9. Add LearnModeSettings
-10. Polish and test all integrations
+1. Data + meta updates (controlContent, index.html)
+2. Navigation restructure (BottomNavBar, Index routing)
+3. Default to Train tab
+4. Create GymsClassesView
+5. Restyle AgentTLC for brutalist Coach TLC
+6. Add "Powered by TLC" + "Men of Purpose OKC" branding everywhere
+7. Move integrity blocks into Train tab
+
