@@ -11,9 +11,9 @@ const Header = () => {
           </div>
           <div>
             <h1 className="text-xl font-bold bg-gradient-to-r from-gold-light to-bronze bg-clip-text text-transparent">
-              Gravitas Fit
+              Tender Loving Care
             </h1>
-            <p className="text-xs text-muted-foreground">Premium Training</p>
+            <p className="text-xs text-muted-foreground">Elite Bodyweight Training</p>
           </div>
         </div>
         

@@ -14,10 +14,18 @@ import {
 const UpdatesTab = () => {
   const updates: AppUpdate[] = [
     {
+      id: "v4.0.0",
+      version: "4.0.0",
+      date: new Date("2026-03-07"),
+      title: "Tender Loving Care — Complete Rebrand",
+      description: "Full platform rebrand combining the best of our exercise library, training system, and coaching features into one unified experience. Removed all third-party platform dependencies.",
+      type: "feature"
+    },
+    {
       id: "v3.0.0",
       version: "3.0.0",
       date: new Date("2026-03-02"),
-      title: "CONTROL by TLC — Full Rebrand",
+      title: "Tender Loving Care v3.0",
       description: "Complete transformation to brutalist design system, STACKED training cycle, Learn Mode with motor-learning research, Integrity blocks, and skill path navigation.",
       type: "feature"
     },
@@ -90,8 +98,8 @@ const UpdatesTab = () => {
           <div className="flex items-center gap-3">
             <CheckCircle className="h-5 w-5 text-primary" />
             <div>
-              <CardTitle className="font-serif text-sm font-bold">CURRENT: v3.0.0</CardTitle>
-              <p className="text-xs text-muted-foreground">March 2, 2026</p>
+              <CardTitle className="font-serif text-sm font-bold">CURRENT: v4.0.0</CardTitle>
+              <p className="text-xs text-muted-foreground">March 7, 2026</p>
             </div>
           </div>
         </CardHeader>

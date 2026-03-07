@@ -1,73 +1,60 @@
-# Welcome to your Lovable project
+# Tender Loving Care
 
-## Project info
+> **Train · Track · Transform**
 
-**URL**: https://lovable.dev/projects/3720c491-a725-4985-95a0-01529fdb9460
+*Every rep is an act of self-care. Master your body with patience, discipline, and love.*
 
-## How can I edit this code?
+---
 
-There are several ways of editing your application.
+## Overview
 
-**Use Lovable**
+**Tender Loving Care** is an elite bodyweight training platform built for calisthenics athletes at every level. From beginner pull-up progressions to advanced planche and handstand work, it combines a comprehensive exercise library, intelligent skill progressions, and an AI coaching assistant into one unified experience.
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/3720c491-a725-4985-95a0-01529fdb9460) and start prompting.
+---
 
-Changes made via Lovable will be committed automatically to this repo.
+## Features
 
-**Use your preferred IDE**
+- **Exercise Library** — 150+ exercises with muscle activation maps, tendon load ratings, and progressions
+- **STACKED Training Cycle** — 4-day auto-rotating cycle: Leverage · Pull+Grip · Inversions · Legs+Mobility
+- **Skill Tree Progressions** — Step-by-step paths for Planche, Handstand, Front Lever, Muscle-Up, Pistol & Legs
+- **Learn Mode** — Motor-learning science integrated into every coaching cue (8 principles)
+- **AI Coach (Coach Care)** — Chat, video analysis, research, and workout slide generation
+- **Workout Calendar** — Track sessions, streaks, and weekly progress
+- **OKC Gyms & Classes Finder** — Discover local training locations and class schedules
+- **Theme Customization** — Multiple visual themes to match your vibe
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+---
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+## Tech Stack
 
-Follow these steps:
+- [Vite](https://vitejs.dev/) — Fast build tooling
+- [TypeScript](https://www.typescriptlang.org/) — Type-safe codebase
+- [React](https://react.dev/) — UI framework
+- [shadcn-ui](https://ui.shadcn.com/) — Accessible component library
+- [Tailwind CSS](https://tailwindcss.com/) — Utility-first styling
+
+---
+
+## Run Locally
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
+# Clone the repository
 git clone <YOUR_GIT_URL>
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+# Navigate to the project directory
+cd tender-loving-care
 
-# Step 3: Install the necessary dependencies.
-npm i
+# Install dependencies
+npm install
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Start the development server
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+The app will be available at `http://localhost:8080`.
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+---
 
-**Use GitHub Codespaces**
+## Philosophy
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/3720c491-a725-4985-95a0-01529fdb9460) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+> *"Master your body with patience, discipline, and love. Every rep is an act of self-care."*

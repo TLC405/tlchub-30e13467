@@ -40,7 +40,7 @@ export function BottomNavBar({ onNavigate, activeView }: BottomNavBarProps) {
       </div>
       <div className="text-center pb-1">
         <span className="text-[8px] text-muted-foreground tracking-widest uppercase">
-          Powered by TLC · Men of Purpose OKC
+          Tender Loving Care
         </span>
       </div>
     </nav>
