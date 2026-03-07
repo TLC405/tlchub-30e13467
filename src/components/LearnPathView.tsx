@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { skillPaths, comingSoon, APP_PHILOSOPHY } from "@/data/controlContent";
+import { skillPaths, comingSoon, APP_PHILOSOPHY, APP_POWERED_BY, APP_FOUNDATION } from "@/data/controlContent";
 import { NonNegotiables } from "./NonNegotiables";
 import { ChevronRight, Lock, BookOpen } from "lucide-react";
 

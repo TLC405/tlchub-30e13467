@@ -3,15 +3,16 @@ import LearnPathView from "@/components/LearnPathView";
 import TrainingView from "@/components/TrainingView";
 import SkillTreeView from "@/components/SkillTreeView";
 import IntegrityView from "@/components/IntegrityView";
-import ProgressView from "@/components/ProgressView";
+import AgentTLC from "@/components/AgentTLC";
+import GymsClassesView from "@/components/GymsClassesView";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import ThemeSelector from "@/components/ThemeSelector";
 import { DownloadProject } from "@/components/DownloadProject";
 import { BottomNavBar } from "@/components/BottomNavBar";
-import { APP_NAME, APP_TAGLINE } from "@/data/controlContent";
+import { APP_NAME, APP_TAGLINE, APP_POWERED_BY } from "@/data/controlContent";
 
 const Index = () => {
-  const [activeView, setActiveView] = useState("learn");
+  const [activeView, setActiveView] = useState("training");
 
   // Parse parameterized views like "skills:planche-progression" or "integrity:wrist-prep"
   const baseView = activeView.split(":")[0];
@@ -27,16 +28,18 @@ const Index = () => {
         return <SkillTreeView initialTreeId={viewParam} onNavigate={setActiveView} />;
       case "integrity":
         return <IntegrityView initialBlockId={viewParam} />;
-      case "progress":
-        return <ProgressView />;
+      case "coach":
+        return <AgentTLC />;
+      case "gyms":
+        return <GymsClassesView />;
       default:
-        return <LearnPathView onNavigate={setActiveView} />;
+        return <TrainingView onNavigate={setActiveView} />;
     }
   };
 
   return (
     <ThemeProvider>
-      <div className="min-h-screen bg-background pb-20">
+      <div className="min-h-screen bg-background pb-24">
         {/* Header */}
         <header className="h-14 border-b-[3px] border-foreground bg-card sticky top-0 z-40">
           <div className="flex items-center justify-between h-full px-4">
@@ -49,6 +52,9 @@ const Index = () => {
               </p>
             </div>
             <div className="flex items-center gap-2">
+              <span className="text-[8px] text-primary font-bold tracking-wider uppercase hidden sm:inline">
+                {APP_POWERED_BY}
+              </span>
               <DownloadProject />
               <ThemeSelector />
             </div>

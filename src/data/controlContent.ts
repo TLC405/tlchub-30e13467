@@ -1,5 +1,7 @@
 export const APP_NAME = "CONTROL";
-export const APP_TAGLINE = "Calisthenics · Yoga · Balance · Mobility";
+export const APP_TAGLINE = "Olympic Mastery";
+export const APP_POWERED_BY = "Powered by TLC";
+export const APP_FOUNDATION = "Men of Purpose OKC Foundation";
 export const APP_PHILOSOPHY = "If you cannot control the position, you do not earn the movement.";
 
 export interface NonNegotiable {

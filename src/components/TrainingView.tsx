@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import { NonNegotiables } from "./NonNegotiables";
-import { stackedWeek } from "@/data/controlContent";
+import { stackedWeek, integrityBlocks, APP_POWERED_BY } from "@/data/controlContent";
 import type { TrainingBlock } from "@/data/controlContent";
 import {
   Dumbbell,
@@ -16,9 +16,11 @@ import {
   CheckCircle,
   Clock,
   ChevronLeft,
-  ChevronRight,
+  ChevronDown,
+  ChevronUp,
   CircleDot,
   ExternalLink,
+  Heart,
 } from "lucide-react";
 
 const iconMap: Record<string, React.ReactNode> = {
@@ -53,6 +55,7 @@ const TrainingView = ({ onNavigate }: TrainingViewProps) => {
   const [selectedDay, setSelectedDay] = useState<number | null>(null);
   const [completedBlocks, setCompletedBlocks] = useState<Record<string, boolean[]>>({});
   const [painFlags, setPainFlags] = useState<Record<string, boolean[]>>({});
+  const [showIntegrity, setShowIntegrity] = useState(false);
   const todayIndex = getTodayDay();
 
   const toggleBlock = (dayId: string, blockIndex: number) => {
@@ -198,6 +201,8 @@ const TrainingView = ({ onNavigate }: TrainingViewProps) => {
         <div className="text-center text-sm text-muted-foreground">
           {completed}/{day.blocks.length} blocks complete
         </div>
+
+        <p className="text-[10px] text-center text-primary font-semibold">{APP_POWERED_BY}</p>
       </div>
     );
   }
@@ -207,10 +212,10 @@ const TrainingView = ({ onNavigate }: TrainingViewProps) => {
     <div className="space-y-6">
       <div className="text-center py-4 space-y-2">
         <h1 className="font-serif text-3xl font-black text-foreground tracking-tight">
-          STACKED
+          What kind of day?
         </h1>
         <p className="text-sm text-muted-foreground">
-          Your 4-day training cycle. Tap a day to begin.
+          Choose your training focus. Tap to begin.
         </p>
       </div>
 
@@ -273,6 +278,50 @@ const TrainingView = ({ onNavigate }: TrainingViewProps) => {
           );
         })}
       </div>
+
+      {/* Integrity Blocks - Collapsible */}
+      <div>
+        <button
+          onClick={() => setShowIntegrity(!showIntegrity)}
+          className="w-full flex items-center justify-between py-3 px-4 border-[2px] border-foreground/20 rounded-[16px] hover:bg-muted/30 transition-colors"
+        >
+          <div className="flex items-center gap-2">
+            <Heart className="h-4 w-4 text-foreground" />
+            <span className="font-serif font-bold text-sm text-foreground">Integrity Blocks</span>
+            <Badge variant="outline" className="text-[9px] rounded-full border-foreground/20">
+              Mobility · Yoga
+            </Badge>
+          </div>
+          {showIntegrity ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+        </button>
+
+        {showIntegrity && (
+          <div className="mt-3 space-y-3 stagger-children">
+            {integrityBlocks.map((block) => (
+              <Card
+                key={block.id}
+                className="border-[2px] border-foreground/30 rounded-[20px] cursor-pointer card-lift hover:border-foreground transition-colors"
+                onClick={() => onNavigate(`integrity:${block.id}`)}
+              >
+                <CardContent className="py-3 px-4">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <Heart className="h-4 w-4 text-muted-foreground" />
+                      <div>
+                        <p className="font-serif font-bold text-sm text-foreground">{block.title}</p>
+                        <p className="text-[10px] text-muted-foreground">{block.duration} · {block.drills.length} drills</p>
+                      </div>
+                    </div>
+                    <ExternalLink className="h-4 w-4 text-primary" />
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        )}
+      </div>
+
+      <p className="text-[10px] text-center text-primary font-semibold">{APP_POWERED_BY}</p>
     </div>
   );
 };
