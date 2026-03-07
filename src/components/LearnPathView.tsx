@@ -109,6 +109,9 @@ const LearnPathView = ({ onNavigate }: LearnPathViewProps) => {
           </Card>
         ))}
       </div>
+
+      <p className="text-[10px] text-center text-primary font-semibold">{APP_POWERED_BY}</p>
+      <p className="text-[9px] text-center text-muted-foreground">{APP_FOUNDATION}</p>
     </div>
   );
 };
