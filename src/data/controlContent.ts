@@ -4,6 +4,9 @@ export const APP_POWERED_BY = "Powered by TLC";
 export const APP_FOUNDATION = "Men of Purpose OKC Foundation";
 export const APP_PHILOSOPHY = "If you cannot control the position, you do not earn the movement.";
 
+export const APP_WORLD_NAME = "TLC WORLD";
+export const APP_WORLD_TAGLINE = "Your Personal Operating System";
+
 export interface NonNegotiable {
   id: string;
   title: string;
