@@ -3,6 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import VideoPlayer from "@/components/VideoPlayer";
 import { skillProgressions, type SkillTree, type ProgressionStep } from "@/data/skillProgressions";
+import { muscleDiagrams } from "@/data/muscleDiagrams";
 import { Play, Tv, ChevronRight } from "lucide-react";
 
 const TLCtvView = () => {
