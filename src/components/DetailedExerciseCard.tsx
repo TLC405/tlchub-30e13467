@@ -47,11 +47,11 @@ const DetailedExerciseCard = ({ exercise, onMarkComplete, isCompleted }: Detaile
             {exercise.youtubeUrl && (
               <Button
                 size="sm"
-                onClick={() => window.open(exercise.youtubeUrl, "_blank", "noopener")}
-                className="bg-destructive hover:bg-destructive/90 text-destructive-foreground"
+                onClick={() => setShowVideo(!showVideo)}
+                className={showVideo ? "bg-primary text-primary-foreground" : "bg-destructive hover:bg-destructive/90 text-destructive-foreground"}
               >
                 <Play className="h-3 w-3 mr-1" />
-                Watch
+                {showVideo ? "Hide" : "Watch"}
               </Button>
             )}
             {onMarkComplete && (
