@@ -134,9 +134,9 @@ const SkillTreeView = ({ initialTreeId, onNavigate }: SkillTreeViewProps) => {
   // ─── Grid View ───────────────────────────────────────────
   if (!selectedTree) {
     return (
-      <div className="space-y-6">
+      <div className="space-y-6 animate-fade-in">
         <div className="text-center py-4 space-y-2">
-          <h1 className="font-serif text-3xl font-black text-foreground tracking-tight">
+          <h1 className="text-2xl font-extrabold text-foreground tracking-tight">
             Skill Trees
           </h1>
           <p className="text-sm text-muted-foreground">
@@ -146,7 +146,7 @@ const SkillTreeView = ({ initialTreeId, onNavigate }: SkillTreeViewProps) => {
 
         <NonNegotiables compact />
 
-        <div className="space-y-4 stagger-children">
+        <div className="space-y-3">
           {skillProgressions.map((tree) => {
             const progress = getTreeProgress(tree);
             const currentLevel = getCurrentLevel(tree);
@@ -154,17 +154,17 @@ const SkillTreeView = ({ initialTreeId, onNavigate }: SkillTreeViewProps) => {
             return (
               <Card
                 key={tree.id}
-                className="border-[3px] border-foreground rounded-[24px] cursor-pointer hover:bg-muted/30 transition-colors card-lift"
+                className="border border-border rounded-lg cursor-pointer hover:border-foreground/30 transition-colors"
                 onClick={() => setSelectedTree(tree)}
               >
                 <CardHeader className="pb-2">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                      <div className="h-10 w-10 rounded-[12px] border-[2px] border-foreground flex items-center justify-center bg-card">
+                      <div className="h-10 w-10 rounded-lg border border-border flex items-center justify-center bg-card">
                         {iconMap[tree.icon] || <Dumbbell className="h-5 w-5" />}
                       </div>
                       <div>
-                        <CardTitle className="font-serif text-lg font-bold">
+                        <CardTitle className="text-base font-bold">
                           {tree.name}
                         </CardTitle>
                         <p className="text-xs text-muted-foreground">
@@ -180,7 +180,7 @@ const SkillTreeView = ({ initialTreeId, onNavigate }: SkillTreeViewProps) => {
                   <p className="text-sm text-muted-foreground">{tree.description}</p>
 
                   <div className="flex items-center gap-2">
-                    <Badge className={`${levelColors[currentLevel]} text-primary-foreground`}>
+                    <Badge className={`${levelColors[currentLevel]} text-white`}>
                       {levelLabels[currentLevel]}
                     </Badge>
                     <span className="text-xs text-muted-foreground">Current Level</span>
@@ -214,32 +214,32 @@ const SkillTreeView = ({ initialTreeId, onNavigate }: SkillTreeViewProps) => {
     const stepIndex = selectedTree.progressions.findIndex((p) => p.id === selectedStep.id);
 
     return (
-      <div className="space-y-4">
+      <div className="space-y-4 animate-fade-in">
         <Button
           variant="outline"
           onClick={() => setSelectedStep(null)}
-          className="border-[2px] border-foreground rounded-[16px]"
+          className="rounded-lg"
         >
           <ChevronLeft className="h-4 w-4 mr-2" />
           Back to {selectedTree.name}
         </Button>
 
-        <Card className="border-[3px] border-foreground rounded-[24px]">
+        <Card className="border border-border rounded-lg">
           <CardHeader>
             <div className="flex items-center gap-3">
               <div
-                className={`h-10 w-10 rounded-[12px] border-[2px] flex items-center justify-center font-bold ${
+                className={`h-10 w-10 rounded-lg border flex items-center justify-center font-bold ${
                   isCompleted
                     ? "border-green-600 bg-green-600/10 text-green-600"
-                    : "border-foreground bg-card text-foreground"
+                    : "border-border bg-card text-foreground"
                 }`}
               >
                 {isCompleted ? <CheckCircle className="h-5 w-5" /> : stepIndex + 1}
               </div>
               <div>
-                <CardTitle className="font-serif text-xl font-bold">{selectedStep.name}</CardTitle>
+                <CardTitle className="text-xl font-bold">{selectedStep.name}</CardTitle>
                 <div className="flex items-center gap-2 mt-1">
-                  <Badge className={`${levelColors[selectedStep.level]} text-primary-foreground`}>
+                  <Badge className={`${levelColors[selectedStep.level]} text-white`}>
                     {levelLabels[selectedStep.level]}
                   </Badge>
                 </div>
@@ -250,9 +250,7 @@ const SkillTreeView = ({ initialTreeId, onNavigate }: SkillTreeViewProps) => {
           <CardContent className="space-y-6">
             <p className="text-muted-foreground">{selectedStep.description}</p>
 
-            {/* Watch Demo — inline player */}
             {selectedStep.youtubeUrl && (() => {
-              // Extract video ID from YouTube URL
               const match = selectedStep.youtubeUrl!.match(/(?:v=|youtu\.be\/)([a-zA-Z0-9_-]+)/);
               const videoId = match ? match[1] : null;
               return videoId ? (
@@ -273,10 +271,9 @@ const SkillTreeView = ({ initialTreeId, onNavigate }: SkillTreeViewProps) => {
               </TabsList>
 
               <TabsContent value="training" className="space-y-6">
-                {/* Form Cues */}
                 {selectedStep.formCues.length > 0 && (
                   <div className="space-y-2">
-                    <h4 className="font-serif font-bold flex items-center gap-2 text-foreground">
+                    <h4 className="font-bold flex items-center gap-2 text-foreground">
                       <CheckCircle className="h-4 w-4 text-green-600" />
                       Form Cues
                     </h4>
@@ -291,10 +288,9 @@ const SkillTreeView = ({ initialTreeId, onNavigate }: SkillTreeViewProps) => {
                   </div>
                 )}
 
-                {/* Common Mistakes */}
                 {selectedStep.commonMistakes.length > 0 && (
                   <div className="space-y-2">
-                    <h4 className="font-serif font-bold flex items-center gap-2 text-foreground">
+                    <h4 className="font-bold flex items-center gap-2 text-foreground">
                       <AlertCircle className="h-4 w-4 text-destructive" />
                       Common Mistakes
                     </h4>
@@ -309,9 +305,8 @@ const SkillTreeView = ({ initialTreeId, onNavigate }: SkillTreeViewProps) => {
                   </div>
                 )}
 
-                {/* Muscles Worked */}
                 <div className="space-y-2">
-                  <h4 className="font-serif font-bold flex items-center gap-2 text-foreground">
+                  <h4 className="font-bold flex items-center gap-2 text-foreground">
                     <Dumbbell className="h-4 w-4" />
                     Muscles Worked
                   </h4>
@@ -337,10 +332,9 @@ const SkillTreeView = ({ initialTreeId, onNavigate }: SkillTreeViewProps) => {
                   </div>
                 </div>
 
-                {/* Prerequisites */}
                 {selectedStep.prerequisites.length > 0 && (
                   <div className="space-y-2">
-                    <h4 className="font-serif font-bold flex items-center gap-2 text-foreground">
+                    <h4 className="font-bold flex items-center gap-2 text-foreground">
                       <Lock className="h-4 w-4" />
                       Prerequisites
                     </h4>
@@ -369,9 +363,8 @@ const SkillTreeView = ({ initialTreeId, onNavigate }: SkillTreeViewProps) => {
               </TabsContent>
             </Tabs>
 
-            {/* Action Button */}
             <Button
-              className={`w-full border-[2px] rounded-[16px] ${
+              className={`w-full rounded-lg ${
                 isCompleted ? "bg-green-600 hover:bg-green-700" : ""
               }`}
               onClick={() => toggleStepComplete(selectedTree.id, selectedStep.id)}
@@ -402,24 +395,24 @@ const SkillTreeView = ({ initialTreeId, onNavigate }: SkillTreeViewProps) => {
 
   // ─── Progression List View ───────────────────────────────
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 animate-fade-in">
       <Button
         variant="outline"
         onClick={() => setSelectedTree(null)}
-        className="border-[2px] border-foreground rounded-[16px]"
+        className="rounded-lg"
       >
         <ChevronLeft className="h-4 w-4 mr-2" />
         All Skill Trees
       </Button>
 
-      <Card className="border-[3px] border-foreground rounded-[24px]">
+      <Card className="border border-border rounded-lg">
         <CardHeader>
           <div className="flex items-center gap-3">
-            <div className="h-12 w-12 rounded-[16px] border-[3px] border-foreground flex items-center justify-center bg-card">
+            <div className="h-12 w-12 rounded-lg border border-border flex items-center justify-center bg-card">
               {iconMap[selectedTree.icon] || <Dumbbell className="h-5 w-5" />}
             </div>
             <div className="flex-1">
-              <CardTitle className="font-serif text-xl font-bold">{selectedTree.name}</CardTitle>
+              <CardTitle className="text-xl font-bold">{selectedTree.name}</CardTitle>
               <p className="text-sm text-muted-foreground">{selectedTree.description}</p>
             </div>
           </div>
@@ -441,7 +434,7 @@ const SkillTreeView = ({ initialTreeId, onNavigate }: SkillTreeViewProps) => {
       </Card>
 
       {/* Level Sections */}
-      <div className="space-y-4 stagger-children">
+      <div className="space-y-4">
         {allLevels.map((level) => {
           const levelSteps = selectedTree.progressions.filter((p) => p.level === level);
           if (levelSteps.length === 0) return null;
@@ -449,7 +442,7 @@ const SkillTreeView = ({ initialTreeId, onNavigate }: SkillTreeViewProps) => {
           return (
             <div key={level} className="space-y-2">
               <div className="flex items-center gap-2">
-                <Badge className={`${levelColors[level]} text-primary-foreground`}>
+                <Badge className={`${levelColors[level]} text-white`}>
                   {levelLabels[level]}
                 </Badge>
                 <span className="text-xs text-muted-foreground">
@@ -467,24 +460,24 @@ const SkillTreeView = ({ initialTreeId, onNavigate }: SkillTreeViewProps) => {
                   return (
                     <Card
                       key={step.id}
-                      className={`border-[3px] rounded-[24px] cursor-pointer transition-colors card-lift ${
+                      className={`border rounded-lg cursor-pointer transition-colors ${
                         isCompleted
                           ? "border-primary/50 bg-primary/5"
                           : isUnlocked
-                          ? "border-foreground hover:bg-muted/30"
-                          : "border-foreground/30 opacity-60"
+                          ? "border-border hover:border-foreground/30"
+                          : "border-border opacity-60"
                       }`}
                       onClick={() => setSelectedStep(step)}
                     >
                       <CardContent className="p-4">
                         <div className="flex items-center gap-3">
                           <div
-                            className={`h-10 w-10 rounded-[12px] border-[2px] flex items-center justify-center font-bold text-sm ${
+                            className={`h-10 w-10 rounded-lg border flex items-center justify-center font-bold text-sm ${
                               isCompleted
                                 ? "border-green-600 bg-green-600/10 text-green-600"
                                 : isUnlocked
-                                ? "border-foreground bg-card text-foreground"
-                                : "border-foreground/30 bg-muted text-muted-foreground"
+                                ? "border-border bg-card text-foreground"
+                                : "border-border bg-muted text-muted-foreground"
                             }`}
                           >
                             {isCompleted ? (

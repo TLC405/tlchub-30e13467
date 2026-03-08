@@ -79,10 +79,10 @@ const GymsClassesView = () => {
     : "gyms fitness Oklahoma City";
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-5 animate-fade-in">
       {/* Header */}
       <div className="text-center py-3 space-y-1">
-        <h1 className="font-serif text-3xl font-black text-foreground tracking-tight">
+        <h1 className="text-2xl font-extrabold text-foreground tracking-tight">
           OKC Fitness Directory
         </h1>
         <p className="text-sm text-muted-foreground">
@@ -90,14 +90,12 @@ const GymsClassesView = () => {
         </p>
       </div>
 
-      {/* Quick-tap Recommendations */}
       <FitnessRecommendations onSelect={handleCategorySelect} activeQuery={activeCategory} />
 
-      {/* Search */}
       <EpicSearch onSearch={handleSearch} isSearching={isSearching} />
 
       {/* Map */}
-      <Card className="border-2 border-foreground/15 rounded-2xl overflow-hidden">
+      <Card className="border border-border rounded-lg overflow-hidden">
         <div className="relative w-full h-[280px]">
           <iframe
             title="OKC Fitness Map"
@@ -115,7 +113,7 @@ const GymsClassesView = () => {
       {searchResults.length > 0 && (
         <div className="space-y-3">
           <div className="flex items-center justify-between">
-            <h2 className="font-serif text-lg font-black text-foreground">
+            <h2 className="text-base font-bold text-foreground">
               Web Results ({searchResults.length})
             </h2>
             <Button variant="ghost" size="sm" onClick={() => setSearchResults([])} className="text-xs">
@@ -136,7 +134,7 @@ const GymsClassesView = () => {
 
       {/* Saved Directory */}
       <div className="space-y-3">
-        <h2 className="font-serif text-lg font-black text-foreground">
+        <h2 className="text-base font-bold text-foreground">
           {activeCategory ? `${activeCategory} in OKC` : "Saved Directory"}
           {!isLoadingDb && ` (${savedGyms.length})`}
         </h2>
@@ -146,10 +144,10 @@ const GymsClassesView = () => {
             <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
           </div>
         ) : savedGyms.length === 0 ? (
-          <Card className="border-2 border-dashed border-foreground/20 rounded-2xl">
+          <Card className="border border-dashed border-border rounded-lg">
             <CardContent className="py-10 text-center">
               <MapPin className="h-8 w-8 mx-auto mb-3 text-muted-foreground" />
-              <p className="font-serif font-bold text-foreground">No saved locations yet</p>
+              <p className="font-bold text-foreground">No saved locations yet</p>
               <p className="text-xs text-muted-foreground mt-1">
                 Search for gyms above and save them to build your OKC fitness directory
               </p>
@@ -163,19 +161,18 @@ const GymsClassesView = () => {
       </div>
 
       {/* Foundation Banner */}
-      <Card className="border-2 border-primary rounded-2xl bg-primary/5">
+      <Card className="border border-primary rounded-lg bg-primary/5">
         <CardContent className="py-6 text-center space-y-2">
-          <p className="font-serif text-lg font-black text-foreground">{APP_FOUNDATION}</p>
+          <p className="text-lg font-extrabold text-foreground">{APP_FOUNDATION}</p>
           <p className="text-xs text-muted-foreground max-w-sm mx-auto">
             Empowering fitness, discipline, and community across Oklahoma City.
           </p>
-          <Badge className="bg-primary text-primary-foreground rounded-full text-xs">
+          <Badge className="bg-primary text-primary-foreground rounded-md text-xs">
             {APP_POWERED_BY}
           </Badge>
         </CardContent>
       </Card>
 
-      {/* Details Modal */}
       <GymDetailsModal gym={selectedGym} open={!!selectedGym} onClose={() => setSelectedGym(null)} />
     </div>
   );
