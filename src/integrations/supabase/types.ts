@@ -14,7 +14,66 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      gyms: {
+        Row: {
+          address: string | null
+          category: string
+          city: string
+          created_at: string
+          description: string | null
+          hours: Json | null
+          id: string
+          latitude: number | null
+          longitude: number | null
+          name: string
+          phone: string | null
+          rating: number | null
+          source_url: string | null
+          state: string
+          tags: string[] | null
+          updated_at: string
+          website: string | null
+        }
+        Insert: {
+          address?: string | null
+          category: string
+          city?: string
+          created_at?: string
+          description?: string | null
+          hours?: Json | null
+          id?: string
+          latitude?: number | null
+          longitude?: number | null
+          name: string
+          phone?: string | null
+          rating?: number | null
+          source_url?: string | null
+          state?: string
+          tags?: string[] | null
+          updated_at?: string
+          website?: string | null
+        }
+        Update: {
+          address?: string | null
+          category?: string
+          city?: string
+          created_at?: string
+          description?: string | null
+          hours?: Json | null
+          id?: string
+          latitude?: number | null
+          longitude?: number | null
+          name?: string
+          phone?: string | null
+          rating?: number | null
+          source_url?: string | null
+          state?: string
+          tags?: string[] | null
+          updated_at?: string
+          website?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
