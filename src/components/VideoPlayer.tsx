@@ -1,5 +1,4 @@
 import { useRef, useState } from "react";
-import ReactPlayer from "react-player";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { X, Maximize, Minimize } from "lucide-react";
@@ -27,6 +26,8 @@ const VideoPlayer = ({ videoId, title, description, onClose, autoplay = true }: 
     }
   };
 
+  const embedUrl = `https://www.youtube-nocookie.com/embed/${videoId}?rel=0&modestbranding=1&iv_load_policy=3&showinfo=0${autoplay ? "&autoplay=1" : ""}`;
+
   return (
     <Card className="bg-card border border-border overflow-hidden">
       <CardHeader className="pb-2 px-3 pt-3">
@@ -49,18 +50,14 @@ const VideoPlayer = ({ videoId, title, description, onClose, autoplay = true }: 
       <CardContent className="p-3 pt-0">
         <div ref={containerRef} className="relative bg-black rounded-lg overflow-hidden">
           <div className="aspect-video">
-            <ReactPlayer
-              url={`https://www.youtube-nocookie.com/watch?v=${videoId}`}
-              playing={autoplay}
-              controls
-              width="100%"
-              height="100%"
-              config={{
-                youtube: {
-                  rel: 0,
-                  iv_load_policy: 3,
-                },
-              }}
+            <iframe
+              src={embedUrl}
+              title={title}
+              className="w-full h-full"
+              allowFullScreen
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              referrerPolicy="no-referrer"
+              style={{ border: 0 }}
             />
           </div>
         </div>
