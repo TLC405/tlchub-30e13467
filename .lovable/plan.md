@@ -1,244 +1,97 @@
 
-# Learn Mode Upgrade Plan
 
-## Overview
+# Integrate Real Exercise & Progression Data from CalisthenicsByTLC
 
-This plan adds a **Learn Mode** feature to the calisthenics app that applies motor-learning research to help users learn skills faster. The implementation is additive-only (no breaking changes), premium in design, and delivers value in ~10 seconds with optional deep dives.
+## Context
 
----
+You uploaded real Supabase exports with **99 exercises** (with YouTube URLs, cues, categories, muscles, chains) and **44 progressions** across 9 skill trees (Planche, Front Lever, Back Lever, Human Flag, Handstand, Iron Cross, Maltese, Manna, Muscle-up). You also uploaded the **STACKED one-pager PDF** which defines the training system philosophy.
 
-## Architecture
+The `calesthenicsbytlc` GitHub repo doesn't exist yet (404). The `tlchub-30e13467` repo is this current project.
 
-### Data Layer (New Files)
+Currently the app uses hardcoded data in `exerciseDatabase.ts` (413 lines of old format) and `skillProgressions.ts` (2099 lines of manually-written progressions). We'll replace all of this with your real exported data.
 
-**1. Create `src/data/learningPrinciples.ts`**
+## Plan
 
-A static data file containing 8 research-backed learning principles:
+### 1. Replace Exercise Database with Real Data
 
-| Slug | Title | When to Use |
-|------|-------|-------------|
-| distributed_practice | Distributed Practice | Always |
-| external_focus | External Focus Cues | Always |
-| variability | Small Variation Practice | Intermediate |
-| autonomy | Autonomy Support | Always |
-| feedback_dosing | Feedback Dosing | Always |
-| retention_test | Retention Test | Intermediate |
-| sleep_consolidation | Sleep & Consolidation | Always |
-| interleaving | Interleaving | Intermediate |
+**File: `src/data/exerciseDatabase.ts`** — Rewrite entirely
 
-Each principle includes:
-- `micro_summary` (140 chars) - quick value
-- `why_it_works` (280 chars) - expandable science
-- `how_to_apply_template` with placeholders (`{exercise}`, `{sets}`)
-- `caution` - safety note
-- `sources[]` - research URLs
+Parse the 99 exercises from your CSV into TypeScript. Each exercise includes real YouTube URLs, Instagram URLs, cues, muscles, equipment, difficulty, chain groups, and chain order. No mock data.
 
-**2. Create `src/types/learning.ts`**
+Categories from your data: Push, Pull, Core, Legs, Skills, Yoga, Mobility, Flexibility.
 
-New TypeScript interfaces:
-- `LearningPrinciple` - principle definition
-- `LearnConfig` - per-exercise learn mapping
-- `LearnDefaultRecipe` - frequency/dose structure
-- `LearnModeIntensity` - user preference setting
+### 2. Replace Skill Progressions with Real Data
 
-**3. Extend existing exercise data**
+**File: `src/data/skillProgressions.ts`** — Rewrite entirely
 
-Update `src/data/exerciseDatabase.ts` to add learn mapping for each exercise:
-- `learn_principle_slugs: string[]` (2-4 principles)
-- `learn_apply_notes: Record<string, string>` (optional overrides)
-- `learn_default_recipe` (frequency, sets, rest ranges)
-- `learn_coach_tip: string` (optional, tasteful humor)
+Parse the 44 progressions into 9 real skill trees grouped by `exercise_id`:
 
-Auto-assignment rules:
-- Skills/static holds (Planche, Handstand, Lever) → `distributed_practice`, `external_focus`, `feedback_dosing`, `retention_test`
-- Mobility/compression → `distributed_practice`, `variability`, `autonomy`, `sleep_consolidation`
-- Strength reps → `distributed_practice`, `external_focus`, `feedback_dosing`
+| Skill Tree | Levels | Exercise |
+|---|---|---|
+| Planche | 5 (Lean → Full) | e7070fde |
+| Front Lever | 5 (Tuck → Full) | a0dab72f |
+| Back Lever | 5 (German Hang → Full) | f6d08baf |
+| Human Flag | 4 (Vertical → Full) | 5bfcdccf |
+| Handstand | 5 (Wall → One Arm) | d7a9d4bb |
+| Iron Cross | 5 (Support → Full) | ec6570fb |
+| Maltese | 5 (Planche Lean → Full) | ee236504 |
+| Manna | 5 (L-Sit → Full) | d5fe0efb |
+| Muscle-up | 5 (Pull-up+Dip → Strict) | f5d3423b |
 
----
+Each progression has real names, descriptions, and level numbers. Link them to the exercise database entries via exercise_id for YouTube URLs and cues.
 
-## UI Components
+### 3. Add STACKED System Content
 
-### New Components
+**File: `src/data/controlContent.ts`** — Update
 
-**1. `src/components/learn/LearnCard.tsx`**
+Add the STACKED Laws and level definitions from the PDF:
+- **Level 1 Foundation**: Positions, tissue tolerance, clean locks
+- **Level 2 Development**: Leverage exposure with control
+- **Level 3 Advanced**: Consistent holds, strong negatives
+- **Level 4 Elite**: Clean peaks + endurance under fatigue
+- STACKED Laws: "Never progress leverage and volume at same time", "Straight-arm days are low fatigue, high quality"
 
-A premium, minimal card showing:
-- Icon + title (e.g., "Practice Recipe")
-- Micro summary (quick value)
-- "Apply to {exercise}" line
-- Tiny caution
-- "Show more" expander for `why_it_works` + sources
+Update `skillPaths` array to include all 9 trees (add Back Lever, Human Flag, Iron Cross, Maltese, Manna).
 
-Design: shadcn Card with subtle border, clean hierarchy, 10-second value.
+### 4. Add TLCtv & CalisthenicsByTLC Branding
 
-**2. `src/components/learn/LearnTab.tsx`**
+**File: `src/data/controlContent.ts`** — Add constants
 
-Displays exactly 3 LearnCards:
-1. **Practice Recipe** - distributed practice + weekly frequency
-2. **Focus Cue** - external focus + one apply line  
-3. **Progress Smarter** - variability OR retention test
-
-Uses existing Tabs component pattern.
-
-**3. `src/components/learn/LearnBiteToast.tsx`**
-
-Post-workout logging micro nudge:
-- One principle per log (rotates across sessions)
-- Example: "Next time: 4×10s instead of 1×40s. Same work, better learning."
-- Uses existing toast/sonner system
-
-**4. `src/components/learn/LearnModeSettings.tsx`**
-
-Coach controls for learn intensity:
-- `low` - micro_summary only
-- `standard` - micro + apply line (default)
-- `nerdy` - includes why_it_works + sources
-
-Stored in localStorage.
-
----
-
-## Integration Points
-
-### 1. Exercise Detail Enhancement
-
-Update `src/components/DetailedExerciseCard.tsx`:
-- Add **Learn** tab alongside existing Exercise Details collapsible
-- Shows 3 LearnCards when expanded
-- Lazy-loaded for performance
-
-### 2. Skill Tree Enhancement
-
-Update `src/components/SkillTreeView.tsx`:
-- Add **Learn** tab in exercise detail view
-- Same 3-card pattern
-
-### 3. Workout Logging Integration
-
-Update `src/components/WorkoutCalendar.tsx`:
-- After logging workout, show LearnBiteToast
-- Rotate principles based on logged exercises
-- Store last shown principle per exercise in localStorage
-
-### 4. Learn Mode Context
-
-Create `src/contexts/LearnModeContext.tsx`:
-- Manages learn intensity preference
-- Provides helper functions for principle lookup
-- Memoizes merged learn content per exercise
-
----
-
-## File Changes Summary
-
-| File | Action | Description |
-|------|--------|-------------|
-| `src/data/learningPrinciples.ts` | Create | 8 principles with premium copy |
-| `src/types/learning.ts` | Create | TypeScript interfaces |
-| `src/types/index.ts` | Modify | Add learn fields to Exercise interface |
-| `src/data/exerciseDatabase.ts` | Modify | Add learn mappings to all exercises |
-| `src/components/learn/LearnCard.tsx` | Create | Premium learn card component |
-| `src/components/learn/LearnTab.tsx` | Create | 3-card learn tab |
-| `src/components/learn/LearnBiteToast.tsx` | Create | Post-log toast component |
-| `src/components/learn/LearnModeSettings.tsx` | Create | Intensity toggle |
-| `src/contexts/LearnModeContext.tsx` | Create | Context for learn preferences |
-| `src/components/DetailedExerciseCard.tsx` | Modify | Add Learn tab |
-| `src/components/SkillTreeView.tsx` | Modify | Add Learn tab to detail view |
-| `src/components/WorkoutCalendar.tsx` | Modify | Add post-log toast |
-| `src/App.tsx` | Modify | Wrap with LearnModeProvider |
-
----
-
-## Technical Details
-
-### Performance Considerations
-- Fetch principles once at app load (static import)
-- Index principles by slug for O(1) lookup
-- Memoize merged learn content per exercise with `useMemo`
-- Lazy-load Learn tab content
-
-### Data Structure Example
-
-```typescript
-// LearningPrinciple
-{
-  id: "distributed_practice",
-  slug: "distributed_practice",
-  title: "Distributed Practice",
-  micro_summary: "More short exposures beats one long grind.",
-  why_it_works: "Spacing practice across days improves retention and skill stability versus cramming.",
-  how_to_apply_template: "Do {exercise} 3-5x/week as 8-12 minute micro-sessions (not 1 marathon).",
-  when_to_use: "always",
-  caution: "If joints feel irritated, keep frequency but lower intensity.",
-  sources: [
-    "https://www.sciencedirect.com/...",
-    "https://pmc.ncbi.nlm.nih.gov/..."
-  ]
-}
-
-// Exercise learn config
-{
-  learn_principle_slugs: ["distributed_practice", "external_focus", "feedback_dosing"],
-  learn_apply_notes: {
-    external_focus: "Think: 'push the floor away' during lean"
-  },
-  learn_default_recipe: {
-    frequency_per_week: 4,
-    dose_type: "microdose",
-    set_count_range: [3, 6],
-    hold_or_rep_range: [15, 30],
-    rest_range_sec: [60, 120]
-  },
-  learn_coach_tip: "Your wrists will thank you for the short sessions."
-}
+```
+APP_SOCIAL_HANDLE = "@calisthenicsbytlc"
+APP_GITHUB = "TLC405"  
+APP_BRAND_TLCTV = "TLCtv"
+APP_SOCIAL_LINKS = { github: "https://github.com/TLC405", ... }
 ```
 
-### Toast Rotation Logic
+Social accounts (YouTube, TikTok, Instagram) marked as "Coming Soon" since they don't exist yet. GitHub is real.
 
-```typescript
-// Get next principle to show (rotates per exercise)
-const getNextPrinciple = (exerciseId: string): LearningPrinciple => {
-  const key = `learn_rotation_${exerciseId}`;
-  const lastIndex = parseInt(localStorage.getItem(key) || "0");
-  const principles = exercise.learn_principle_slugs;
-  const nextIndex = (lastIndex + 1) % principles.length;
-  localStorage.setItem(key, nextIndex.toString());
-  return principlesMap[principles[nextIndex]];
-}
-```
+### 5. Update SkillTreeView to Use Real Data
 
----
+**File: `src/components/SkillTreeView.tsx`** — Modify
 
-## Quality Bar
+- Pull YouTube URLs from real exercise data instead of placeholder `videoUrl` fields
+- Show all 9 skill trees (currently only shows ~6)
+- Link progression steps to their parent exercise for cues and video
 
-### Design Principles
-- Premium hierarchy, spacing, clean microcopy
-- Never imply failure - always give an easier next action
-- Personal, light, empathetic tone (never corny)
-- 10 seconds of value, expandable for deeper reading
-- Follows existing design patterns (clean-border, premium-shadow, glass-effect)
+### 6. Update LearnPathView with All 9 Paths
 
-### Accessibility
-- Proper focus management in expandable sections
-- Screen reader friendly labels
-- Keyboard navigation for Learn tabs
+**File: `src/components/LearnPathView.tsx`** — Modify
 
-### Mobile-First
-- Cards stack cleanly on mobile
-- Touch-friendly expand/collapse
-- Toast positioned for mobile viewing
+Update to show all 9 skill paths with real gate descriptions from the CSV data.
 
----
+### 7. Copy STACKED PDF Image to Project
 
-## Implementation Order
+Copy the one-pager image to `src/assets/` so it can be displayed in the Training or Learn view as a reference card.
 
-1. Create types and data files (principles + exercise mappings)
-2. Create LearnModeContext provider
-3. Build LearnCard component
-4. Build LearnTab component  
-5. Integrate into DetailedExerciseCard
-6. Integrate into SkillTreeView
-7. Build LearnBiteToast
-8. Integrate into WorkoutCalendar
-9. Add LearnModeSettings
-10. Polish and test all integrations
+## Files Summary
+
+| File | Action |
+|---|---|
+| `src/data/exerciseDatabase.ts` | Rewrite — 99 real exercises with YouTube URLs |
+| `src/data/skillProgressions.ts` | Rewrite — 9 skill trees, 44 real progressions |
+| `src/data/controlContent.ts` | Modify — Add STACKED laws, levels, 9 paths, TLCtv branding |
+| `src/components/SkillTreeView.tsx` | Modify — Support 9 trees, real YouTube links |
+| `src/components/LearnPathView.tsx` | Modify — Show all 9 skill paths |
+| `src/assets/stacked-onepager.jpg` | Create — Copy PDF image for display |
+
