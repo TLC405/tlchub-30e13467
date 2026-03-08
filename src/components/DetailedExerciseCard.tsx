@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -9,6 +8,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Play, ChevronDown, Heart, Zap, Target, Activity, AlertCircle, BookOpen } from "lucide-react";
 import type { Exercise } from "@/types";
 import LearnTab from "@/components/learn/LearnTab";
+import VideoPlayer from "@/components/VideoPlayer";
 
 interface DetailedExerciseCardProps {
   exercise: Exercise;
@@ -22,6 +22,7 @@ const difficultyColors: Record<number, string> = { 1: "bg-green-600", 2: "bg-blu
 const DetailedExerciseCard = ({ exercise, onMarkComplete, isCompleted }: DetailedExerciseCardProps) => {
   const [showDetails, setShowDetails] = useState(false);
   const [activeTab, setActiveTab] = useState("details");
+  const [showVideo, setShowVideo] = useState(false);
 
   return (
     <Card className="clean-border premium-shadow bg-card">
@@ -46,11 +47,11 @@ const DetailedExerciseCard = ({ exercise, onMarkComplete, isCompleted }: Detaile
             {exercise.youtubeUrl && (
               <Button
                 size="sm"
-                onClick={() => window.open(exercise.youtubeUrl, "_blank", "noopener")}
-                className="bg-destructive hover:bg-destructive/90 text-destructive-foreground"
+                onClick={() => setShowVideo(!showVideo)}
+                className={showVideo ? "bg-primary text-primary-foreground" : "bg-destructive hover:bg-destructive/90 text-destructive-foreground"}
               >
                 <Play className="h-3 w-3 mr-1" />
-                Watch
+                {showVideo ? "Hide" : "Watch"}
               </Button>
             )}
             {onMarkComplete && (
@@ -66,6 +67,17 @@ const DetailedExerciseCard = ({ exercise, onMarkComplete, isCompleted }: Detaile
           </div>
         </div>
       </CardHeader>
+
+      {/* Inline Video Player */}
+      {showVideo && exercise.youtubeUrl && (() => {
+        const match = exercise.youtubeUrl!.match(/(?:v=|youtu\.be\/)([a-zA-Z0-9_-]+)/);
+        const videoId = match ? match[1] : null;
+        return videoId ? (
+          <div className="px-3 pb-2">
+            <VideoPlayer videoId={videoId} title={exercise.name} onClose={() => setShowVideo(false)} />
+          </div>
+        ) : null;
+      })()}
 
       <Collapsible open={showDetails} onOpenChange={setShowDetails}>
         <CollapsibleTrigger asChild>

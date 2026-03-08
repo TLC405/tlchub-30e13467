@@ -1,5 +1,6 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
+import VideoPlayer from "@/components/VideoPlayer";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -249,17 +250,15 @@ const SkillTreeView = ({ initialTreeId, onNavigate }: SkillTreeViewProps) => {
           <CardContent className="space-y-6">
             <p className="text-muted-foreground">{selectedStep.description}</p>
 
-            {/* Watch Demo — real YouTube URL */}
-            {selectedStep.youtubeUrl && (
-              <Button
-                variant="outline"
-                className="border-[2px] border-foreground rounded-[16px] w-full"
-                onClick={() => window.open(selectedStep.youtubeUrl, "_blank", "noopener")}
-              >
-                <Play className="h-4 w-4 mr-2" />
-                Watch Demo — YouTube
-              </Button>
-            )}
+            {/* Watch Demo — inline player */}
+            {selectedStep.youtubeUrl && (() => {
+              // Extract video ID from YouTube URL
+              const match = selectedStep.youtubeUrl!.match(/(?:v=|youtu\.be\/)([a-zA-Z0-9_-]+)/);
+              const videoId = match ? match[1] : null;
+              return videoId ? (
+                <VideoPlayer videoId={videoId} title={`${selectedStep.name} Demo`} />
+              ) : null;
+            })()}
 
             <Tabs defaultValue="training" className="w-full">
               <TabsList className="grid w-full grid-cols-2 mb-4">

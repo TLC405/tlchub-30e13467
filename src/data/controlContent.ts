@@ -1,7 +1,9 @@
 export const APP_NAME = "CONTROL";
 export const APP_TAGLINE = "Olympic Mastery";
 export const APP_POWERED_BY = "Powered by TLC";
-export const APP_FOUNDATION = "Men of Purpose OKC Foundation";
+export const APP_FOUNDATION = "Inspire Oklahoma City";
+export const APP_COPYRIGHT = `© ${new Date().getFullYear()} Inspire Oklahoma City. All rights reserved.`;
+export const APP_VERSION = "1.0.0";
 export const APP_PHILOSOPHY = "If you cannot control the position, you do not earn the movement.";
 
 // ── TLCtv & CalisthenicsByTLC Branding ──────────────────────
@@ -10,9 +12,9 @@ export const APP_GITHUB = "TLC405";
 export const APP_BRAND_TLCTV = "TLCtv";
 export const APP_SOCIAL_LINKS = {
   github: "https://github.com/TLC405",
-  youtube: null as string | null, // Coming Soon
-  tiktok: null as string | null,  // Coming Soon
-  instagram: null as string | null, // Coming Soon
+  youtube: null as string | null,
+  tiktok: null as string | null,
+  instagram: null as string | null,
 };
 
 // ── STACKED System ──────────────────────────────────────────
