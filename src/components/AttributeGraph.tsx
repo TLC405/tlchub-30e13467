@@ -1,5 +1,5 @@
 import type { TrainingAttributes } from "@/data/skillProgressions";
-import { Zap, Target, Clock, Stretch, AlertTriangle } from "lucide-react";
+import { Zap, Target, Clock, Move, AlertTriangle } from "lucide-react";
 
 const attributeConfig = [
   { key: "strength" as const, label: "STR", color: "bg-red-500", icon: Zap },
