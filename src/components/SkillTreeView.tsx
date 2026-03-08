@@ -251,9 +251,14 @@ const SkillTreeView = ({ initialTreeId, onNavigate }: SkillTreeViewProps) => {
             <p className="text-muted-foreground">{selectedStep.description}</p>
 
             {/* Watch Demo — inline player */}
-            {selectedStep.youtubeUrl && (
-              <InlineVideo url={selectedStep.youtubeUrl} title={selectedStep.name} />
-            )}
+            {selectedStep.youtubeUrl && (() => {
+              // Extract video ID from YouTube URL
+              const match = selectedStep.youtubeUrl!.match(/(?:v=|youtu\.be\/)([a-zA-Z0-9_-]+)/);
+              const videoId = match ? match[1] : null;
+              return videoId ? (
+                <VideoPlayer videoId={videoId} title={`${selectedStep.name} Demo`} />
+              ) : null;
+            })()}
 
             <Tabs defaultValue="training" className="w-full">
               <TabsList className="grid w-full grid-cols-2 mb-4">

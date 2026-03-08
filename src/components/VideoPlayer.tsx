@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import ReactPlayer from "react-player/youtube";
+import ReactPlayer from "react-player/lazy";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { X, Maximize, Minimize } from "lucide-react";
