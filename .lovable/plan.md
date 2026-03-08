@@ -1,101 +1,244 @@
 
+# Learn Mode Upgrade Plan
 
-# TLC TRAINER -- Bold Elegance Redesign
+## Overview
 
-## What you asked for
+This plan adds a **Learn Mode** feature to the calisthenics app that applies motor-learning research to help users learn skills faster. The implementation is additive-only (no breaking changes), premium in design, and delivers value in ~10 seconds with optional deep dives.
 
-1. Rename app from "CONTROL" to **TLC TRAINER** -- remove the old tagline ("Olympic Mastery")
-2. Create a custom **TLC shield logo** (OKC Thunder style -- black shield with gold "TLC" inside), rendered as an SVG component
-3. Replace the **Coach TLC tab** with a **TLCtv video library** tab (Netflix-style scrollable video feed)
-4. **Complete layout overhaul** following "Bold Elegance" design law: near-black/off-white backgrounds, no gradients, no glassmorphism, one gold accent, firm corners, tactile buttons, generous whitespace
-5. New components and upgraded navigation
+---
 
-## Design Token System (Bold Elegance)
+## Architecture
 
-```text
-PALETTE
-  Background:   #0A0C10 (near-black) / #FAFAFA (off-white for light)
-  Foreground:   #FAFAFA / #0A0C10
-  Card:         #141619 / #F0F0F0
-  Accent:       #D4A843 (gold -- ONE accent only)
-  Muted:        #2A2D33 / #E0E0E0
-  Border:       #2A2D33 / #D0D0D0
-  Destructive:  #CC3333
+### Data Layer (New Files)
 
-TYPOGRAPHY
-  Headlines:    Inter 700/800 (drop Playfair Display -- too editorial)
-  Body:         Inter 400/500
-  Mono:         JetBrains Mono (keep)
+**1. Create `src/data/learningPrinciples.ts`**
 
-SPACING
-  Radius:       8px (firm, not bubbly)
-  Card border:  1px solid (not 3px brutalist -- too heavy)
-  Shadows:      subtle 0 1px 3px rgba(0,0,0,0.2) for depth
+A static data file containing 8 research-backed learning principles:
 
-MOTION
-  Transitions:  150-250ms ease
-  No stagger animations (too playful)
+| Slug | Title | When to Use |
+|------|-------|-------------|
+| distributed_practice | Distributed Practice | Always |
+| external_focus | External Focus Cues | Always |
+| variability | Small Variation Practice | Intermediate |
+| autonomy | Autonomy Support | Always |
+| feedback_dosing | Feedback Dosing | Always |
+| retention_test | Retention Test | Intermediate |
+| sleep_consolidation | Sleep & Consolidation | Always |
+| interleaving | Interleaving | Intermediate |
+
+Each principle includes:
+- `micro_summary` (140 chars) - quick value
+- `why_it_works` (280 chars) - expandable science
+- `how_to_apply_template` with placeholders (`{exercise}`, `{sets}`)
+- `caution` - safety note
+- `sources[]` - research URLs
+
+**2. Create `src/types/learning.ts`**
+
+New TypeScript interfaces:
+- `LearningPrinciple` - principle definition
+- `LearnConfig` - per-exercise learn mapping
+- `LearnDefaultRecipe` - frequency/dose structure
+- `LearnModeIntensity` - user preference setting
+
+**3. Extend existing exercise data**
+
+Update `src/data/exerciseDatabase.ts` to add learn mapping for each exercise:
+- `learn_principle_slugs: string[]` (2-4 principles)
+- `learn_apply_notes: Record<string, string>` (optional overrides)
+- `learn_default_recipe` (frequency, sets, rest ranges)
+- `learn_coach_tip: string` (optional, tasteful humor)
+
+Auto-assignment rules:
+- Skills/static holds (Planche, Handstand, Lever) → `distributed_practice`, `external_focus`, `feedback_dosing`, `retention_test`
+- Mobility/compression → `distributed_practice`, `variability`, `autonomy`, `sleep_consolidation`
+- Strength reps → `distributed_practice`, `external_focus`, `feedback_dosing`
+
+---
+
+## UI Components
+
+### New Components
+
+**1. `src/components/learn/LearnCard.tsx`**
+
+A premium, minimal card showing:
+- Icon + title (e.g., "Practice Recipe")
+- Micro summary (quick value)
+- "Apply to {exercise}" line
+- Tiny caution
+- "Show more" expander for `why_it_works` + sources
+
+Design: shadcn Card with subtle border, clean hierarchy, 10-second value.
+
+**2. `src/components/learn/LearnTab.tsx`**
+
+Displays exactly 3 LearnCards:
+1. **Practice Recipe** - distributed practice + weekly frequency
+2. **Focus Cue** - external focus + one apply line  
+3. **Progress Smarter** - variability OR retention test
+
+Uses existing Tabs component pattern.
+
+**3. `src/components/learn/LearnBiteToast.tsx`**
+
+Post-workout logging micro nudge:
+- One principle per log (rotates across sessions)
+- Example: "Next time: 4×10s instead of 1×40s. Same work, better learning."
+- Uses existing toast/sonner system
+
+**4. `src/components/learn/LearnModeSettings.tsx`**
+
+Coach controls for learn intensity:
+- `low` - micro_summary only
+- `standard` - micro + apply line (default)
+- `nerdy` - includes why_it_works + sources
+
+Stored in localStorage.
+
+---
+
+## Integration Points
+
+### 1. Exercise Detail Enhancement
+
+Update `src/components/DetailedExerciseCard.tsx`:
+- Add **Learn** tab alongside existing Exercise Details collapsible
+- Shows 3 LearnCards when expanded
+- Lazy-loaded for performance
+
+### 2. Skill Tree Enhancement
+
+Update `src/components/SkillTreeView.tsx`:
+- Add **Learn** tab in exercise detail view
+- Same 3-card pattern
+
+### 3. Workout Logging Integration
+
+Update `src/components/WorkoutCalendar.tsx`:
+- After logging workout, show LearnBiteToast
+- Rotate principles based on logged exercises
+- Store last shown principle per exercise in localStorage
+
+### 4. Learn Mode Context
+
+Create `src/contexts/LearnModeContext.tsx`:
+- Manages learn intensity preference
+- Provides helper functions for principle lookup
+- Memoizes merged learn content per exercise
+
+---
+
+## File Changes Summary
+
+| File | Action | Description |
+|------|--------|-------------|
+| `src/data/learningPrinciples.ts` | Create | 8 principles with premium copy |
+| `src/types/learning.ts` | Create | TypeScript interfaces |
+| `src/types/index.ts` | Modify | Add learn fields to Exercise interface |
+| `src/data/exerciseDatabase.ts` | Modify | Add learn mappings to all exercises |
+| `src/components/learn/LearnCard.tsx` | Create | Premium learn card component |
+| `src/components/learn/LearnTab.tsx` | Create | 3-card learn tab |
+| `src/components/learn/LearnBiteToast.tsx` | Create | Post-log toast component |
+| `src/components/learn/LearnModeSettings.tsx` | Create | Intensity toggle |
+| `src/contexts/LearnModeContext.tsx` | Create | Context for learn preferences |
+| `src/components/DetailedExerciseCard.tsx` | Modify | Add Learn tab |
+| `src/components/SkillTreeView.tsx` | Modify | Add Learn tab to detail view |
+| `src/components/WorkoutCalendar.tsx` | Modify | Add post-log toast |
+| `src/App.tsx` | Modify | Wrap with LearnModeProvider |
+
+---
+
+## Technical Details
+
+### Performance Considerations
+- Fetch principles once at app load (static import)
+- Index principles by slug for O(1) lookup
+- Memoize merged learn content per exercise with `useMemo`
+- Lazy-load Learn tab content
+
+### Data Structure Example
+
+```typescript
+// LearningPrinciple
+{
+  id: "distributed_practice",
+  slug: "distributed_practice",
+  title: "Distributed Practice",
+  micro_summary: "More short exposures beats one long grind.",
+  why_it_works: "Spacing practice across days improves retention and skill stability versus cramming.",
+  how_to_apply_template: "Do {exercise} 3-5x/week as 8-12 minute micro-sessions (not 1 marathon).",
+  when_to_use: "always",
+  caution: "If joints feel irritated, keep frequency but lower intensity.",
+  sources: [
+    "https://www.sciencedirect.com/...",
+    "https://pmc.ncbi.nlm.nih.gov/..."
+  ]
+}
+
+// Exercise learn config
+{
+  learn_principle_slugs: ["distributed_practice", "external_focus", "feedback_dosing"],
+  learn_apply_notes: {
+    external_focus: "Think: 'push the floor away' during lean"
+  },
+  learn_default_recipe: {
+    frequency_per_week: 4,
+    dose_type: "microdose",
+    set_count_range: [3, 6],
+    hold_or_rep_range: [15, 30],
+    rest_range_sec: [60, 120]
+  },
+  learn_coach_tip: "Your wrists will thank you for the short sessions."
+}
 ```
 
-## Architecture Changes
+### Toast Rotation Logic
 
-### Branding (`src/data/controlContent.ts`)
-- `APP_NAME` = "TLC TRAINER"
-- Remove `APP_TAGLINE`
-- `APP_POWERED_BY` = "Powered by TLC"
-- Keep `APP_FOUNDATION`, `APP_COPYRIGHT`, `APP_VERSION`
+```typescript
+// Get next principle to show (rotates per exercise)
+const getNextPrinciple = (exerciseId: string): LearningPrinciple => {
+  const key = `learn_rotation_${exerciseId}`;
+  const lastIndex = parseInt(localStorage.getItem(key) || "0");
+  const principles = exercise.learn_principle_slugs;
+  const nextIndex = (lastIndex + 1) % principles.length;
+  localStorage.setItem(key, nextIndex.toString());
+  return principlesMap[principles[nextIndex]];
+}
+```
 
-### New: TLC Shield Logo (`src/components/TLCLogo.tsx`)
-- SVG component: black shield shape (like OKC Thunder's shield silhouette) with gold "TLC" text centered
-- Accepts `size` prop (sm/md/lg)
-- Used in header and splash/loading states
+---
 
-### New: TLCtv Tab (`src/components/TLCtvView.tsx`)
-- Replaces Coach TLC in bottom nav
-- Scrollable video library organized by skill path (Planche, Front Lever, etc.)
-- Each section: horizontal scroll of video cards
-- Video cards tap to expand inline `VideoPlayer`
-- Videos sourced from `skillProgressions` data (existing YouTube IDs)
-- Empty state if no videos: "No videos yet" with icon
+## Quality Bar
 
-### Navigation Changes (`src/components/BottomNavBar.tsx`)
-- Replace `{ id: "coach", title: "Coach", icon: Brain }` with `{ id: "tlctv", title: "TLCtv", icon: Tv }`
-- 5 tabs: Learn, Train, Skills, TLCtv, Gyms
+### Design Principles
+- Premium hierarchy, spacing, clean microcopy
+- Never imply failure - always give an easier next action
+- Personal, light, empathetic tone (never corny)
+- 10 seconds of value, expandable for deeper reading
+- Follows existing design patterns (clean-border, premium-shadow, glass-effect)
 
-### Header Redesign (`src/pages/Index.tsx`)
-- TLC shield logo (small) + "TLC TRAINER" text -- no tagline
-- Theme toggle on right
-- Clean black bar (dark) or white bar (light)
+### Accessibility
+- Proper focus management in expandable sections
+- Screen reader friendly labels
+- Keyboard navigation for Learn tabs
 
-### CSS Overhaul (`src/index.css`)
-- Replace entire color token system with Bold Elegance palette
-- Remove brutalist-card class (3px borders, 24px radius)
-- Remove blueprint-underline, stagger-children animations
-- New utility classes: `.card-elevated` (subtle shadow), `.gold-accent` (text color)
-- Firm 8px radius everywhere
+### Mobile-First
+- Cards stack cleanly on mobile
+- Touch-friendly expand/collapse
+- Toast positioned for mobile viewing
 
-### Component Updates
-All existing views (TrainingView, LearnPathView, SkillTreeView, GymsClassesView) get:
-- Border reduced from `border-[3px] border-foreground rounded-[24px]` to `border border-border rounded-lg`
-- Remove `card-lift` hover effects (too playful)
-- Firm, tactile buttons with subtle shadow
-- Gold accent on active/primary states instead of blue
+---
 
-## Files Summary
+## Implementation Order
 
-| File | Action |
-|---|---|
-| `src/data/controlContent.ts` | Rename to TLC TRAINER, remove tagline |
-| `src/components/TLCLogo.tsx` | **New** -- SVG shield logo (black + gold) |
-| `src/components/TLCtvView.tsx` | **New** -- video library tab |
-| `src/index.css` | **Rewrite** -- Bold Elegance tokens |
-| `src/pages/Index.tsx` | Redesign header with logo |
-| `src/components/BottomNavBar.tsx` | Replace Coach with TLCtv |
-| `src/components/TrainingView.tsx` | Restyle cards to new design system |
-| `src/components/LearnPathView.tsx` | Restyle cards to new design system |
-| `src/components/SkillTreeView.tsx` | Restyle cards to new design system |
-| `src/components/GymsClassesView.tsx` | Restyle cards to new design system |
-| `src/components/VideoPlayer.tsx` | Update to match new tokens |
-| `src/components/ThemeSelector.tsx` | Restyle button |
-| `index.html` | Update title to "TLC TRAINER" |
-
+1. Create types and data files (principles + exercise mappings)
+2. Create LearnModeContext provider
+3. Build LearnCard component
+4. Build LearnTab component  
+5. Integrate into DetailedExerciseCard
+6. Integrate into SkillTreeView
+7. Build LearnBiteToast
+8. Integrate into WorkoutCalendar
+9. Add LearnModeSettings
+10. Polish and test all integrations

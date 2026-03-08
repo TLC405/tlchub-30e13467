@@ -22,11 +22,7 @@ export default {
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
 				ring: 'hsl(var(--ring))',
-				background: {
-					DEFAULT: 'hsl(var(--background))',
-					secondary: 'hsl(var(--background-secondary))',
-					tertiary: 'hsl(var(--background-tertiary))'
-				},
+				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',
 				primary: {
 					DEFAULT: 'hsl(var(--primary))',
@@ -54,26 +50,8 @@ export default {
 				},
 				card: {
 					DEFAULT: 'hsl(var(--card))',
-					secondary: 'hsl(var(--card-secondary))',
-					foreground: 'hsl(var(--card-foreground))',
-					border: 'hsl(var(--card-border))'
+					foreground: 'hsl(var(--card-foreground))'
 				},
-				bronze: {
-					DEFAULT: 'hsl(var(--bronze))',
-					light: 'hsl(var(--bronze-light))',
-					dark: 'hsl(var(--bronze-dark))'
-				},
-				gold: {
-					DEFAULT: 'hsl(var(--gold))',
-					light: 'hsl(var(--gold-light))',
-					dark: 'hsl(var(--gold-dark))'
-				},
-				glass: 'hsl(var(--glass))',
-				'glass-border': 'hsl(var(--glass-border))',
-				handstand: 'hsl(var(--handstand))',
-				planche: 'hsl(var(--planche))',
-				pullup: 'hsl(var(--pullup))',
-				rings: 'hsl(var(--rings))',
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
 					foreground: 'hsl(var(--sidebar-foreground))',
@@ -92,20 +70,12 @@ export default {
 			},
 			keyframes: {
 				'accordion-down': {
-					from: {
-						height: '0'
-					},
-					to: {
-						height: 'var(--radix-accordion-content-height)'
-					}
+					from: { height: '0' },
+					to: { height: 'var(--radix-accordion-content-height)' }
 				},
 				'accordion-up': {
-					from: {
-						height: 'var(--radix-accordion-content-height)'
-					},
-					to: {
-						height: '0'
-					}
+					from: { height: 'var(--radix-accordion-content-height)' },
+					to: { height: '0' }
 				}
 			},
 			animation: {

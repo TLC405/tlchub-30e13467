@@ -3,13 +3,14 @@ import LearnPathView from "@/components/LearnPathView";
 import TrainingView from "@/components/TrainingView";
 import SkillTreeView from "@/components/SkillTreeView";
 import IntegrityView from "@/components/IntegrityView";
-import AgentTLC from "@/components/AgentTLC";
+import TLCtvView from "@/components/TLCtvView";
 import GymsClassesView from "@/components/GymsClassesView";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import ThemeSelector from "@/components/ThemeSelector";
 import { BottomNavBar } from "@/components/BottomNavBar";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
-import { APP_NAME, APP_TAGLINE, APP_POWERED_BY } from "@/data/controlContent";
+import { TLCLogo } from "@/components/TLCLogo";
+import { APP_NAME } from "@/data/controlContent";
 
 const Index = () => {
   const [activeView, setActiveView] = useState("training");
@@ -27,8 +28,8 @@ const Index = () => {
         return <SkillTreeView initialTreeId={viewParam} onNavigate={setActiveView} />;
       case "integrity":
         return <IntegrityView initialBlockId={viewParam} />;
-      case "coach":
-        return <AgentTLC />;
+      case "tlctv":
+        return <TLCtvView />;
       case "gyms":
         return <GymsClassesView />;
       default:
@@ -42,20 +43,13 @@ const Index = () => {
         <div className="min-h-screen bg-background pb-24">
           <header className="h-12 border-b border-border bg-card sticky top-0 z-40">
             <div className="flex items-center justify-between h-full px-4">
-              <div>
-                <h1 className="font-serif text-lg font-black text-foreground tracking-tight leading-none">
+              <div className="flex items-center gap-2">
+                <TLCLogo size="sm" />
+                <h1 className="text-sm font-extrabold text-foreground tracking-tight uppercase">
                   {APP_NAME}
                 </h1>
-                <p className="text-[9px] text-muted-foreground tracking-widest uppercase leading-none mt-0.5">
-                  {APP_TAGLINE}
-                </p>
               </div>
-              <div className="flex items-center gap-2">
-                <span className="text-[8px] text-primary font-bold tracking-wider uppercase hidden sm:inline">
-                  {APP_POWERED_BY}
-                </span>
-                <ThemeSelector />
-              </div>
+              <ThemeSelector />
             </div>
           </header>
 

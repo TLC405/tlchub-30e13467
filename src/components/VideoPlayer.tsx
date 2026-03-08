@@ -31,12 +31,12 @@ const VideoPlayer = ({ videoId, title, description, onClose, autoplay = true }: 
   const embedUrl = `https://www.youtube-nocookie.com/embed/${videoId}?rel=0&modestbranding=1&iv_load_policy=3&showinfo=0${autoplay ? "&autoplay=1" : ""}`;
 
   return (
-    <Card className="bg-card border border-border overflow-hidden">
+    <Card className="bg-card border border-border rounded-lg overflow-hidden">
       <CardHeader className="pb-2 px-3 pt-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2 min-w-0">
             <CardTitle className="text-sm font-semibold truncate">{title}</CardTitle>
-            <Badge variant="outline" className="text-[8px] px-1.5 py-0 border-primary/40 text-primary font-black tracking-wider shrink-0">
+            <Badge variant="outline" className="text-[8px] px-1.5 py-0 border-primary/40 text-primary font-bold tracking-wider shrink-0">
               TLC
             </Badge>
           </div>
@@ -55,7 +55,7 @@ const VideoPlayer = ({ videoId, title, description, onClose, autoplay = true }: 
       </CardHeader>
 
       <CardContent className="p-3 pt-0">
-        <div ref={containerRef} className="relative bg-black rounded-lg overflow-hidden">
+        <div ref={containerRef} className="relative bg-foreground/5 rounded-lg overflow-hidden">
           <div className="aspect-video">
             <iframe
               src={embedUrl}
@@ -67,9 +67,8 @@ const VideoPlayer = ({ videoId, title, description, onClose, autoplay = true }: 
               style={{ border: 0 }}
             />
           </div>
-          {/* TLC Watermark */}
           <div className="absolute bottom-2 right-2 pointer-events-none">
-            <span className="text-[9px] font-black tracking-widest text-white/30 uppercase">
+            <span className="text-[9px] font-bold tracking-widest text-foreground/20 uppercase">
               {APP_POWERED_BY}
             </span>
           </div>

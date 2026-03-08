@@ -10,13 +10,13 @@ interface LearnPathViewProps {
 
 const LearnPathView = ({ onNavigate }: LearnPathViewProps) => {
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 animate-fade-in">
       {/* Philosophy */}
       <div className="text-center py-6 space-y-2">
-        <h1 className="font-serif text-3xl font-black text-foreground tracking-tight">
+        <h1 className="text-2xl font-extrabold text-foreground tracking-tight">
           Choose Your Path
         </h1>
-        <p className="text-sm text-muted-foreground font-serif italic max-w-md mx-auto">
+        <p className="text-sm text-muted-foreground italic max-w-md mx-auto">
           "{APP_PHILOSOPHY}"
         </p>
       </div>
@@ -24,9 +24,9 @@ const LearnPathView = ({ onNavigate }: LearnPathViewProps) => {
       <NonNegotiables compact />
 
       {/* STACKED Laws */}
-      <Card className="border-[3px] border-foreground rounded-[24px]">
+      <Card className="border border-border rounded-lg">
         <CardHeader className="pb-2">
-          <CardTitle className="font-serif text-lg font-bold flex items-center gap-2 text-foreground">
+          <CardTitle className="text-base font-bold flex items-center gap-2 text-foreground">
             <Shield className="h-5 w-5" />
             STACKED Laws
           </CardTitle>
@@ -43,12 +43,12 @@ const LearnPathView = ({ onNavigate }: LearnPathViewProps) => {
         </CardContent>
       </Card>
 
-      {/* Skill Paths — all 9 */}
-      <div className="space-y-4 stagger-children">
+      {/* Skill Paths */}
+      <div className="space-y-3">
         {skillPaths.map((path) => (
           <Card
             key={path.id}
-            className="border-[3px] border-foreground rounded-[24px] hover:bg-muted/30 transition-colors cursor-pointer card-lift"
+            className="border border-border rounded-lg hover:border-foreground/30 transition-colors cursor-pointer"
             onClick={() =>
               path.skillTreeId
                 ? onNavigate(`skills:${path.skillTreeId}`)
@@ -57,7 +57,7 @@ const LearnPathView = ({ onNavigate }: LearnPathViewProps) => {
           >
             <CardHeader className="pb-2">
               <div className="flex items-center justify-between">
-                <CardTitle className="font-serif text-lg font-bold text-foreground blueprint-underline">
+                <CardTitle className="text-base font-bold text-foreground">
                   {path.title}
                 </CardTitle>
                 <ChevronRight className="h-5 w-5 text-muted-foreground" />
@@ -66,7 +66,7 @@ const LearnPathView = ({ onNavigate }: LearnPathViewProps) => {
             </CardHeader>
             <CardContent className="space-y-3">
               {/* Gates */}
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-1.5">
                 {path.gates.map((gate, i) => {
                   const level = gate.split(":")[0];
                   const isElite = i >= 4;
@@ -74,10 +74,10 @@ const LearnPathView = ({ onNavigate }: LearnPathViewProps) => {
                     <Badge
                       key={i}
                       variant="outline"
-                      className={`text-xs border-[2px] rounded-full font-mono ${
+                      className={`text-xs rounded-md font-mono ${
                         isElite
                           ? "border-dashed border-destructive/40 text-muted-foreground"
-                          : "border-foreground/30"
+                          : "border-border"
                       }`}
                     >
                       <span className="font-bold mr-1">{level}</span>
@@ -88,7 +88,7 @@ const LearnPathView = ({ onNavigate }: LearnPathViewProps) => {
               </div>
 
               {/* Why */}
-              <div className="bg-muted/50 rounded-[16px] p-3 border border-border">
+              <div className="bg-muted/50 rounded-lg p-3 border border-border">
                 <div className="flex items-start gap-2">
                   <BookOpen className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
                   <p className="text-xs text-muted-foreground leading-relaxed">{path.why}</p>
@@ -100,26 +100,26 @@ const LearnPathView = ({ onNavigate }: LearnPathViewProps) => {
       </div>
 
       {/* Coming Soon */}
-      <div className="space-y-3 stagger-children">
-        <h2 className="font-serif text-lg font-bold text-muted-foreground text-center">
+      <div className="space-y-3">
+        <h2 className="text-base font-bold text-muted-foreground text-center">
           Coming Soon
         </h2>
         {comingSoon.map((item) => (
           <Card
             key={item.title}
-            className="border-[3px] border-dashed border-muted-foreground/30 rounded-[24px] opacity-70 card-lift"
+            className="border border-dashed border-border rounded-lg opacity-70"
           >
-            <CardContent className="py-5 px-5">
+            <CardContent className="py-4 px-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <Lock className="h-4 w-4 text-muted-foreground flex-shrink-0" />
                   <div>
-                    <p className="font-serif font-bold text-foreground">{item.title}</p>
+                    <p className="font-bold text-foreground">{item.title}</p>
                     <p className="text-xs text-muted-foreground mt-0.5">{item.description}</p>
                   </div>
                 </div>
                 <div className="flex flex-col items-end gap-1">
-                  <Badge variant="outline" className="text-[10px] border-dashed border-destructive/40 rounded-full font-mono">
+                  <Badge variant="outline" className="text-[10px] border-dashed border-destructive/40 rounded-md font-mono">
                     {item.level}
                   </Badge>
                   <span className="text-[10px] text-muted-foreground font-mono">{item.eta}</span>

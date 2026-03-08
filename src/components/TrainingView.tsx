@@ -101,11 +101,11 @@ const TrainingView = ({ onNavigate }: TrainingViewProps) => {
     const completed = blocks.filter(Boolean).length;
 
     return (
-      <div className="space-y-6">
+      <div className="space-y-6 animate-fade-in">
         <Button
           variant="outline"
           onClick={() => setSelectedDay(null)}
-          className="border-[2px] border-foreground rounded-[16px]"
+          className="rounded-lg"
         >
           <ChevronLeft className="h-4 w-4 mr-2" />
           All Days
@@ -113,11 +113,11 @@ const TrainingView = ({ onNavigate }: TrainingViewProps) => {
 
         <div className="text-center space-y-1">
           <div className="inline-flex items-center gap-3">
-            <div className="h-12 w-12 rounded-[16px] border-[3px] border-foreground flex items-center justify-center bg-card">
+            <div className="h-12 w-12 rounded-lg border border-border flex items-center justify-center bg-card">
               {iconMap[day.icon]}
             </div>
             <div className="text-left">
-              <h1 className="font-serif text-2xl font-black text-foreground">
+              <h1 className="text-2xl font-extrabold text-foreground">
                 {day.label} — {day.title}
               </h1>
               <p className="text-sm text-muted-foreground">{day.emphasis}</p>
@@ -127,7 +127,7 @@ const TrainingView = ({ onNavigate }: TrainingViewProps) => {
 
         <NonNegotiables />
 
-        <div className="space-y-3 stagger-children">
+        <div className="space-y-2">
           {day.blocks.map((block, i) => {
             const isDone = blocks[i] || false;
             const isPainFlagged = (painFlags[day.id] || [])[i] || false;
@@ -135,16 +135,16 @@ const TrainingView = ({ onNavigate }: TrainingViewProps) => {
             return (
               <Card
                 key={i}
-                className={`border-[3px] rounded-[24px] transition-colors cursor-pointer card-lift ${
+                className={`border rounded-lg transition-colors cursor-pointer ${
                   isPainFlagged
                     ? "border-destructive/60 bg-destructive/5"
                     : isDone
                     ? "border-primary/50 bg-primary/5"
-                    : "border-foreground"
+                    : "border-border hover:border-foreground/30"
                 }`}
                 onClick={() => handleBlockTap(block, day.id, i)}
               >
-                <CardContent className="py-4 px-5">
+                <CardContent className="py-3 px-4">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
                       {isDone ? (
@@ -171,8 +171,8 @@ const TrainingView = ({ onNavigate }: TrainingViewProps) => {
                       {hasAction && (
                         <button
                           onClick={(e) => { e.stopPropagation(); toggleBlock(day.id, i); }}
-                          className={`h-6 w-6 rounded-full border-[2px] flex items-center justify-center transition-colors ${
-                            isDone ? "border-primary bg-primary/10" : "border-foreground/30 hover:border-foreground"
+                          className={`h-6 w-6 rounded-full border flex items-center justify-center transition-colors ${
+                            isDone ? "border-primary bg-primary/10" : "border-border hover:border-foreground"
                           }`}
                           title="Mark complete"
                         >
@@ -209,9 +209,9 @@ const TrainingView = ({ onNavigate }: TrainingViewProps) => {
 
   // Day selection view
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 animate-fade-in">
       <div className="text-center py-4 space-y-2">
-        <h1 className="font-serif text-3xl font-black text-foreground tracking-tight">
+        <h1 className="text-2xl font-extrabold text-foreground tracking-tight">
           What kind of day?
         </h1>
         <p className="text-sm text-muted-foreground">
@@ -221,7 +221,7 @@ const TrainingView = ({ onNavigate }: TrainingViewProps) => {
 
       <NonNegotiables compact />
 
-      <div className="space-y-4">
+      <div className="space-y-3">
         {stackedWeek.map((day, index) => {
           const isToday = index === todayIndex;
           const blocks = completedBlocks[day.id] || [];
@@ -230,19 +230,19 @@ const TrainingView = ({ onNavigate }: TrainingViewProps) => {
           return (
             <Card
               key={day.id}
-              className={`border-[3px] rounded-[24px] cursor-pointer transition-all hover:bg-muted/30 ${
-                isToday ? "border-primary" : "border-foreground"
+              className={`border rounded-lg cursor-pointer transition-colors hover:border-foreground/30 ${
+                isToday ? "border-primary" : "border-border"
               } ${day.optional ? "opacity-60 border-dashed" : ""}`}
               onClick={() => setSelectedDay(index)}
             >
               <CardHeader className="pb-2">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <div className="h-10 w-10 rounded-[12px] border-[2px] border-foreground flex items-center justify-center bg-card">
+                    <div className="h-10 w-10 rounded-lg border border-border flex items-center justify-center bg-card">
                       {iconMap[day.icon]}
                     </div>
                     <div>
-                      <CardTitle className="font-serif text-lg font-bold">
+                      <CardTitle className="text-base font-bold">
                         {day.label} — {day.title}
                       </CardTitle>
                       <p className="text-xs text-muted-foreground">{day.emphasis}</p>
@@ -250,12 +250,12 @@ const TrainingView = ({ onNavigate }: TrainingViewProps) => {
                   </div>
                   <div className="flex flex-col items-end gap-1">
                     {isToday && (
-                      <Badge className="bg-primary text-primary-foreground text-[10px] rounded-full">
+                      <Badge className="bg-primary text-primary-foreground text-[10px] rounded-md">
                         TODAY
                       </Badge>
                     )}
                     {day.optional && (
-                      <Badge variant="outline" className="text-[10px] rounded-full border-foreground/30">
+                      <Badge variant="outline" className="text-[10px] rounded-md border-border">
                         Optional
                       </Badge>
                     )}
@@ -279,16 +279,16 @@ const TrainingView = ({ onNavigate }: TrainingViewProps) => {
         })}
       </div>
 
-      {/* Integrity Blocks - Collapsible */}
+      {/* Integrity Blocks */}
       <div>
         <button
           onClick={() => setShowIntegrity(!showIntegrity)}
-          className="w-full flex items-center justify-between py-3 px-4 border-[2px] border-foreground/20 rounded-[16px] hover:bg-muted/30 transition-colors"
+          className="w-full flex items-center justify-between py-3 px-4 border border-border rounded-lg hover:bg-muted/30 transition-colors"
         >
           <div className="flex items-center gap-2">
             <Heart className="h-4 w-4 text-foreground" />
-            <span className="font-serif font-bold text-sm text-foreground">Integrity Blocks</span>
-            <Badge variant="outline" className="text-[9px] rounded-full border-foreground/20">
+            <span className="font-bold text-sm text-foreground">Integrity Blocks</span>
+            <Badge variant="outline" className="text-[9px] rounded-md border-border">
               Mobility · Yoga
             </Badge>
           </div>
@@ -296,11 +296,11 @@ const TrainingView = ({ onNavigate }: TrainingViewProps) => {
         </button>
 
         {showIntegrity && (
-          <div className="mt-3 space-y-3 stagger-children">
+          <div className="mt-2 space-y-2">
             {integrityBlocks.map((block) => (
               <Card
                 key={block.id}
-                className="border-[2px] border-foreground/30 rounded-[20px] cursor-pointer card-lift hover:border-foreground transition-colors"
+                className="border border-border rounded-lg cursor-pointer hover:border-foreground/30 transition-colors"
                 onClick={() => onNavigate(`integrity:${block.id}`)}
               >
                 <CardContent className="py-3 px-4">
@@ -308,7 +308,7 @@ const TrainingView = ({ onNavigate }: TrainingViewProps) => {
                     <div className="flex items-center gap-3">
                       <Heart className="h-4 w-4 text-muted-foreground" />
                       <div>
-                        <p className="font-serif font-bold text-sm text-foreground">{block.title}</p>
+                        <p className="font-bold text-sm text-foreground">{block.title}</p>
                         <p className="text-[10px] text-muted-foreground">{block.duration} · {block.drills.length} drills</p>
                       </div>
                     </div>

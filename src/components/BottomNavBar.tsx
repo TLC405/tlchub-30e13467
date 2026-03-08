@@ -2,7 +2,7 @@ import {
   BookOpen,
   Dumbbell,
   GitBranch,
-  Brain,
+  Tv,
   MapPin,
 } from "lucide-react";
 import { APP_COPYRIGHT, APP_POWERED_BY, APP_VERSION } from "@/data/controlContent";
@@ -16,7 +16,7 @@ const menuItems = [
   { id: "learn", title: "Learn", icon: BookOpen },
   { id: "training", title: "Train", icon: Dumbbell },
   { id: "skills", title: "Skills", icon: GitBranch },
-  { id: "coach", title: "Coach", icon: Brain },
+  { id: "tlctv", title: "TLCtv", icon: Tv },
   { id: "gyms", title: "Gyms", icon: MapPin },
 ];
 
@@ -28,9 +28,9 @@ export function BottomNavBar({ onNavigate, activeView }: BottomNavBarProps) {
           <button
             key={item.id}
             onClick={() => onNavigate(item.id)}
-            className={`relative flex flex-col items-center justify-center min-w-0 flex-1 py-2 px-1 rounded-xl transition-all duration-200 ${
+            className={`relative flex flex-col items-center justify-center min-w-0 flex-1 py-2 px-1 rounded-lg transition-colors duration-150 ${
               activeView === item.id
-                ? "text-primary bg-primary/10"
+                ? "text-primary"
                 : "text-muted-foreground hover:text-foreground"
             }`}
           >

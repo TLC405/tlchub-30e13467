@@ -1,9 +1,8 @@
-export const APP_NAME = "CONTROL";
-export const APP_TAGLINE = "Olympic Mastery";
+export const APP_NAME = "TLC TRAINER";
 export const APP_POWERED_BY = "Powered by TLC";
 export const APP_FOUNDATION = "Inspire Oklahoma City";
 export const APP_COPYRIGHT = `© ${new Date().getFullYear()} Inspire Oklahoma City. All rights reserved.`;
-export const APP_VERSION = "1.0.0";
+export const APP_VERSION = "2.0.0";
 export const APP_PHILOSOPHY = "If you cannot control the position, you do not earn the movement.";
 
 // ── TLCtv & CalisthenicsByTLC Branding ──────────────────────
