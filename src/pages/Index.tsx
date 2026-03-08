@@ -7,7 +7,6 @@ import AgentTLC from "@/components/AgentTLC";
 import GymsClassesView from "@/components/GymsClassesView";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import ThemeSelector from "@/components/ThemeSelector";
-import { DownloadProject } from "@/components/DownloadProject";
 import { BottomNavBar } from "@/components/BottomNavBar";
 import { APP_NAME, APP_TAGLINE, APP_POWERED_BY } from "@/data/controlContent";
 
