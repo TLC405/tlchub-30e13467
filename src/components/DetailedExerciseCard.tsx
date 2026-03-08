@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -9,6 +8,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Play, ChevronDown, Heart, Zap, Target, Activity, AlertCircle, BookOpen } from "lucide-react";
 import type { Exercise } from "@/types";
 import LearnTab from "@/components/learn/LearnTab";
+import VideoPlayer from "@/components/VideoPlayer";
 
 interface DetailedExerciseCardProps {
   exercise: Exercise;
