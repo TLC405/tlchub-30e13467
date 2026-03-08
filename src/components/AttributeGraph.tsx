@@ -5,7 +5,7 @@ const attributeConfig = [
   { key: "strength" as const, label: "STR", color: "bg-red-500", icon: Zap },
   { key: "technique" as const, label: "TECH", color: "bg-blue-500", icon: Target },
   { key: "endurance" as const, label: "END", color: "bg-green-500", icon: Clock },
-  { key: "flexibility" as const, label: "FLEX", color: "bg-purple-500", icon: Stretch },
+  { key: "flexibility" as const, label: "FLEX", color: "bg-purple-500", icon: Move },
   { key: "tendonLoad" as const, label: "TENDON", color: "bg-amber-500", icon: AlertTriangle },
 ];
 
