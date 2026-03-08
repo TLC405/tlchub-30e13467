@@ -1,26 +1,13 @@
 import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
-import { NonNegotiables } from "./NonNegotiables";
-import { stackedWeek, integrityBlocks, APP_POWERED_BY } from "@/data/controlContent";
+import { nonNegotiables, stackedWeek, integrityBlocks, APP_POWERED_BY } from "@/data/controlContent";
+import { skillProgressions } from "@/data/skillProgressions";
+import { muscleDiagrams } from "@/data/muscleDiagrams";
 import type { TrainingBlock } from "@/data/controlContent";
 import {
-  Dumbbell,
-  ArrowUp,
-  Zap,
-  Target,
-  Star,
-  Play,
-  CheckCircle,
-  Clock,
-  ChevronLeft,
-  ChevronDown,
-  ChevronUp,
-  CircleDot,
-  ExternalLink,
-  Heart,
+  Dumbbell, ArrowUp, Zap, Target, Star, ChevronDown, ChevronUp,
+  Shield, Heart, Clock, CircleDot, CheckCircle, Play, ExternalLink,
 } from "lucide-react";
 
 const iconMap: Record<string, React.ReactNode> = {
@@ -38,7 +25,7 @@ const getTodayDay = (): number => {
     const { day, date } = JSON.parse(saved);
     const today = new Date().toDateString();
     if (date === today) return day;
-    const next = (day + 1) % 4;
+    const next = (day + 1) % 5;
     localStorage.setItem(key, JSON.stringify({ day: next, date: today }));
     return next;
   }
@@ -46,16 +33,27 @@ const getTodayDay = (): number => {
   return 0;
 };
 
+// Resolve skill tree details for a block action
+function getSkillTreeForAction(action?: TrainingBlock["action"]) {
+  if (!action || action.type !== "skill" || !action.treeId) return null;
+  return skillProgressions.find((t) => t.id === action.treeId) || null;
+}
+
+function getIntegrityForAction(action?: TrainingBlock["action"]) {
+  if (!action || action.type !== "integrity" || !action.blockId) return null;
+  return integrityBlocks.find((b) => b.id === action.blockId) || null;
+}
+
 interface TrainingViewProps {
   onNavigate: (view: string) => void;
 }
 
 const TrainingView = ({ onNavigate }: TrainingViewProps) => {
   const { toast } = useToast();
-  const [selectedDay, setSelectedDay] = useState<number | null>(null);
+  const [expandedDay, setExpandedDay] = useState<string | null>(null);
+  const [expandedBlock, setExpandedBlock] = useState<string | null>(null);
   const [completedBlocks, setCompletedBlocks] = useState<Record<string, boolean[]>>({});
   const [painFlags, setPainFlags] = useState<Record<string, boolean[]>>({});
-  const [showIntegrity, setShowIntegrity] = useState(false);
   const todayIndex = getTodayDay();
 
   const toggleBlock = (dayId: string, blockIndex: number) => {
@@ -71,259 +69,277 @@ const TrainingView = ({ onNavigate }: TrainingViewProps) => {
     setPainFlags((prev) => {
       const flags = [...(prev[dayId] || [])];
       flags[blockIndex] = !flags[blockIndex];
-      const updated = { ...prev, [dayId]: flags };
-      try { localStorage.setItem("control_pain_flags", JSON.stringify(updated)); } catch {}
-      return updated;
+      return { ...prev, [dayId]: flags };
     });
-    toast({
-      title: "Pain flagged",
-      description: "Consider a regression. Listen to your body.",
-      variant: "destructive",
-    });
+    toast({ title: "Pain flagged", description: "Consider a regression.", variant: "destructive" });
   };
 
-  const handleBlockTap = (block: TrainingBlock, dayId: string, blockIndex: number) => {
-    if (block.action) {
-      if (block.action.type === "skill" && block.action.treeId) {
-        onNavigate(`skills:${block.action.treeId}`);
-      } else if (block.action.type === "integrity" && block.action.blockId) {
-        onNavigate(`integrity:${block.action.blockId}`);
-      }
-    } else {
-      toggleBlock(dayId, blockIndex);
-    }
-  };
+  const blockKey = (dayId: string, i: number) => `${dayId}-${i}`;
 
-  // Day detail view
-  if (selectedDay !== null) {
-    const day = stackedWeek[selectedDay];
-    const blocks = completedBlocks[day.id] || [];
-    const completed = blocks.filter(Boolean).length;
-
-    return (
-      <div className="space-y-6 animate-fade-in">
-        <Button
-          variant="outline"
-          onClick={() => setSelectedDay(null)}
-          className="rounded-lg"
-        >
-          <ChevronLeft className="h-4 w-4 mr-2" />
-          All Days
-        </Button>
-
-        <div className="text-center space-y-1">
-          <div className="inline-flex items-center gap-3">
-            <div className="h-12 w-12 rounded-lg border border-border flex items-center justify-center bg-card">
-              {iconMap[day.icon]}
-            </div>
-            <div className="text-left">
-              <h1 className="text-2xl font-extrabold text-foreground">
-                {day.label} — {day.title}
-              </h1>
-              <p className="text-sm text-muted-foreground">{day.emphasis}</p>
-            </div>
-          </div>
-        </div>
-
-        <NonNegotiables />
-
-        <div className="space-y-2">
-          {day.blocks.map((block, i) => {
-            const isDone = blocks[i] || false;
-            const isPainFlagged = (painFlags[day.id] || [])[i] || false;
-            const hasAction = !!block.action;
-            return (
-              <Card
-                key={i}
-                className={`border rounded-lg transition-colors cursor-pointer ${
-                  isPainFlagged
-                    ? "border-destructive/60 bg-destructive/5"
-                    : isDone
-                    ? "border-primary/50 bg-primary/5"
-                    : "border-border hover:border-foreground/30"
-                }`}
-                onClick={() => handleBlockTap(block, day.id, i)}
-              >
-                <CardContent className="py-3 px-4">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      {isDone ? (
-                        <CheckCircle className="h-5 w-5 text-primary flex-shrink-0" />
-                      ) : hasAction ? (
-                        <ExternalLink className="h-5 w-5 text-primary flex-shrink-0" />
-                      ) : (
-                        <Play className="h-5 w-5 text-muted-foreground flex-shrink-0" />
-                      )}
-                      <div>
-                        <span
-                          className={`font-medium text-sm ${
-                            isDone ? "line-through text-muted-foreground" : "text-foreground"
-                          }`}
-                        >
-                          {block.label}
-                        </span>
-                        {hasAction && !isDone && (
-                          <p className="text-[10px] text-primary mt-0.5">Tap to open →</p>
-                        )}
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      {hasAction && (
-                        <button
-                          onClick={(e) => { e.stopPropagation(); toggleBlock(day.id, i); }}
-                          className={`h-6 w-6 rounded-full border flex items-center justify-center transition-colors ${
-                            isDone ? "border-primary bg-primary/10" : "border-border hover:border-foreground"
-                          }`}
-                          title="Mark complete"
-                        >
-                          {isDone && <CheckCircle className="h-3.5 w-3.5 text-primary" />}
-                        </button>
-                      )}
-                      <button
-                        onClick={(e) => flagPain(day.id, i, e)}
-                        className={`h-6 w-6 rounded-full flex items-center justify-center transition-colors ${
-                          isPainFlagged
-                            ? "bg-destructive text-destructive-foreground"
-                            : "hover:bg-destructive/10 text-muted-foreground"
-                        }`}
-                        title="Flag pain"
-                      >
-                        <CircleDot className="h-3.5 w-3.5" />
-                      </button>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            );
-          })}
-        </div>
-
-        <div className="text-center text-sm text-muted-foreground">
-          {completed}/{day.blocks.length} blocks complete
-        </div>
-
-        <p className="text-[10px] text-center text-primary font-semibold">{APP_POWERED_BY}</p>
-      </div>
-    );
-  }
-
-  // Day selection view
   return (
-    <div className="space-y-6 animate-fade-in">
-      <div className="text-center py-4 space-y-2">
-        <h1 className="text-2xl font-extrabold text-foreground tracking-tight">
-          What kind of day?
-        </h1>
-        <p className="text-sm text-muted-foreground">
-          Choose your training focus. Tap to begin.
-        </p>
+    <div className="space-y-4 animate-fade-in">
+      {/* Header */}
+      <div className="py-3 space-y-1">
+        <h1 className="text-2xl font-extrabold text-foreground tracking-tight">Train</h1>
+        <p className="text-sm text-muted-foreground">Expand a day. See the work.</p>
       </div>
 
-      <NonNegotiables compact />
+      {/* Non-Negotiables — integrated bar */}
+      <div className="flex items-center gap-2 py-2 px-3 border border-border rounded-lg bg-card">
+        <Shield className="h-4 w-4 text-primary flex-shrink-0" />
+        <div className="flex flex-wrap gap-x-2 gap-y-0.5">
+          {nonNegotiables.map((nn) => (
+            <span key={nn.id} className="text-[11px] font-semibold text-foreground">
+              {nn.title}
+            </span>
+          ))}
+        </div>
+      </div>
 
-      <div className="space-y-3">
+      {/* Days — accordion */}
+      <div className="space-y-2">
         {stackedWeek.map((day, index) => {
           const isToday = index === todayIndex;
+          const isOpen = expandedDay === day.id;
           const blocks = completedBlocks[day.id] || [];
           const completed = blocks.filter(Boolean).length;
 
           return (
-            <Card
+            <div
               key={day.id}
-              className={`border rounded-lg cursor-pointer transition-colors hover:border-foreground/30 ${
-                isToday ? "border-primary" : "border-border"
-              } ${day.optional ? "opacity-60 border-dashed" : ""}`}
-              onClick={() => setSelectedDay(index)}
+              className={`border rounded-lg overflow-hidden transition-colors ${
+                isOpen ? "border-primary bg-card" : isToday ? "border-primary/50" : "border-border"
+              } ${day.optional ? "opacity-70 border-dashed" : ""}`}
             >
-              <CardHeader className="pb-2">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="h-10 w-10 rounded-lg border border-border flex items-center justify-center bg-card">
-                      {iconMap[day.icon]}
-                    </div>
-                    <div>
-                      <CardTitle className="text-base font-bold">
-                        {day.label} — {day.title}
-                      </CardTitle>
-                      <p className="text-xs text-muted-foreground">{day.emphasis}</p>
-                    </div>
+              {/* Day header */}
+              <button
+                onClick={() => setExpandedDay(isOpen ? null : day.id)}
+                className="w-full flex items-center justify-between px-4 py-3 hover:bg-muted/30 transition-colors"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="h-9 w-9 rounded-lg border border-border flex items-center justify-center bg-background">
+                    {iconMap[day.icon]}
                   </div>
-                  <div className="flex flex-col items-end gap-1">
-                    {isToday && (
-                      <Badge className="bg-primary text-primary-foreground text-[10px] rounded-md">
-                        TODAY
-                      </Badge>
-                    )}
-                    {day.optional && (
-                      <Badge variant="outline" className="text-[10px] rounded-md border-border">
-                        Optional
-                      </Badge>
-                    )}
+                  <div className="text-left">
+                    <div className="flex items-center gap-2">
+                      <span className="font-bold text-sm text-foreground">{day.label} — {day.title}</span>
+                      {isToday && (
+                        <Badge className="bg-primary text-primary-foreground text-[9px] px-1.5 py-0 rounded">TODAY</Badge>
+                      )}
+                      {day.optional && (
+                        <Badge variant="outline" className="text-[9px] rounded border-border">Optional</Badge>
+                      )}
+                    </div>
+                    <p className="text-[11px] text-muted-foreground">{day.emphasis}</p>
                   </div>
                 </div>
-              </CardHeader>
-              <CardContent className="pt-0">
-                <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                  <Clock className="h-3 w-3" />
-                  <span>{day.blocks.length} blocks</span>
+                <div className="flex items-center gap-2">
                   {completed > 0 && (
-                    <>
-                      <span>·</span>
-                      <span className="text-primary">{completed} done</span>
-                    </>
+                    <span className="text-[10px] text-primary font-semibold">{completed}/{day.blocks.length}</span>
                   )}
+                  {isOpen ? <ChevronUp className="h-4 w-4 text-muted-foreground" /> : <ChevronDown className="h-4 w-4 text-muted-foreground" />}
                 </div>
-              </CardContent>
-            </Card>
+              </button>
+
+              {/* Expanded blocks */}
+              {isOpen && (
+                <div className="border-t border-border">
+                  {day.blocks.map((block, i) => {
+                    const isDone = blocks[i] || false;
+                    const isPain = (painFlags[day.id] || [])[i] || false;
+                    const bKey = blockKey(day.id, i);
+                    const isBlockOpen = expandedBlock === bKey;
+                    const skillTree = getSkillTreeForAction(block.action);
+                    const integrity = getIntegrityForAction(block.action);
+
+                    return (
+                      <div key={i} className={`border-b border-border last:border-b-0 ${isPain ? "bg-destructive/5" : ""}`}>
+                        {/* Block row */}
+                        <div className="flex items-center gap-2 px-4 py-2.5">
+                          {/* Complete toggle */}
+                          <button
+                            onClick={() => toggleBlock(day.id, i)}
+                            className={`h-5 w-5 rounded flex-shrink-0 border flex items-center justify-center transition-colors ${
+                              isDone ? "border-primary bg-primary/10" : "border-border hover:border-foreground/40"
+                            }`}
+                          >
+                            {isDone && <CheckCircle className="h-3 w-3 text-primary" />}
+                          </button>
+
+                          {/* Label — tappable to expand */}
+                          <button
+                            onClick={() => setExpandedBlock(isBlockOpen ? null : bKey)}
+                            className={`flex-1 text-left text-sm font-medium transition-colors ${
+                              isDone ? "line-through text-muted-foreground" : "text-foreground"
+                            }`}
+                          >
+                            {block.label}
+                          </button>
+
+                          {/* Indicators */}
+                          <div className="flex items-center gap-1.5">
+                            {(skillTree || integrity) && (
+                              <ChevronDown className={`h-3.5 w-3.5 text-primary transition-transform ${isBlockOpen ? "rotate-180" : ""}`} />
+                            )}
+                            <button
+                              onClick={(e) => flagPain(day.id, i, e)}
+                              className={`h-5 w-5 rounded-full flex items-center justify-center transition-colors ${
+                                isPain ? "bg-destructive text-destructive-foreground" : "hover:bg-destructive/10 text-muted-foreground"
+                              }`}
+                              title="Flag pain"
+                            >
+                              <CircleDot className="h-3 w-3" />
+                            </button>
+                          </div>
+                        </div>
+
+                        {/* Expanded detail — inline, no popup */}
+                        {isBlockOpen && (skillTree || integrity) && (
+                          <div className="px-4 pb-3 animate-fade-in">
+                            {skillTree && <SkillTreeInline tree={skillTree} onNavigate={onNavigate} />}
+                            {integrity && <IntegrityInline block={integrity} />}
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
           );
         })}
       </div>
 
-      {/* Integrity Blocks */}
-      <div>
-        <button
-          onClick={() => setShowIntegrity(!showIntegrity)}
-          className="w-full flex items-center justify-between py-3 px-4 border border-border rounded-lg hover:bg-muted/30 transition-colors"
-        >
-          <div className="flex items-center gap-2">
-            <Heart className="h-4 w-4 text-foreground" />
-            <span className="font-bold text-sm text-foreground">Integrity Blocks</span>
-            <Badge variant="outline" className="text-[9px] rounded-md border-border">
-              Mobility · Yoga
-            </Badge>
-          </div>
-          {showIntegrity ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
-        </button>
-
-        {showIntegrity && (
-          <div className="mt-2 space-y-2">
-            {integrityBlocks.map((block) => (
-              <Card
-                key={block.id}
-                className="border border-border rounded-lg cursor-pointer hover:border-foreground/30 transition-colors"
-                onClick={() => onNavigate(`integrity:${block.id}`)}
-              >
-                <CardContent className="py-3 px-4">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <Heart className="h-4 w-4 text-muted-foreground" />
-                      <div>
-                        <p className="font-bold text-sm text-foreground">{block.title}</p>
-                        <p className="text-[10px] text-muted-foreground">{block.duration} · {block.drills.length} drills</p>
-                      </div>
-                    </div>
-                    <ExternalLink className="h-4 w-4 text-primary" />
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        )}
-      </div>
+      {/* Integrity Blocks — quick access */}
+      <IntegrityQuickAccess />
 
       <p className="text-[10px] text-center text-primary font-semibold">{APP_POWERED_BY}</p>
     </div>
   );
 };
+
+/* ── Skill Tree Inline ────────────────────────────── */
+function SkillTreeInline({ tree, onNavigate }: { tree: ReturnType<typeof getSkillTreeForAction> & {}; onNavigate: (v: string) => void }) {
+  const diagram = muscleDiagrams[tree.id];
+  return (
+    <div className="border border-border rounded-lg bg-background p-3 space-y-2">
+      <div className="flex items-center gap-3">
+        {diagram && (
+          <img src={diagram} alt={tree.name} className="w-10 h-10 rounded object-contain bg-secondary/30 p-0.5" loading="lazy" />
+        )}
+        <div className="flex-1">
+          <p className="text-xs font-bold text-foreground">{tree.name}</p>
+          <p className="text-[10px] text-muted-foreground">{tree.description}</p>
+        </div>
+      </div>
+      <div className="space-y-1">
+        {tree.progressions.map((step) => (
+          <div key={step.id} className="flex items-center gap-2 text-[11px]">
+            <span className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${
+              step.levelNumber <= 2 ? "bg-primary" : "bg-border"
+            }`} />
+            <span className="text-foreground font-medium">{step.name}</span>
+            <span className="text-muted-foreground capitalize">— {step.level}</span>
+          </div>
+        ))}
+      </div>
+      <button
+        onClick={() => onNavigate(`skills:${tree.id}`)}
+        className="text-[11px] text-primary font-semibold hover:underline flex items-center gap-1"
+      >
+        Full Skill Path <ExternalLink className="h-3 w-3" />
+      </button>
+    </div>
+  );
+}
+
+/* ── Integrity Inline ─────────────────────────────── */
+function IntegrityInline({ block }: { block: NonNullable<ReturnType<typeof getIntegrityForAction>> }) {
+  return (
+    <div className="border border-border rounded-lg bg-background p-3 space-y-2">
+      <div className="flex items-center gap-2">
+        <Heart className="h-4 w-4 text-primary" />
+        <p className="text-xs font-bold text-foreground">{block.title}</p>
+        <span className="text-[10px] text-muted-foreground">{block.duration}</span>
+      </div>
+      <p className="text-[11px] text-muted-foreground">{block.description}</p>
+      <div className="flex flex-wrap gap-1.5">
+        {block.drills.map((d, i) => (
+          <span key={i} className="text-[10px] bg-muted rounded px-2 py-0.5 text-foreground">{d}</span>
+        ))}
+      </div>
+      {block.cues.length > 0 && (
+        <div className="space-y-0.5">
+          {block.cues.map((c, i) => (
+            <p key={i} className="text-[10px] text-muted-foreground">
+              <span className="text-primary mr-1">→</span>{c}
+            </p>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* ── Integrity Quick Access ───────────────────────── */
+function IntegrityQuickAccess() {
+  const [open, setOpen] = useState(false);
+  return (
+    <div>
+      <button
+        onClick={() => setOpen(!open)}
+        className="w-full flex items-center justify-between py-2.5 px-4 border border-border rounded-lg hover:bg-muted/30 transition-colors"
+      >
+        <div className="flex items-center gap-2">
+          <Heart className="h-4 w-4 text-primary" />
+          <span className="font-bold text-sm text-foreground">Integrity Blocks</span>
+          <Badge variant="outline" className="text-[9px] rounded border-border">Mobility · Yoga</Badge>
+        </div>
+        {open ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+      </button>
+      {open && (
+        <div className="mt-1.5 space-y-1.5">
+          {integrityBlocks.map((block) => (
+            <IntegrityQuickCard key={block.id} block={block} />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function IntegrityQuickCard({ block }: { block: typeof integrityBlocks[0] }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="border border-border rounded-lg overflow-hidden">
+      <button
+        onClick={() => setOpen(!open)}
+        className="w-full flex items-center justify-between px-4 py-2.5 hover:bg-muted/30 transition-colors"
+      >
+        <div className="flex items-center gap-2">
+          <Heart className="h-3.5 w-3.5 text-muted-foreground" />
+          <span className="font-semibold text-sm text-foreground">{block.title}</span>
+          <span className="text-[10px] text-muted-foreground">{block.duration}</span>
+        </div>
+        {open ? <ChevronUp className="h-3.5 w-3.5" /> : <ChevronDown className="h-3.5 w-3.5" />}
+      </button>
+      {open && (
+        <div className="px-4 pb-3 space-y-2 animate-fade-in">
+          <p className="text-[11px] text-muted-foreground">{block.description}</p>
+          <div className="flex flex-wrap gap-1.5">
+            {block.drills.map((d, i) => (
+              <span key={i} className="text-[10px] bg-muted rounded px-2 py-0.5 text-foreground">{d}</span>
+            ))}
+          </div>
+          {block.cues.map((c, i) => (
+            <p key={i} className="text-[10px] text-muted-foreground">
+              <span className="text-primary mr-1">→</span>{c}
+            </p>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
 
 export default TrainingView;
