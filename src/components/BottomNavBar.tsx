@@ -1,7 +1,7 @@
 import { 
   BookOpen,
   Dumbbell,
-  GitBranch,
+  Sparkles,
   Tv,
   MapPin,
 } from "lucide-react";
@@ -15,7 +15,7 @@ interface BottomNavBarProps {
 const menuItems = [
   { id: "learn", title: "Learn", icon: BookOpen },
   { id: "training", title: "Train", icon: Dumbbell },
-  { id: "skills", title: "Skills", icon: GitBranch },
+  { id: "skills", title: "Skills", icon: Sparkles },
   { id: "tlctv", title: "TLCtv", icon: Tv },
   { id: "gyms", title: "Gyms", icon: MapPin },
 ];
