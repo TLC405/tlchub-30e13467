@@ -11,7 +11,9 @@ import { muscleDiagrams } from "@/data/muscleDiagrams";
 import {
   ChevronLeft, Lock, CheckCircle, Play, Target,
   Dumbbell, ArrowUp, Zap, CircleDot, Star, Flag, Minus,
-  TrendingDown, BookOpen, ChevronDown, ChevronUp, Search,
+  TrendingDown, BookOpen, ChevronDown, ChevronUp, Flame,
+  Grip, RotateCcw, Hand, Cross, Sparkles, ArrowUpFromLine,
+  Trophy, Swords, Shield,
 } from "lucide-react";
 import { skillProgressions, type SkillTree, type ProgressionStep, type SkillLevel } from "@/data/skillProgressions";
 import LearnTab from "@/components/learn/LearnTab";
@@ -38,6 +40,13 @@ const iconMap: Record<string, React.ReactNode> = {
   Flag: <Flag className="h-4 w-4" />,
   Minus: <Minus className="h-4 w-4" />,
   TrendingDown: <TrendingDown className="h-4 w-4" />,
+  Flame: <Flame className="h-4 w-4" />,
+  Grip: <Grip className="h-4 w-4" />,
+  RotateCcw: <RotateCcw className="h-4 w-4" />,
+  Hand: <Hand className="h-4 w-4" />,
+  Cross: <Cross className="h-4 w-4" />,
+  Sparkles: <Sparkles className="h-4 w-4" />,
+  ArrowUpFromLine: <ArrowUpFromLine className="h-4 w-4" />,
 };
 
 const levelColors: Record<SkillLevel, string> = {
@@ -50,7 +59,13 @@ const levelLabels: Record<SkillLevel, string> = {
   advanced: "L3", elite: "L4", peak: "L5",
 };
 
-const allLevels: SkillLevel[] = ["foundation", "development", "advanced", "elite", "peak"];
+const categoryIcons: Record<string, React.ReactNode> = {
+  all: <Trophy className="h-3.5 w-3.5" />,
+  push: <Swords className="h-3.5 w-3.5" />,
+  pull: <Grip className="h-3.5 w-3.5" />,
+  core: <Shield className="h-3.5 w-3.5" />,
+  skill: <Sparkles className="h-3.5 w-3.5" />,
+};
 
 const getVideoId = (url?: string): string | null => {
   if (!url) return null;
@@ -58,7 +73,7 @@ const getVideoId = (url?: string): string | null => {
   return match ? match[1] : null;
 };
 
-// ─── Compact Step Card (extracted for performance) ───────
+// ─── Compact Step Card ───────────────────────────────────
 const StepCard = React.memo(({
   step, globalIndex, isCompleted, isUnlocked, isOpen,
   onToggle, onComplete, treeName,
@@ -76,8 +91,8 @@ const StepCard = React.memo(({
     }`}>
       <button className="w-full text-left" onClick={onToggle}>
         <div className="flex items-center gap-3 px-3 py-2.5">
-          {/* Video thumbnail — small */}
-          {videoId && (
+          {/* Video thumbnail */}
+          {videoId ? (
             <div className="w-14 h-10 flex-shrink-0 relative rounded overflow-hidden bg-secondary">
               <img
                 src={`https://img.youtube.com/vi/${videoId}/default.jpg`}
@@ -88,6 +103,10 @@ const StepCard = React.memo(({
               <div className="absolute inset-0 bg-foreground/20 flex items-center justify-center">
                 <Play className="h-3 w-3 text-primary-foreground fill-current" />
               </div>
+            </div>
+          ) : (
+            <div className="w-14 h-10 flex-shrink-0 rounded bg-secondary flex items-center justify-center">
+              <Play className="h-3 w-3 text-muted-foreground" />
             </div>
           )}
 
@@ -246,30 +265,36 @@ const SkillTreeView = ({ initialTreeId, onNavigate }: SkillTreeViewProps) => {
       <div className="space-y-4 animate-fade-in">
         {/* Header */}
         <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-xl font-extrabold text-foreground tracking-tight">Skill Paths</h1>
-            <p className="text-xs text-muted-foreground">{skillProgressions.length} paths · Foundation → Peak</p>
+          <div className="flex items-center gap-2.5">
+            <div className="h-9 w-9 rounded-lg bg-primary/10 flex items-center justify-center">
+              <Sparkles className="h-5 w-5 text-primary" />
+            </div>
+            <div>
+              <h1 className="text-xl font-extrabold text-foreground tracking-tight">Skill Paths</h1>
+              <p className="text-[10px] text-muted-foreground">{skillProgressions.length} paths · Foundation → Peak</p>
+            </div>
           </div>
         </div>
 
-        {/* Category filter chips */}
+        {/* Category filter chips with icons */}
         <div className="flex gap-1.5 overflow-x-auto pb-1">
           {(["all", "push", "pull", "core", "skill"] as const).map((cat) => (
             <button
               key={cat}
               onClick={() => setFilter(cat)}
-              className={`px-3 py-1 rounded-full text-xs font-semibold transition-colors whitespace-nowrap ${
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition-colors whitespace-nowrap ${
                 filter === cat
                   ? "bg-primary text-primary-foreground"
                   : "bg-secondary text-muted-foreground hover:text-foreground"
               }`}
             >
+              {categoryIcons[cat]}
               {cat === "all" ? "All" : cat.charAt(0).toUpperCase() + cat.slice(1)}
             </button>
           ))}
         </div>
 
-        {/* Compact grid — 2 columns on mobile */}
+        {/* Grid */}
         <div className="grid grid-cols-2 gap-2">
           {filteredTrees.map((tree) => {
             const progress = getTreeProgress(tree);
@@ -281,7 +306,6 @@ const SkillTreeView = ({ initialTreeId, onNavigate }: SkillTreeViewProps) => {
                 className="text-left border border-border rounded-lg p-3 hover:border-foreground/30 transition-all duration-200 hover:shadow-md bg-card active:scale-[0.98]"
                 onClick={() => setSelectedTree(tree)}
               >
-                {/* Muscle diagram + icon */}
                 <div className="flex items-center gap-2 mb-2">
                   {muscleDiagrams[tree.id] ? (
                     <img src={muscleDiagrams[tree.id]} alt="" className="w-10 h-10 object-contain rounded bg-secondary/30 p-0.5" loading="lazy" />
@@ -295,8 +319,6 @@ const SkillTreeView = ({ initialTreeId, onNavigate }: SkillTreeViewProps) => {
                     <p className="text-[10px] text-muted-foreground">{completed}/{tree.progressions.length}</p>
                   </div>
                 </div>
-
-                {/* Progress bar */}
                 <Progress value={progress} className="h-1" />
               </button>
             );
@@ -316,8 +338,12 @@ const SkillTreeView = ({ initialTreeId, onNavigate }: SkillTreeViewProps) => {
         <Button variant="ghost" size="sm" onClick={() => { setSelectedTree(null); setExpandedStep(null); }} className="h-8 w-8 p-0">
           <ChevronLeft className="h-5 w-5" />
         </Button>
-        {muscleDiagrams[currentTree.id] && (
+        {muscleDiagrams[currentTree.id] ? (
           <img src={muscleDiagrams[currentTree.id]} alt="" className="w-10 h-10 rounded object-contain bg-secondary/30 p-0.5" />
+        ) : (
+          <div className="w-10 h-10 rounded bg-secondary flex items-center justify-center">
+            {iconMap[currentTree.icon] || <Dumbbell className="h-4 w-4" />}
+          </div>
         )}
         <div className="flex-1 min-w-0">
           <h2 className="text-base font-bold truncate">{currentTree.name}</h2>
@@ -336,7 +362,7 @@ const SkillTreeView = ({ initialTreeId, onNavigate }: SkillTreeViewProps) => {
         <span className="text-xs text-muted-foreground">Goal: {currentTree.eliteGoal}</span>
       </div>
 
-      {/* Steps — flat list with level badges inline, no level headers */}
+      {/* Steps */}
       <div className="space-y-1.5">
         {currentTree.progressions.map((step, globalIndex) => (
           <StepCard
