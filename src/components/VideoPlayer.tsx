@@ -1,7 +1,9 @@
 import { useRef, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { X, Maximize, Minimize } from "lucide-react";
+import { APP_POWERED_BY } from "@/data/controlContent";
 
 interface VideoPlayerProps {
   videoId: string;
@@ -32,7 +34,12 @@ const VideoPlayer = ({ videoId, title, description, onClose, autoplay = true }: 
     <Card className="bg-card border border-border overflow-hidden">
       <CardHeader className="pb-2 px-3 pt-3">
         <div className="flex items-center justify-between">
-          <CardTitle className="text-sm font-semibold truncate">{title}</CardTitle>
+          <div className="flex items-center gap-2 min-w-0">
+            <CardTitle className="text-sm font-semibold truncate">{title}</CardTitle>
+            <Badge variant="outline" className="text-[8px] px-1.5 py-0 border-primary/40 text-primary font-black tracking-wider shrink-0">
+              TLC
+            </Badge>
+          </div>
           <div className="flex gap-1">
             <Button variant="ghost" size="sm" onClick={toggleFullscreen} className="h-6 w-6 p-0">
               {isFullscreen ? <Minimize className="h-3 w-3" /> : <Maximize className="h-3 w-3" />}
@@ -59,6 +66,12 @@ const VideoPlayer = ({ videoId, title, description, onClose, autoplay = true }: 
               referrerPolicy="no-referrer"
               style={{ border: 0 }}
             />
+          </div>
+          {/* TLC Watermark */}
+          <div className="absolute bottom-2 right-2 pointer-events-none">
+            <span className="text-[9px] font-black tracking-widest text-white/30 uppercase">
+              {APP_POWERED_BY}
+            </span>
           </div>
         </div>
       </CardContent>
