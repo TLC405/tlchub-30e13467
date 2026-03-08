@@ -22,6 +22,7 @@ const difficultyColors: Record<number, string> = { 1: "bg-green-600", 2: "bg-blu
 const DetailedExerciseCard = ({ exercise, onMarkComplete, isCompleted }: DetailedExerciseCardProps) => {
   const [showDetails, setShowDetails] = useState(false);
   const [activeTab, setActiveTab] = useState("details");
+  const [showVideo, setShowVideo] = useState(false);
 
   return (
     <Card className="clean-border premium-shadow bg-card">
