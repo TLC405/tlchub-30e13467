@@ -68,6 +68,17 @@ const DetailedExerciseCard = ({ exercise, onMarkComplete, isCompleted }: Detaile
         </div>
       </CardHeader>
 
+      {/* Inline Video Player */}
+      {showVideo && exercise.youtubeUrl && (() => {
+        const match = exercise.youtubeUrl!.match(/(?:v=|youtu\.be\/)([a-zA-Z0-9_-]+)/);
+        const videoId = match ? match[1] : null;
+        return videoId ? (
+          <div className="px-3 pb-2">
+            <VideoPlayer videoId={videoId} title={exercise.name} onClose={() => setShowVideo(false)} />
+          </div>
+        ) : null;
+      })()}
+
       <Collapsible open={showDetails} onOpenChange={setShowDetails}>
         <CollapsibleTrigger asChild>
           <Button variant="ghost" className="w-full justify-between px-6">
