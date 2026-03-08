@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=JetBrains+Mono:wght@100;200;300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,61 +6,50 @@
 
 @layer base {
   :root {
-    /* CONTROL Brutalist Palette */
-    --background: 225 6% 97%;      /* #F5F6F8 */
-    --foreground: 220 27% 4%;      /* #0A0C10 */
-    --card: 225 10% 93%;           /* #ECEEF2 */
+    /* Bold Elegance — Light */
+    --background: 0 0% 98%;           /* #FAFAFA */
+    --foreground: 220 27% 4%;         /* #0A0C10 */
+    --card: 0 0% 94%;                 /* #F0F0F0 */
     --card-foreground: 220 27% 4%;
-    --popover: 225 10% 93%;
+    --popover: 0 0% 94%;
     --popover-foreground: 220 27% 4%;
-    --primary: 224 100% 55%;       /* #1A4EFF */
-    --primary-foreground: 0 0% 100%;
-    --secondary: 225 10% 93%;
+    --primary: 41 52% 55%;            /* #D4A843 gold */
+    --primary-foreground: 220 27% 4%;
+    --secondary: 0 0% 88%;            /* #E0E0E0 */
     --secondary-foreground: 220 27% 4%;
-    --muted: 225 10% 93%;
+    --muted: 0 0% 88%;
     --muted-foreground: 220 6% 45%;
-    --accent: 224 100% 55%;
-    --accent-foreground: 0 0% 100%;
-    --destructive: 0 85% 60%;
-    --destructive-foreground: 0 0% 100%;
-    --border: 222 10% 83%;         /* #D2D6DE */
-    --input: 222 10% 83%;
-    --ring: 224 100% 55%;
-    --radius: 1rem;
-    --warning: 38 92% 50%;
-    --warning-foreground: 0 0% 100%;
-    --success: 142 76% 36%;
-    --success-foreground: 0 0% 100%;
-    --info: 224 100% 55%;
-    --info-foreground: 0 0% 100%;
+    --accent: 41 52% 55%;
+    --accent-foreground: 220 27% 4%;
+    --destructive: 0 65% 48%;         /* #CC3333 */
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 82%;               /* #D0D0D0 */
+    --input: 0 0% 82%;
+    --ring: 41 52% 55%;
+    --radius: 0.5rem;
   }
 
   .dark {
-    --background: 220 27% 4%;
-    --foreground: 225 6% 97%;
-    --card: 220 20% 10%;
-    --card-foreground: 225 6% 97%;
-    --popover: 220 20% 10%;
-    --popover-foreground: 225 6% 97%;
-    --primary: 224 100% 65%;
+    /* Bold Elegance — Dark */
+    --background: 220 27% 4%;         /* #0A0C10 */
+    --foreground: 0 0% 98%;           /* #FAFAFA */
+    --card: 220 14% 9%;               /* #141619 */
+    --card-foreground: 0 0% 98%;
+    --popover: 220 14% 9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 41 52% 55%;            /* #D4A843 gold */
     --primary-foreground: 220 27% 4%;
-    --secondary: 220 20% 15%;
-    --secondary-foreground: 225 6% 97%;
-    --muted: 220 20% 15%;
-    --muted-foreground: 222 10% 65%;
-    --accent: 224 100% 65%;
+    --secondary: 220 10% 16%;         /* #2A2D33 */
+    --secondary-foreground: 0 0% 98%;
+    --muted: 220 10% 16%;
+    --muted-foreground: 220 6% 60%;
+    --accent: 41 52% 55%;
     --accent-foreground: 220 27% 4%;
-    --destructive: 0 75% 60%;
-    --destructive-foreground: 225 6% 97%;
-    --border: 220 15% 25%;
-    --input: 220 15% 25%;
-    --ring: 224 100% 65%;
-    --warning: 38 92% 50%;
-    --warning-foreground: 220 27% 4%;
-    --success: 142 76% 36%;
-    --success-foreground: 225 6% 97%;
-    --info: 224 100% 65%;
-    --info-foreground: 220 27% 4%;
+    --destructive: 0 65% 48%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 220 10% 16%;            /* #2A2D33 */
+    --input: 220 10% 16%;
+    --ring: 41 52% 55%;
   }
 }
 
@@ -78,23 +67,13 @@
     line-height: 1.5;
   }
 
-
   .font-sans {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  }
-
-  .font-serif {
-    font-family: 'Playfair Display', Georgia, serif;
   }
 
   .font-mono {
     font-family: 'JetBrains Mono', 'SF Mono', Monaco, monospace;
     font-variant-ligatures: none;
-  }
-
-  /* Brutalist Card Override */
-  .brutalist-card {
-    @apply border-[3px] border-foreground rounded-[24px] bg-card;
   }
 
   /* Mobile safe area */
@@ -104,86 +83,28 @@
     overflow-x: hidden;
   }
 
-  /* Premium shadow — flat brutalist */
-  .premium-shadow {
-    box-shadow: 4px 4px 0 0 hsl(var(--foreground) / 0.08);
+  /* Card elevated — subtle depth */
+  .card-elevated {
+    box-shadow: 0 1px 3px 0 hsl(var(--foreground) / 0.06), 0 1px 2px -1px hsl(var(--foreground) / 0.06);
   }
 
-  /* Animations */
+  /* Gold accent text */
+  .gold-accent {
+    color: hsl(var(--primary));
+  }
+
+  /* Fade in */
   .animate-fade-in {
-    animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .animate-slide-up {
-    animation: slideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: fadeIn 0.2s ease;
   }
 
   @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(6px); }
+    from { opacity: 0; transform: translateY(4px); }
     to { opacity: 1; transform: translateY(0); }
   }
-
-  @keyframes slideUp {
-    from { opacity: 0; transform: translateY(12px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  @keyframes blueprintDraw {
-    from { transform: scaleX(0); }
-    to { transform: scaleX(1); }
-  }
-
-  @keyframes staggerFadeIn {
-    from { opacity: 0; transform: translateY(8px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  /* Blueprint underline draw */
-  .blueprint-underline {
-    position: relative;
-  }
-  .blueprint-underline::after {
-    content: '';
-    position: absolute;
-    bottom: -2px;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background: hsl(var(--primary));
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.28s cubic-bezier(0.23, 1, 0.32, 1);
-  }
-  .blueprint-underline:hover::after,
-  .blueprint-underline:focus-within::after {
-    transform: scaleX(1);
-  }
-
-  /* Card hover lift */
-  .card-lift {
-    transition: transform 0.18s cubic-bezier(0.23, 1, 0.32, 1);
-  }
-  .card-lift:hover {
-    transform: translateY(-2px);
-  }
-
-  /* Staggered list children */
-  .stagger-children > * {
-    animation: staggerFadeIn 0.3s cubic-bezier(0.23, 1, 0.32, 1) both;
-  }
-  .stagger-children > *:nth-child(1) { animation-delay: 0s; }
-  .stagger-children > *:nth-child(2) { animation-delay: 0.04s; }
-  .stagger-children > *:nth-child(3) { animation-delay: 0.08s; }
-  .stagger-children > *:nth-child(4) { animation-delay: 0.12s; }
-  .stagger-children > *:nth-child(5) { animation-delay: 0.16s; }
-  .stagger-children > *:nth-child(6) { animation-delay: 0.2s; }
-  .stagger-children > *:nth-child(7) { animation-delay: 0.24s; }
-  .stagger-children > *:nth-child(8) { animation-delay: 0.28s; }
 
   @media (prefers-reduced-motion: reduce) {
-    .card-lift:hover { transform: none; }
-    .blueprint-underline::after { transition: none; }
-    .stagger-children > * { animation: none; }
+    .animate-fade-in { animation: none; }
   }
 
   /* Mobile text containment */
@@ -194,7 +115,7 @@
 }
 
 /* Scrollbar — minimal */
-::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar { width: 4px; height: 4px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: hsl(var(--foreground) / 0.15); border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: hsl(var(--foreground) / 0.3); }
+::-webkit-scrollbar-thumb { background: hsl(var(--foreground) / 0.12); border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: hsl(var(--foreground) / 0.25); }

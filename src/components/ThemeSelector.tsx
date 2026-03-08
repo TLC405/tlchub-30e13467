@@ -7,10 +7,10 @@ const ThemeSelector = () => {
 
   return (
     <Button
-      variant="outline"
+      variant="ghost"
       size="sm"
       onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
-      className="border-[2px] border-foreground rounded-[16px] h-9 w-9 p-0"
+      className="h-8 w-8 p-0 text-muted-foreground hover:text-foreground"
     >
       {theme === 'light' ? (
         <Moon className="h-4 w-4" />
