@@ -231,4 +231,24 @@ export const skillProgressions: SkillTree[] = [
       { csvId: "337f1345-50b3-4081-88ac-aa810d02a3a7", level: 5, name: "Strict Muscle-up", description: "Clean, kip-free muscle-up", attributes: { strength: 9, technique: 9, endurance: 6, flexibility: 3, tendonLoad: 8 } },
     ]
   ),
+
+  // ── RINGS ──────────────────────────────────────────────────
+  buildTree(
+    "rings-progression", "Rings Mastery",
+    "824ab873-204a-404f-aa8c-610395602820", "skill",
+    "Ring support to full iron cross & beyond. Complete rings control.",
+    "Ring Muscle-Up to Iron Cross Combo", "CircleDot", "amber",
+    [
+      { csvId: "rings-01-support", level: 1, name: "Ring Support Hold", description: "Hold top of dip on rings with arms locked and rings turned out", attributes: { strength: 3, technique: 5, endurance: 3, flexibility: 2, tendonLoad: 3 } },
+      { csvId: "rings-02-dip", level: 1, name: "Ring Dip", description: "Full range dip on rings — elbows locked at top, deep stretch at bottom", attributes: { strength: 4, technique: 5, endurance: 4, flexibility: 3, tendonLoad: 4 } },
+      { csvId: "rings-03-lsit", level: 2, name: "Ring L-Sit", description: "L-Sit hold on rings with legs parallel to floor", attributes: { strength: 5, technique: 6, endurance: 4, flexibility: 5, tendonLoad: 4 } },
+      { csvId: "rings-04-skin-the-cat", level: 2, name: "Skin the Cat", description: "Full rotation through german hang and back — shoulder mobility builder", attributes: { strength: 4, technique: 6, endurance: 3, flexibility: 7, tendonLoad: 5 } },
+      { csvId: "rings-05-muscle-up", level: 3, name: "Ring Muscle-Up", description: "False grip pull-up transitioning into a dip on rings", attributes: { strength: 7, technique: 8, endurance: 5, flexibility: 3, tendonLoad: 6 } },
+      { csvId: "rings-06-back-lever", level: 3, name: "Ring Back Lever", description: "Horizontal hold face down with straight arms on rings", attributes: { strength: 6, technique: 7, endurance: 4, flexibility: 6, tendonLoad: 7 } },
+      { csvId: "rings-07-front-lever", level: 4, name: "Ring Front Lever", description: "Horizontal hold face up with straight arms on rings", attributes: { strength: 8, technique: 7, endurance: 5, flexibility: 4, tendonLoad: 8 } },
+      { csvId: "rings-08-butterfly-mount", level: 4, name: "Butterfly Mount", description: "Swing to support hold — dynamic ring transition", attributes: { strength: 7, technique: 9, endurance: 5, flexibility: 4, tendonLoad: 7 } },
+      { csvId: "rings-09-iron-cross", level: 5, name: "Iron Cross (Rings)", description: "Arms extended horizontally with body vertical — elite ring hold", attributes: { strength: 10, technique: 9, endurance: 6, flexibility: 6, tendonLoad: 10 } },
+      { csvId: "rings-10-maltese", level: 5, name: "Maltese (Rings)", description: "Horizontal body with arms behind — beyond elite", attributes: { strength: 10, technique: 10, endurance: 6, flexibility: 8, tendonLoad: 10 } },
+    ]
+  ),
 ];

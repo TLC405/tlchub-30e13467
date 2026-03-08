@@ -7,6 +7,7 @@ import ironCrossImg from '@/assets/muscles/iron-cross.png';
 import malteseImg from '@/assets/muscles/maltese.png';
 import mannaImg from '@/assets/muscles/manna.png';
 import muscleUpImg from '@/assets/muscles/muscle-up.png';
+import ringsImg from '@/assets/muscles/rings.png';
 
 export const muscleDiagrams: Record<string, string> = {
   'planche-progression': plancheImg,
@@ -18,4 +19,5 @@ export const muscleDiagrams: Record<string, string> = {
   'maltese-progression': malteseImg,
   'manna-progression': mannaImg,
   'muscle-up-progression': muscleUpImg,
+  'rings-progression': ringsImg,
 };
