@@ -65,12 +65,24 @@ const TLCtvView = () => {
       ) : (
         sections.map(({ tree, videos }) => (
           <div key={tree.id} className="space-y-3">
-            {/* Section header */}
-            <div className="flex items-center justify-between">
-              <h2 className="text-base font-bold text-foreground">{tree.name}</h2>
-              <Badge variant="outline" className="text-[10px] font-mono">
-                {videos.length} video{videos.length !== 1 ? 's' : ''}
-              </Badge>
+            {/* Section header with muscle diagram */}
+            <div className="flex items-center gap-3">
+              {muscleDiagrams[tree.id] && (
+                <div className="w-12 h-12 flex-shrink-0 rounded-lg bg-secondary/30 overflow-hidden p-0.5">
+                  <img
+                    src={muscleDiagrams[tree.id]}
+                    alt={`${tree.name} muscles`}
+                    className="w-full h-full object-contain"
+                    loading="lazy"
+                  />
+                </div>
+              )}
+              <div className="flex-1 flex items-center justify-between">
+                <h2 className="text-base font-bold text-foreground">{tree.name}</h2>
+                <Badge variant="outline" className="text-[10px] font-mono">
+                  {videos.length} video{videos.length !== 1 ? 's' : ''}
+                </Badge>
+              </div>
             </div>
 
             {/* Horizontal scroll */}

@@ -155,51 +155,54 @@ const SkillTreeView = ({ initialTreeId, onNavigate }: SkillTreeViewProps) => {
             return (
               <Card
                 key={tree.id}
-                className="border border-border rounded-lg cursor-pointer hover:border-foreground/30 transition-colors"
+                className="border border-border rounded-lg cursor-pointer hover:border-foreground/30 transition-colors overflow-hidden"
                 onClick={() => setSelectedTree(tree)}
               >
-                <CardHeader className="pb-2">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className="h-10 w-10 rounded-lg border border-border flex items-center justify-center bg-card">
-                        {iconMap[tree.icon] || <Dumbbell className="h-5 w-5" />}
-                      </div>
-                      <div>
-                        <CardTitle className="text-base font-bold">
-                          {tree.name}
-                        </CardTitle>
-                        <p className="text-xs text-muted-foreground">
-                          {tree.progressions.length} levels
-                        </p>
-                      </div>
+                <div className="flex">
+                  {/* Muscle Diagram */}
+                  {muscleDiagrams[tree.id] && (
+                    <div className="w-24 h-24 flex-shrink-0 bg-secondary/30 flex items-center justify-center p-1">
+                      <img
+                        src={muscleDiagrams[tree.id]}
+                        alt={`${tree.name} muscle diagram`}
+                        className="w-full h-full object-contain"
+                        loading="lazy"
+                      />
                     </div>
-                    <ChevronRight className="h-5 w-5 text-muted-foreground" />
-                  </div>
-                </CardHeader>
+                  )}
+                  <div className="flex-1 min-w-0">
+                    <CardHeader className="pb-2">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                          <div className="h-10 w-10 rounded-lg border border-border flex items-center justify-center bg-card">
+                            {iconMap[tree.icon] || <Dumbbell className="h-5 w-5" />}
+                          </div>
+                          <div>
+                            <CardTitle className="text-base font-bold">
+                              {tree.name}
+                            </CardTitle>
+                            <p className="text-xs text-muted-foreground">
+                              {tree.progressions.length} levels
+                            </p>
+                          </div>
+                        </div>
+                        <ChevronRight className="h-5 w-5 text-muted-foreground" />
+                      </div>
+                    </CardHeader>
 
-                <CardContent className="space-y-3">
-                  <p className="text-sm text-muted-foreground">{tree.description}</p>
-
-                  <div className="flex items-center gap-2">
-                    <Badge className={`${levelColors[currentLevel]} text-white`}>
-                      {levelLabels[currentLevel]}
-                    </Badge>
-                    <span className="text-xs text-muted-foreground">Current Level</span>
+                    <CardContent className="space-y-2 pt-0">
+                      <div className="flex items-center gap-2">
+                        <Badge className={`${levelColors[currentLevel]} text-white`}>
+                          {levelLabels[currentLevel]}
+                        </Badge>
+                        <span className="text-xs text-muted-foreground">
+                          {completedSteps[tree.id]?.length || 0}/{tree.progressions.length}
+                        </span>
+                      </div>
+                      <Progress value={progress} className="h-1.5" />
+                    </CardContent>
                   </div>
-
-                  <div className="space-y-1">
-                    <div className="flex justify-between text-xs text-muted-foreground">
-                      <span>Progress</span>
-                      <span>{completedSteps[tree.id]?.length || 0}/{tree.progressions.length}</span>
-                    </div>
-                    <Progress value={progress} className="h-2" />
-                  </div>
-
-                  <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                    <Target className="h-3 w-3" />
-                    <span>Goal: {tree.eliteGoal}</span>
-                  </div>
-                </CardContent>
+                </div>
               </Card>
             );
           })}
