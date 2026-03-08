@@ -4,7 +4,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
 import { NonNegotiables } from "./NonNegotiables";
@@ -27,7 +26,7 @@ import {
   AlertCircle,
   BookOpen,
 } from "lucide-react";
-import { skillProgressions, type SkillTree, type ProgressionStep } from "@/data/skillProgressions";
+import { skillProgressions, type SkillTree, type ProgressionStep, type SkillLevel } from "@/data/skillProgressions";
 import LearnTab from "@/components/learn/LearnTab";
 
 const PROGRESS_KEY = "calisthenics_skill_progress";
@@ -56,19 +55,23 @@ const iconMap: Record<string, React.ReactNode> = {
   TrendingDown: <TrendingDown className="h-5 w-5" />,
 };
 
-const levelColors: Record<string, string> = {
-  beginner: "bg-green-600",
-  intermediate: "bg-blue-600",
+const levelColors: Record<SkillLevel, string> = {
+  foundation: "bg-green-600",
+  development: "bg-blue-600",
   advanced: "bg-orange-600",
   elite: "bg-red-600",
+  peak: "bg-purple-600",
 };
 
-const levelLabels: Record<string, string> = {
-  beginner: "L1 Beginner",
-  intermediate: "L2 Intermediate",
+const levelLabels: Record<SkillLevel, string> = {
+  foundation: "L1 Foundation",
+  development: "L2 Development",
   advanced: "L3 Advanced",
   elite: "L4 Elite",
+  peak: "L5 Peak",
 };
+
+const allLevels: SkillLevel[] = ["foundation", "development", "advanced", "elite", "peak"];
 
 interface SkillTreeViewProps {
   initialTreeId?: string;
@@ -88,9 +91,8 @@ const SkillTreeView = ({ initialTreeId, onNavigate }: SkillTreeViewProps) => {
     }
   }, [initialTreeId]);
 
-  const isStepCompleted = (treeId: string, stepId: string) => {
-    return completedSteps[treeId]?.includes(stepId) || false;
-  };
+  const isStepCompleted = (treeId: string, stepId: string) =>
+    completedSteps[treeId]?.includes(stepId) || false;
 
   const isStepUnlocked = (tree: SkillTree, step: ProgressionStep) => {
     if (step.prerequisites.length === 0) return true;
@@ -100,12 +102,9 @@ const SkillTreeView = ({ initialTreeId, onNavigate }: SkillTreeViewProps) => {
   const toggleStepComplete = (treeId: string, stepId: string) => {
     setCompletedSteps((prev) => {
       const treeProgress = prev[treeId] || [];
-      let newProgress: string[];
-      if (treeProgress.includes(stepId)) {
-        newProgress = treeProgress.filter((id) => id !== stepId);
-      } else {
-        newProgress = [...treeProgress, stepId];
-      }
+      const newProgress = treeProgress.includes(stepId)
+        ? treeProgress.filter((id) => id !== stepId)
+        : [...treeProgress, stepId];
       const updated = { ...prev, [treeId]: newProgress };
       saveProgress(updated);
       return updated;
@@ -122,16 +121,16 @@ const SkillTreeView = ({ initialTreeId, onNavigate }: SkillTreeViewProps) => {
     return Math.round((completed / tree.progressions.length) * 100);
   };
 
-  const getCurrentLevel = (tree: SkillTree): string => {
+  const getCurrentLevel = (tree: SkillTree): SkillLevel => {
     const treeProgress = completedSteps[tree.id] || [];
-    if (treeProgress.length === 0) return "beginner";
+    if (treeProgress.length === 0) return "foundation";
     const lastCompleted = tree.progressions
       .filter((p) => treeProgress.includes(p.id))
       .pop();
-    return lastCompleted?.level || "beginner";
+    return lastCompleted?.level || "foundation";
   };
 
-  // ─── Grid View ───────────────────────────────────────────────
+  // ─── Grid View ───────────────────────────────────────────
   if (!selectedTree) {
     return (
       <div className="space-y-6">
@@ -140,7 +139,7 @@ const SkillTreeView = ({ initialTreeId, onNavigate }: SkillTreeViewProps) => {
             Skill Trees
           </h1>
           <p className="text-sm text-muted-foreground">
-            Master each progression from beginner to elite
+            9 paths from foundation to peak — real progressions, real data
           </p>
         </div>
 
@@ -161,14 +160,14 @@ const SkillTreeView = ({ initialTreeId, onNavigate }: SkillTreeViewProps) => {
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
                       <div className="h-10 w-10 rounded-[12px] border-[2px] border-foreground flex items-center justify-center bg-card">
-                        {iconMap[tree.icon]}
+                        {iconMap[tree.icon] || <Dumbbell className="h-5 w-5" />}
                       </div>
                       <div>
                         <CardTitle className="font-serif text-lg font-bold">
                           {tree.name}
                         </CardTitle>
                         <p className="text-xs text-muted-foreground">
-                          {tree.progressions.length} progressions
+                          {tree.progressions.length} levels
                         </p>
                       </div>
                     </div>
@@ -189,9 +188,7 @@ const SkillTreeView = ({ initialTreeId, onNavigate }: SkillTreeViewProps) => {
                   <div className="space-y-1">
                     <div className="flex justify-between text-xs text-muted-foreground">
                       <span>Progress</span>
-                      <span>
-                        {completedSteps[tree.id]?.length || 0}/{tree.progressions.length}
-                      </span>
+                      <span>{completedSteps[tree.id]?.length || 0}/{tree.progressions.length}</span>
                     </div>
                     <Progress value={progress} className="h-2" />
                   </div>
@@ -209,7 +206,7 @@ const SkillTreeView = ({ initialTreeId, onNavigate }: SkillTreeViewProps) => {
     );
   }
 
-  // ─── Exercise Detail View ────────────────────────────────────
+  // ─── Exercise Detail View ────────────────────────────────
   if (selectedStep) {
     const isCompleted = isStepCompleted(selectedTree.id, selectedStep.id);
     const isUnlocked = isStepUnlocked(selectedTree, selectedStep);
@@ -244,17 +241,6 @@ const SkillTreeView = ({ initialTreeId, onNavigate }: SkillTreeViewProps) => {
                   <Badge className={`${levelColors[selectedStep.level]} text-primary-foreground`}>
                     {levelLabels[selectedStep.level]}
                   </Badge>
-                  {selectedStep.level === "elite" && (
-                    <Badge
-                      variant="outline"
-                      className="text-[10px] border-dashed border-destructive/40 rounded-full font-mono"
-                    >
-                      Coming Soon
-                    </Badge>
-                  )}
-                  <span className="text-sm text-muted-foreground">
-                    ~{selectedStep.estimatedWeeksToMaster} weeks
-                  </span>
                 </div>
               </div>
             </div>
@@ -263,15 +249,15 @@ const SkillTreeView = ({ initialTreeId, onNavigate }: SkillTreeViewProps) => {
           <CardContent className="space-y-6">
             <p className="text-muted-foreground">{selectedStep.description}</p>
 
-            {/* Watch Demo */}
-            {selectedStep.videoUrl && (
+            {/* Watch Demo — real YouTube URL */}
+            {selectedStep.youtubeUrl && (
               <Button
                 variant="outline"
                 className="border-[2px] border-foreground rounded-[16px] w-full"
-                onClick={() => window.open(selectedStep.videoUrl, "_blank", "noopener")}
+                onClick={() => window.open(selectedStep.youtubeUrl, "_blank", "noopener")}
               >
                 <Play className="h-4 w-4 mr-2" />
-                Watch Demo — {selectedStep.videoSource || "Video"}
+                Watch Demo — YouTube
               </Button>
             )}
 
@@ -288,55 +274,41 @@ const SkillTreeView = ({ initialTreeId, onNavigate }: SkillTreeViewProps) => {
               </TabsList>
 
               <TabsContent value="training" className="space-y-6">
-                {/* Training Parameters */}
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                  {[
-                    { label: "Sets", value: selectedStep.sets },
-                    { label: "Reps", value: selectedStep.reps },
-                    { label: "Rest", value: selectedStep.restTime },
-                    ...(selectedStep.holdTime ? [{ label: "Hold", value: selectedStep.holdTime }] : []),
-                  ].map((param) => (
-                    <div
-                      key={param.label}
-                      className="border-[2px] border-foreground rounded-[16px] p-3 text-center bg-card"
-                    >
-                      <p className="text-xs text-muted-foreground mb-1">{param.label}</p>
-                      <p className="font-bold text-lg text-foreground">{param.value}</p>
-                    </div>
-                  ))}
-                </div>
-
                 {/* Form Cues */}
-                <div className="space-y-2">
-                  <h4 className="font-serif font-bold flex items-center gap-2 text-foreground">
-                    <CheckCircle className="h-4 w-4 text-green-600" />
-                    Form Cues
-                  </h4>
-                  <ul className="space-y-1">
-                    {selectedStep.formCues.map((cue, i) => (
-                      <li key={i} className="text-sm text-muted-foreground flex items-start gap-2">
-                        <span className="text-green-600 mt-1">✓</span>
-                        {cue}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                {selectedStep.formCues.length > 0 && (
+                  <div className="space-y-2">
+                    <h4 className="font-serif font-bold flex items-center gap-2 text-foreground">
+                      <CheckCircle className="h-4 w-4 text-green-600" />
+                      Form Cues
+                    </h4>
+                    <ul className="space-y-1">
+                      {selectedStep.formCues.map((cue, i) => (
+                        <li key={i} className="text-sm text-muted-foreground flex items-start gap-2">
+                          <span className="text-green-600 mt-1">✓</span>
+                          {cue}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
 
                 {/* Common Mistakes */}
-                <div className="space-y-2">
-                  <h4 className="font-serif font-bold flex items-center gap-2 text-foreground">
-                    <AlertCircle className="h-4 w-4 text-destructive" />
-                    Common Mistakes
-                  </h4>
-                  <ul className="space-y-1">
-                    {selectedStep.commonMistakes.map((mistake, i) => (
-                      <li key={i} className="text-sm text-muted-foreground flex items-start gap-2">
-                        <span className="text-destructive mt-1">✗</span>
-                        {mistake}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                {selectedStep.commonMistakes.length > 0 && (
+                  <div className="space-y-2">
+                    <h4 className="font-serif font-bold flex items-center gap-2 text-foreground">
+                      <AlertCircle className="h-4 w-4 text-destructive" />
+                      Common Mistakes
+                    </h4>
+                    <ul className="space-y-1">
+                      {selectedStep.commonMistakes.map((mistake, i) => (
+                        <li key={i} className="text-sm text-muted-foreground flex items-start gap-2">
+                          <span className="text-destructive mt-1">✗</span>
+                          {mistake}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
 
                 {/* Muscles Worked */}
                 <div className="space-y-2">
@@ -349,22 +321,20 @@ const SkillTreeView = ({ initialTreeId, onNavigate }: SkillTreeViewProps) => {
                       <p className="text-xs text-muted-foreground mb-1">Primary</p>
                       <div className="flex flex-wrap gap-1">
                         {selectedStep.musclesWorked.primary.map((muscle, i) => (
-                          <Badge key={i} variant="secondary" className="text-xs">
-                            {muscle}
-                          </Badge>
+                          <Badge key={i} variant="secondary" className="text-xs">{muscle}</Badge>
                         ))}
                       </div>
                     </div>
-                    <div>
-                      <p className="text-xs text-muted-foreground mb-1">Secondary</p>
-                      <div className="flex flex-wrap gap-1">
-                        {selectedStep.musclesWorked.secondary.map((muscle, i) => (
-                          <Badge key={i} variant="outline" className="text-xs">
-                            {muscle}
-                          </Badge>
-                        ))}
+                    {selectedStep.musclesWorked.secondary.length > 0 && (
+                      <div>
+                        <p className="text-xs text-muted-foreground mb-1">Secondary</p>
+                        <div className="flex flex-wrap gap-1">
+                          {selectedStep.musclesWorked.secondary.map((muscle, i) => (
+                            <Badge key={i} variant="outline" className="text-xs">{muscle}</Badge>
+                          ))}
+                        </div>
                       </div>
-                    </div>
+                    )}
                   </div>
                 </div>
 
@@ -391,19 +361,6 @@ const SkillTreeView = ({ initialTreeId, onNavigate }: SkillTreeViewProps) => {
                         ) : null;
                       })}
                     </div>
-                  </div>
-                )}
-
-                {/* Next Progression */}
-                {selectedStep.nextProgression && (
-                  <div className="space-y-2">
-                    <h4 className="font-serif font-bold flex items-center gap-2 text-foreground">
-                      <ChevronRight className="h-4 w-4" />
-                      Next Progression
-                    </h4>
-                    <Badge variant="outline" className="text-sm border-[2px] border-foreground/30 rounded-full">
-                      {selectedTree.progressions.find((p) => p.id === selectedStep.nextProgression)?.name}
-                    </Badge>
                   </div>
                 )}
               </TabsContent>
@@ -444,7 +401,7 @@ const SkillTreeView = ({ initialTreeId, onNavigate }: SkillTreeViewProps) => {
     );
   }
 
-  // ─── Progression List View ───────────────────────────────────
+  // ─── Progression List View ───────────────────────────────
   return (
     <div className="space-y-4">
       <Button
@@ -460,7 +417,7 @@ const SkillTreeView = ({ initialTreeId, onNavigate }: SkillTreeViewProps) => {
         <CardHeader>
           <div className="flex items-center gap-3">
             <div className="h-12 w-12 rounded-[16px] border-[3px] border-foreground flex items-center justify-center bg-card">
-              {iconMap[selectedTree.icon]}
+              {iconMap[selectedTree.icon] || <Dumbbell className="h-5 w-5" />}
             </div>
             <div className="flex-1">
               <CardTitle className="font-serif text-xl font-bold">{selectedTree.name}</CardTitle>
@@ -470,7 +427,7 @@ const SkillTreeView = ({ initialTreeId, onNavigate }: SkillTreeViewProps) => {
 
           <div className="mt-4 space-y-2">
             <div className="flex justify-between text-sm">
-              <span className="text-muted-foreground">Progress to Elite</span>
+              <span className="text-muted-foreground">Progress to Peak</span>
               <span className="font-medium">
                 {completedSteps[selectedTree.id]?.length || 0}/{selectedTree.progressions.length}
               </span>
@@ -486,7 +443,7 @@ const SkillTreeView = ({ initialTreeId, onNavigate }: SkillTreeViewProps) => {
 
       {/* Level Sections */}
       <div className="space-y-4 stagger-children">
-        {(["beginner", "intermediate", "advanced", "elite"] as const).map((level) => {
+        {allLevels.map((level) => {
           const levelSteps = selectedTree.progressions.filter((p) => p.level === level);
           if (levelSteps.length === 0) return null;
 
@@ -552,14 +509,9 @@ const SkillTreeView = ({ initialTreeId, onNavigate }: SkillTreeViewProps) => {
                             >
                               {step.name}
                             </h3>
-                            <div className="flex items-center gap-3 text-xs text-muted-foreground mt-1">
-                              <span>
-                                {step.sets} sets × {step.reps}
-                              </span>
-                              <span className="flex items-center gap-1">
-                                <Clock className="h-3 w-3" />~{step.estimatedWeeksToMaster}w
-                              </span>
-                            </div>
+                            <p className="text-xs text-muted-foreground mt-1 line-clamp-1">
+                              {step.description}
+                            </p>
                           </div>
 
                           <ChevronRight className="h-5 w-5 text-muted-foreground flex-shrink-0" />

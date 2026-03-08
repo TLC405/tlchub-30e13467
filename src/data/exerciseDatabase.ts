@@ -1,413 +1,130 @@
-
 import type { Exercise } from "@/types";
 
 export const exerciseDatabase: Exercise[] = [
-  // 1️⃣ Handstand & Inverted Mastery
-  {
-    id: "wall-stomach-straddle-handstand",
-    name: "Wall Stomach Straddle to Handstand",
-    category: "handstand-inverted",
-    difficulty: "intermediate",
-    sets: "3×5",
-    description: "Advanced wall-supported handstand entry with straddle press movement",
-    progression: "Freestanding Straddle Press",
-    videoId: "handstand-straddle-press-tutorial",
-    muscleGroups: ["shoulders", "core", "wrists"],
-    equipment: ["wall"],
-    musclesWorked: {
-      primary: ["Anterior Deltoid", "Posterior Deltoid", "Serratus Anterior", "Rectus Abdominis"],
-      secondary: ["Triceps Brachii", "Trapezius", "Rhomboids", "Latissimus Dorsi"],
-      stabilizers: ["Deep Neck Flexors", "Erector Spinae", "Multifidus"]
-    },
-    tendonsInvolved: ["Supraspinatus Tendon", "Infraspinatus Tendon", "Biceps Tendon"],
-    recoveryTime: {
-      muscle: "24-48 hours",
-      tendon: "48-72 hours",
-      nervous: "24-36 hours"
-    },
-    formCues: [
-      "Keep shoulders directly over wrists",
-      "Engage core throughout movement",
-      "Control the straddle transition"
-    ]
-  },
-  {
-    id: "wall-handstand-kick-ups",
-    name: "Wall Handstand Kick-Ups", 
-    category: "handstand-inverted",
-    difficulty: "beginner",
-    sets: "4×15",
-    description: "Basic wall-assisted handstand entry practice for strength building",
-    progression: "Wall Handstand Shoulder Taps",
-    videoId: "wall-handstand-basics",
-    muscleGroups: ["shoulders", "core"],
-    equipment: ["wall"],
-    musclesWorked: {
-      primary: ["Anterior Deltoid", "Medial Deltoid", "Rectus Abdominis"],
-      secondary: ["Triceps Brachii", "Serratus Anterior", "External Obliques"],
-      stabilizers: ["Rotator Cuff Complex", "Deep Spinal Stabilizers"]
-    },
-    tendonsInvolved: ["Rotator Cuff Tendons", "Biceps Tendon"],
-    recoveryTime: {
-      muscle: "18-24 hours",
-      tendon: "24-48 hours",
-      nervous: "12-24 hours"
-    },
-    formCues: [
-      "Start close to wall",
-      "Kick up with control, not force",
-      "Keep arms straight and strong"
-    ]
-  },
-  {
-    id: "press-walks",
-    name: "Press Walks (Wall or Free)",
-    category: "handstand-inverted", 
-    difficulty: "intermediate",
-    sets: "3×10–15 steps",
-    description: "Dynamic handstand walking with press entry for advanced coordination",
-    progression: "Freestanding Press Walks",
-    videoId: "handstand-press-walks",
-    muscleGroups: ["shoulders", "core", "wrists"],
-    equipment: ["wall", "open-space"],
-    musclesWorked: {
-      primary: ["Deltoid Complex", "Serratus Anterior", "Core Stabilizers"],
-      secondary: ["Triceps Brachii", "Latissimus Dorsi", "Trapezius"],
-      stabilizers: ["Intrinsic Hand Muscles", "Forearm Flexors/Extensors"]
-    },
-    tendonsInvolved: ["Supraspinatus Tendon", "Wrist Extensor Tendons"],
-    recoveryTime: {
-      muscle: "36-48 hours",
-      tendon: "48-72 hours",
-      nervous: "24-48 hours"
-    },
-    formCues: [
-      "Maintain hollow body position",
-      "Small controlled steps",
-      "Keep shoulders over hands"
-    ]
-  },
-  {
-    id: "handstand-shoulder-taps",
-    name: "Handstand Shoulder Taps",
-    category: "handstand-inverted",
-    difficulty: "intermediate", 
-    sets: "3×15 taps",
-    description: "Unilateral stability challenge in handstand position",
-    progression: "Handstand Walking",
-    videoId: "handstand-shoulder-taps",
-    muscleGroups: ["shoulders", "core"],
-    prerequisites: ["wall-handstand-kick-ups"],
-    musclesWorked: {
-      primary: ["Unilateral Deltoid Stabilizers", "Obliques", "Quadratus Lumborum"],
-      secondary: ["Serratus Anterior", "Rhomboids", "Latissimus Dorsi"],
-      stabilizers: ["Deep Core Stabilizers", "Rotator Cuff"]
-    },
-    tendonsInvolved: ["Rotator Cuff Tendons", "Supraspinatus Tendon"],
-    recoveryTime: {
-      muscle: "24-36 hours",
-      tendon: "36-48 hours",
-      nervous: "18-36 hours"
-    },
-    formCues: [
-      "Shift weight slowly to supporting arm",
-      "Keep hips square",
-      "Light tap, don't rest on shoulder"
-    ]
-  },
-  {
-    id: "handstand-walking",
-    name: "Handstand Walking",
-    category: "handstand-inverted",
-    difficulty: "intermediate",
-    sets: "3×10 steps", 
-    description: "Dynamic handstand locomotion for advanced practitioners",
-    progression: "Flow Combinations",
-    videoId: "handstand-walking-tutorial",
-    muscleGroups: ["shoulders", "core", "wrists"],
-    musclesWorked: {
-      primary: ["Deltoid Complex", "Serratus Anterior", "Core Stabilizers"],
-      secondary: ["Triceps Brachii", "Trapezius", "Latissimus Dorsi"],
-      stabilizers: ["Intrinsic Hand Muscles", "Wrist Stabilizers"]
-    },
-    tendonsInvolved: ["Supraspinatus Tendon", "Wrist Extensor Tendons"],
-    recoveryTime: {
-      muscle: "36-48 hours",
-      tendon: "48-72 hours",
-      nervous: "24-48 hours"
-    },
-    formCues: [
-      "Fall forward with control",
-      "Catch with fingertips",
-      "Keep shoulders over support hand"
-    ]
-  },
+  // ── PUSH ───────────────────────────────────────────────────
+  { id: "02fe0aa6-c7a0-4253-9aa0-96d136376730", slug: "wall-push-up", name: "Wall Push-up", category: "Push", primaryMuscles: ["chest","shoulders"], secondaryMuscles: ["triceps"], equipment: ["None"], cues: ["Stand arm length from wall","Place hands on wall","Lower chest toward wall","Push back","Keep body straight"], youtubeUrl: "https://www.youtube.com/watch?v=a6YHbXD2XlU", difficultyLevel: 1, chainGroup: "pushup-chain", chainOrder: 1 },
+  { id: "2a90da00-0624-4db9-bf6e-678631c46be6", slug: "incline-push-up", name: "Incline Push-up", category: "Push", primaryMuscles: ["Chest","Triceps"], secondaryMuscles: ["Shoulders"], equipment: ["None"], cues: ["Hands on elevated surface","Core tight","Full range of motion"], youtubeUrl: "https://www.youtube.com/watch?v=cfns5VRDssk", difficultyLevel: 1, chainGroup: "pushup-chain", chainOrder: 2 },
+  { id: "bed0b12b-45da-4a24-9b55-cdf96c91757f", slug: "push-up", name: "Push-up", category: "Push", primaryMuscles: ["chest","triceps"], secondaryMuscles: ["shoulders","core"], equipment: ["bodyweight"], cues: ["Keep body straight like a plank","Lower chest to ground","Elbows at 45 degrees","Full lockout at top"], youtubeUrl: "https://www.youtube.com/watch?v=IODxDxX7oi4", difficultyLevel: 2, videoVerified: true, chainGroup: "pushup-chain", chainOrder: 3 },
+  { id: "bc3ec39f-367d-40ee-adc1-e1a6a43939c4", slug: "diamond-push-up", name: "Diamond Push-up", category: "Push", primaryMuscles: ["triceps","chest"], secondaryMuscles: ["shoulders"], equipment: ["bodyweight"], cues: ["Hands form diamond shape","Elbows stay close to body","Lower chest to hands","Great for tricep focus"], youtubeUrl: "https://www.youtube.com/watch?v=J0DnG1_S92I", difficultyLevel: 2, videoVerified: true, chainGroup: "pushup-chain", chainOrder: 4 },
+  { id: "5f38e4fe-5245-4b44-9592-7786790247da", slug: "wide-push-up", name: "Wide Push-up", category: "Push", primaryMuscles: ["Chest","Shoulders"], secondaryMuscles: ["Triceps"], equipment: ["None"], cues: ["Hands wider than shoulders","Elbows at 45 degrees","Full lockout"], youtubeUrl: "https://www.youtube.com/watch?v=GbPOEUGfWVY", difficultyLevel: 2, chainGroup: "pushup-chain", chainOrder: 4 },
+  { id: "ba7806c6-3691-4f21-8986-cfd16c75ba93", slug: "pseudo-planche-push-up", name: "Pseudo Planche Push-up", category: "Push", primaryMuscles: ["shoulders","chest"], secondaryMuscles: ["triceps","core"], equipment: ["bodyweight"], cues: ["Hands by hips, fingers back","Lean shoulders forward","Protract scapula","Build planche strength"], youtubeUrl: "https://www.youtube.com/watch?v=odcPqBOlJhI", difficultyLevel: 5, videoVerified: true, chainGroup: "pushup-chain", chainOrder: 5 },
+  { id: "f7467e59-4793-42ee-9f10-e65f526f9aaf", slug: "archer-push-up", name: "Archer Push-up", category: "Push", primaryMuscles: ["chest","triceps"], secondaryMuscles: ["shoulders","core"], equipment: ["bodyweight"], cues: ["Wide hand placement","Shift weight to one side","Keep straight arm extended","Progress toward one-arm"], youtubeUrl: "https://www.youtube.com/watch?v=A0r8ploEnZY", difficultyLevel: 4, videoVerified: true, chainGroup: "pushup-chain", chainOrder: 6 },
+  { id: "cfe23876-579c-4e40-b966-cf3dce51ae1b", slug: "one-arm-push-up", name: "One Arm Push-up", category: "Push", primaryMuscles: ["Chest","Triceps"], secondaryMuscles: ["Core","Shoulders"], equipment: ["None"], cues: ["Feet wide for balance","Hips square","Slow eccentric"], youtubeUrl: "https://www.youtube.com/watch?v=IODxDxX7oi4", difficultyLevel: 5, chainGroup: "pushup-chain", chainOrder: 7 },
+  { id: "e52beff8-c184-4b1c-9308-85acd4b092db", slug: "pike-push-up", name: "Pike Push-up", category: "Push", primaryMuscles: ["shoulders","triceps"], secondaryMuscles: ["chest","core"], equipment: ["bodyweight"], cues: ["Hips high in inverted V","Head between arms at bottom","Straight arms at top","Progress to HSPU"], youtubeUrl: "https://www.youtube.com/watch?v=2avz4xI25vQ", difficultyLevel: 3, videoVerified: true, chainGroup: "pike-push-chain", chainOrder: 1 },
+  { id: "b6f8d72a-fc6e-4a3a-a1ff-027c8cf62b72", slug: "decline-push-up", name: "Decline Push-up", category: "Push", primaryMuscles: ["Upper Chest","Shoulders"], secondaryMuscles: ["Triceps"], equipment: ["None"], cues: ["Feet elevated","Maintain straight line","Control descent"], youtubeUrl: "https://www.youtube.com/watch?v=SKPab2YC8BE", difficultyLevel: 3, chainGroup: "pike-push-chain", chainOrder: 2 },
+  { id: "6a5040d2-5965-417a-be46-979b3023c381", slug: "handstand-push-up", name: "Handstand Push-up", category: "Push", primaryMuscles: ["shoulders","triceps"], secondaryMuscles: ["core","chest"], equipment: ["wall"], cues: ["Kick up to wall","Lower head to ground","Keep core tight","Press back up controlled"], youtubeUrl: "https://www.youtube.com/watch?v=tQhrk6WMcKw", difficultyLevel: 4, videoVerified: true, chainGroup: "pike-push-chain", chainOrder: 3 },
+  { id: "1ea63246-190a-408e-813a-4a017dbafb3d", slug: "planche-lean", name: "Planche Lean", category: "Push", primaryMuscles: ["Shoulders","Forearms","Core","Serratus Anterior"], secondaryMuscles: [], equipment: ["None (Bodyweight)"], cues: ["Keep arms completely locked straight","Lean forward until your shoulders are past your wrists","Protract your shoulder blades (push the floor away)","Squeeze your glutes and core to keep a straight line from head to heels"], youtubeUrl: "https://www.youtube.com/watch?v=wKV5zVJTYBo", difficultyLevel: 2, videoVerified: true, chainGroup: "planche-chain", chainOrder: 1 },
+  { id: "a9bd2560-424d-474f-884d-af0f68ecdacc", slug: "tuck-planche", name: "Tuck Planche", category: "Push", primaryMuscles: ["Shoulders","Chest","Core","Biceps"], secondaryMuscles: [], equipment: ["None (Bodyweight)"], cues: ["Start in a tuck position with knees to chest","Push down hard into the floor to lift hips to shoulder height","Ensure elbows are locked out completely","Maintain a rounded upper back (protraction)"], youtubeUrl: "https://www.youtube.com/watch?v=bn-HZm7bpy0", difficultyLevel: 3, videoVerified: true, chainGroup: "planche-chain", chainOrder: 2 },
+  { id: "1b46f13e-a1c5-49e6-95b7-2c15cc2bd1a8", slug: "advanced-tuck-planche", name: "Advanced Tuck Planche", category: "Push", primaryMuscles: ["Shoulders","Lower Back","Core","Triceps"], secondaryMuscles: [], equipment: ["None (Bodyweight)"], cues: ["From a tuck position, move your knees away from your chest until your back is flat","Keep your hips level with your shoulders","Maintain maximum shoulder protraction and straight arms"], youtubeUrl: "https://www.youtube.com/watch?v=bn-HZm7bpy0", difficultyLevel: 4, videoVerified: true, chainGroup: "planche-chain", chainOrder: 3 },
+  { id: "2c7c6453-ee52-452f-90c1-67a4ae81e497", slug: "straddle-planche", name: "Straddle Planche", category: "Push", primaryMuscles: ["Shoulders","Glutes","Lower Back","Core"], secondaryMuscles: [], equipment: ["None (Bodyweight)"], cues: ["Spread legs as wide as possible to reduce the lever length","Squeeze glutes and lower back to keep legs parallel to the ground","Point your toes and lock your knees straight","Lean further forward than the tuck versions to balance the weight of the legs"], youtubeUrl: "https://www.youtube.com/watch?v=V9LWMkorWoc", difficultyLevel: 5, videoVerified: true, chainGroup: "planche-chain", chainOrder: 4 },
+  { id: "7fabcea5-f770-4f2f-a2c7-cb773d804ef3", slug: "dip", name: "Parallel Bar Dip", category: "Push", primaryMuscles: ["triceps","chest"], secondaryMuscles: ["shoulders"], equipment: ["parallel bars"], cues: ["Grip bars shoulder width","Lower until 90 degree bend","Lean forward for chest focus","Lock out at top"], youtubeUrl: "https://www.youtube.com/watch?v=2z8JmcrW-As", difficultyLevel: 3, videoVerified: true, chainGroup: "dip-chain", chainOrder: 1 },
+  { id: "824ab873-204a-404f-aa8c-610395602820", slug: "ring-dip", name: "Ring Dip", category: "Push", primaryMuscles: ["Chest","Triceps"], secondaryMuscles: ["Shoulders"], equipment: ["Rings"], cues: ["Turn rings out at top","Deep stretch at bottom","Lock elbows fully"], youtubeUrl: "https://www.youtube.com/watch?v=JEgSRatnfB0", difficultyLevel: 4, chainGroup: "dip-chain", chainOrder: 2 },
+  { id: "8d2df320-193d-4a85-9826-c77b4a6180e6", slug: "ring-push-up", name: "Ring Push-up", category: "Push", primaryMuscles: ["Chest","Triceps"], secondaryMuscles: ["Shoulders","Core"], equipment: ["Rings"], cues: ["Turn rings out at top","Control the instability","Core braced"], youtubeUrl: "https://www.youtube.com/watch?v=F5HVuHBBXaw", difficultyLevel: 3 },
 
-  // 2️⃣ Pulling & Rows (Advanced Variations)
-  {
-    id: "pull-typewriter",
-    name: "Pull Typewriter Up",
-    category: "pulling-rows",
-    difficulty: "intermediate", 
-    sets: "3×6–8",
-    description: "Dynamic lateral movement during pull-up for unilateral strength",
-    progression: "Pull Typewriter Combination Flow",
-    videoId: "typewriter-pullups-tutorial",
-    muscleGroups: ["lats", "biceps", "core"],
-    equipment: ["pull-up-bar"],
-    musclesWorked: {
-      primary: ["Latissimus Dorsi", "Biceps Brachii", "Posterior Deltoid"],
-      secondary: ["Rhomboids", "Middle Trapezius", "Brachialis"],
-      stabilizers: ["Core Stabilizers", "Forearm Flexors"]
-    },
-    tendonsInvolved: ["Biceps Tendon", "Latissimus Dorsi Tendon"],
-    recoveryTime: {
-      muscle: "24-48 hours",
-      tendon: "36-48 hours",
-      nervous: "24-36 hours"
-    },
-    formCues: [
-      "Pull to one side completely",
-      "Slide across maintaining height",
-      "Control the lateral movement"
-    ]
-  },
-  {
-    id: "archer-pullups",
-    name: "Archer Pull-Ups", 
-    category: "pulling-rows",
-    difficulty: "intermediate",
-    sets: "3×6 each side",
-    description: "Unilateral pull-up variation with one arm extended",
-    progression: "Weighted Pull-Ups",
-    videoId: "archer-pullups-progression",
-    muscleGroups: ["lats", "biceps", "core"],
-    equipment: ["pull-up-bar"],
-    musclesWorked: {
-      primary: ["Unilateral Latissimus Dorsi", "Biceps Brachii", "Posterior Deltoid"],
-      secondary: ["Rhomboids", "Middle Trapezius", "Serratus Anterior"],
-      stabilizers: ["Obliques", "Rotator Cuff"]
-    },
-    tendonsInvolved: ["Biceps Tendon", "Supraspinatus Tendon"],
-    recoveryTime: {
-      muscle: "36-48 hours",
-      tendon: "48-72 hours",
-      nervous: "24-48 hours"
-    },
-    formCues: [
-      "One arm pulls, one arm supports",
-      "Keep supporting arm straight",
-      "Control both up and down phases"
-    ]
-  },
+  // ── PULL ───────────────────────────────────────────────────
+  { id: "9ed7ba92-017c-433c-a520-35454fe04d51", slug: "dead-hang", name: "Dead Hang", category: "Pull", primaryMuscles: ["Forearms","Lats"], secondaryMuscles: ["Shoulders"], equipment: ["Pull-up bar"], cues: ["Shoulders relaxed","Full grip","Breathe steadily"], youtubeUrl: "https://www.youtube.com/watch?v=WbfCVrwKfoM", difficultyLevel: 1, chainGroup: "pullup-chain", chainOrder: 1 },
+  { id: "c30b39af-a5c1-4e1e-a30f-334a27c695ec", slug: "active-hang", name: "Active Hang", category: "Pull", primaryMuscles: ["Lats","Shoulders"], secondaryMuscles: ["Forearms"], equipment: ["Pull-up bar"], cues: ["Depress shoulders","Engage lats","Keep arms straight"], youtubeUrl: "https://www.youtube.com/watch?v=HoE-C85ZlCE", difficultyLevel: 1, chainGroup: "pullup-chain", chainOrder: 2 },
+  { id: "b1d2bc41-9140-438e-8a59-a2573ee9c03a", slug: "australian-row", name: "Australian Row", category: "Pull", primaryMuscles: ["upper back","biceps"], secondaryMuscles: ["rear delts"], equipment: ["low bar"], cues: ["Body at 45 degrees","Pull chest to bar","Squeeze shoulder blades","Great beginner pull exercise"], youtubeUrl: "https://www.youtube.com/watch?v=Fl0UMfdEzsE", difficultyLevel: 2, videoVerified: true, chainGroup: "pullup-chain", chainOrder: 3 },
+  { id: "2001173b-71df-463a-b38c-2641751e79ed", slug: "chin-up", name: "Chin-up", category: "Pull", primaryMuscles: ["biceps","lats"], secondaryMuscles: ["forearms"], equipment: ["pull-up bar"], cues: ["Supinated (underhand) grip","Pull chin over bar","Great bicep activation","Easier than pull-ups"], youtubeUrl: "https://www.youtube.com/watch?v=brhRXlOhsAM", difficultyLevel: 1, videoVerified: true, chainGroup: "pullup-chain", chainOrder: 4 },
+  { id: "7676918e-156b-409c-a34c-402acc774731", slug: "pull-up", name: "Pull-up", category: "Pull", primaryMuscles: ["lats","biceps"], secondaryMuscles: ["forearms","rear delts"], equipment: ["pull-up bar"], cues: ["Grip slightly wider than shoulders","Pull chest to bar","Squeeze lats at top","Full dead hang at bottom"], youtubeUrl: "https://www.youtube.com/watch?v=eGo4IYlbE5g", difficultyLevel: 3, videoVerified: true, chainGroup: "muscleup-chain", chainOrder: 1 },
+  { id: "2f5f03ab-b96e-4009-b48f-6182199a9e1b", slug: "archer-pull-up", name: "Archer Pull-up", category: "Pull", primaryMuscles: ["lats","biceps"], secondaryMuscles: ["forearms","core"], equipment: ["pull-up bar"], cues: ["Wide grip on bar","Pull to one hand","Straight arm assists","Progress to one-arm"], youtubeUrl: "https://www.youtube.com/watch?v=_LGLKUiQH5k", difficultyLevel: 4, videoVerified: true, chainGroup: "pullup-chain", chainOrder: 6 },
+  { id: "56c063b3-d7e4-446b-96d1-c479bf5e2209", slug: "typewriter-pull-up", name: "Typewriter Pull-up", category: "Pull", primaryMuscles: ["Lats","Biceps"], secondaryMuscles: ["Forearms","Core"], equipment: ["Pull-up bar"], cues: ["Pull to one side","Shift across the bar","Control throughout"], youtubeUrl: "https://www.youtube.com/watch?v=zNxRb9BaiPE", difficultyLevel: 4, chainGroup: "pullup-chain", chainOrder: 7 },
+  { id: "42ed9cd4-03e0-4e2e-8431-18a5b341681f", slug: "one-arm-chin-up", name: "One Arm Chin-up", category: "Pull", primaryMuscles: ["Lats","Biceps"], secondaryMuscles: ["Forearms","Core"], equipment: ["Pull-up bar"], cues: ["Supinated grip","Full dead hang start","Control negatives"], youtubeUrl: "https://www.youtube.com/watch?v=lU4v7Bfginw", difficultyLevel: 5, chainGroup: "pullup-chain", chainOrder: 8 },
+  { id: "101e7cde-6ea8-4221-b1e9-c7cc11dd6d59", slug: "tuck-front-lever", name: "Tuck Front Lever", category: "Pull", primaryMuscles: ["Lats","Core"], secondaryMuscles: ["Shoulders","Biceps"], equipment: ["Pull-up bar"], cues: ["Knees to chest","Hips level with shoulders","Depress scapula"], youtubeUrl: "https://www.youtube.com/watch?v=tiST0v9pXbY", difficultyLevel: 3, chainGroup: "lever-chain", chainOrder: 1 },
+  { id: "728cafb6-2b4b-4198-bda4-9c25fab399ff", slug: "front-lever-raise", name: "Front Lever Raise", category: "Pull", primaryMuscles: ["lats","core"], secondaryMuscles: ["shoulders","biceps"], equipment: ["pull-up bar"], cues: ["Hang from bar","Raise body horizontal","Keep arms straight","Ultimate lat strength"], youtubeUrl: "https://www.youtube.com/watch?v=-kI16UUefGs", difficultyLevel: 4, videoVerified: true, chainGroup: "lever-chain", chainOrder: 2 },
+  { id: "f5d3423b-952b-4ea9-82d2-81d07041be97", slug: "muscle-up", name: "Muscle-up", category: "Pull", primaryMuscles: ["lats","triceps","chest"], secondaryMuscles: ["shoulders","core"], equipment: ["pull-up bar"], cues: ["Explosive pull-up","Transition at top","Lean forward over bar","Dip to finish"], youtubeUrl: "https://www.youtube.com/watch?v=BbkFT3HlrIg", difficultyLevel: 4, videoVerified: true, chainGroup: "muscleup-chain", chainOrder: 2 },
+  { id: "ab94981b-f22a-428d-b2c5-fde2c4e32b67", slug: "ring-row", name: "Ring Row", category: "Pull", primaryMuscles: ["Back","Biceps"], secondaryMuscles: ["Shoulders","Core"], equipment: ["Rings"], cues: ["Body straight like a plank","Pull to chest","Control descent"], youtubeUrl: "https://www.youtube.com/watch?v=FP7IGNqp_Xc", difficultyLevel: 2 },
 
-  // 3️⃣ Planche & Parallettes (Advanced Pushing)
-  {
-    id: "planche-leans",
-    name: "Planche Leans",
-    category: "planche-parallettes",
-    difficulty: "beginner",
-    sets: "3×20s",
-    description: "Foundation planche strength and wrist conditioning exercise",
-    progression: "Pseudo Planche Push-Ups",
-    videoId: "planche-leans-tutorial", 
-    muscleGroups: ["shoulders", "core", "wrists"],
-    musclesWorked: {
-      primary: ["Anterior Deltoid", "Serratus Anterior", "Rectus Abdominis"],
-      secondary: ["Triceps Brachii", "Posterior Deltoid", "External Obliques"],
-      stabilizers: ["Wrist Flexors", "Forearm Extensors"]
-    },
-    tendonsInvolved: ["Biceps Tendon", "Wrist Extensor Tendons"],
-    recoveryTime: {
-      muscle: "18-24 hours",
-      tendon: "24-36 hours",
-      nervous: "12-18 hours"
-    },
-    formCues: [
-      "Lean forward gradually",
-      "Keep arms straight",
-      "Hollow body position"
-    ]
-  },
-  {
-    id: "pseudo-planche-pushups",
-    name: "Pseudo Planche Push-Ups",
-    category: "planche-parallettes",
-    difficulty: "intermediate",
-    sets: "3×8–12",
-    description: "Dynamic planche-position push-ups for strength development",
-    progression: "Tuck Planche Hold",
-    videoId: "pseudo-planche-pushups",
-    muscleGroups: ["shoulders", "chest", "core"],
-    musclesWorked: {
-      primary: ["Anterior Deltoid", "Pectoralis Major", "Triceps Brachii"],
-      secondary: ["Serratus Anterior", "Rectus Abdominis", "External Obliques"],
-      stabilizers: ["Posterior Deltoid", "Rhomboids"]
-    },
-    tendonsInvolved: ["Pectoralis Major Tendon", "Biceps Tendon"],
-    recoveryTime: {
-      muscle: "24-36 hours",
-      tendon: "36-48 hours",
-      nervous: "18-24 hours"
-    },
-    formCues: [
-      "Hands positioned low on torso",
-      "Lean forward significantly",
-      "Full range push-up motion"
-    ]
-  },
+  // ── CORE ───────────────────────────────────────────────────
+  { id: "8f0405e6-a771-40f3-b5bb-416fe7c12857", slug: "plank", name: "Plank", category: "Core", primaryMuscles: ["core","abs"], secondaryMuscles: ["shoulders","glutes"], equipment: ["bodyweight"], cues: ["Forearms on ground","Body straight line","Squeeze glutes","Dont let hips sag"], youtubeUrl: "https://www.youtube.com/watch?v=ASdvN_XEl_c", difficultyLevel: 1, videoVerified: true, chainGroup: "plank-chain", chainOrder: 1 },
+  { id: "8c967013-08fb-4639-b0f6-e331341014db", slug: "side-plank", name: "Side Plank", category: "Core", primaryMuscles: ["Obliques","Core"], secondaryMuscles: ["Shoulders"], equipment: ["None"], cues: ["Stack hips","Straight body line","Elbow under shoulder"], youtubeUrl: "https://www.youtube.com/watch?v=K2VljzCC16g", difficultyLevel: 2, chainGroup: "plank-chain", chainOrder: 2 },
+  { id: "0941a9e9-c052-4cda-b17d-62a4e27ac433", slug: "hollow-body-hold", name: "Hollow Body Hold", category: "Core", primaryMuscles: ["abs","core"], secondaryMuscles: ["hip flexors"], equipment: ["bodyweight"], cues: ["Arms overhead","Lower back pressed to floor","Legs extended","Gymnastics foundation"], youtubeUrl: "https://www.youtube.com/watch?v=LlDNef_Ztsc", difficultyLevel: 1, videoVerified: true, chainGroup: "plank-chain", chainOrder: 3 },
+  { id: "a11a42b0-d38c-4b5b-8977-ae6cae277381", slug: "dead-bug", name: "Dead Bug", category: "Core", primaryMuscles: ["Core","Hip Flexors"], secondaryMuscles: ["Lower Back"], equipment: ["None"], cues: ["Low back pressed to floor","Opposite arm and leg extend","Breathe out on extension"], youtubeUrl: "https://www.youtube.com/watch?v=jvPddSwyo3c", difficultyLevel: 1 },
+  { id: "f57bb237-e1ea-4d92-96a5-843b70a11220", slug: "mountain-climber", name: "Mountain Climber", category: "Core", primaryMuscles: ["Core","Hip Flexors"], secondaryMuscles: ["Shoulders","Quads"], equipment: ["None"], cues: ["Hands under shoulders","Drive knees to chest","Keep hips low"], youtubeUrl: "https://www.youtube.com/watch?v=nmwgirgXLYM", difficultyLevel: 1 },
+  { id: "810dfb84-fd7c-4d19-b992-b38507b7311f", slug: "hanging-leg-raise", name: "Hanging Leg Raise", category: "Core", primaryMuscles: ["abs","hip flexors"], secondaryMuscles: ["grip","lats"], equipment: ["pull-up bar"], cues: ["Hang from bar","Raise legs to horizontal","Control the negative","No swinging"], youtubeUrl: "https://www.youtube.com/watch?v=G0ysNevIv0w", difficultyLevel: 1, videoVerified: true, chainGroup: "lever-core-chain", chainOrder: 1 },
+  { id: "30a4315d-65b2-4843-832b-6b2c4475151d", slug: "toes-to-bar", name: "Toes to Bar", category: "Core", primaryMuscles: ["Core","Hip Flexors"], secondaryMuscles: ["Lats","Forearms"], equipment: ["Pull-up bar"], cues: ["Kip from shoulders","Toes touch bar","Control the swing"], youtubeUrl: "https://www.youtube.com/watch?v=_03pCKOv4l4", difficultyLevel: 3, chainGroup: "lever-core-chain", chainOrder: 2 },
+  { id: "b97d3b98-ea8f-46b7-b62a-8b625debead6", slug: "windshield-wiper", name: "Windshield Wiper", category: "Core", primaryMuscles: ["Obliques","Core"], secondaryMuscles: ["Shoulders","Lats"], equipment: ["Pull-up bar"], cues: ["Legs together","Control rotation","Full range side to side"], youtubeUrl: "https://www.youtube.com/watch?v=0TnnnuMqDvQ", difficultyLevel: 4, chainGroup: "lever-core-chain", chainOrder: 3 },
+  { id: "d5c4272e-6085-4ea7-a52e-cdd1df07edd6", slug: "dragon-flag", name: "Dragon Flag", category: "Core", primaryMuscles: ["abs","core"], secondaryMuscles: ["lats","hip flexors"], equipment: ["bench"], cues: ["Grip behind head","Raise body vertical","Lower slowly with control","Bruce Lees favorite"], youtubeUrl: "https://www.youtube.com/watch?v=qNbAyeLVMeY", difficultyLevel: 3, videoVerified: true, chainGroup: "lever-core-chain", chainOrder: 4 },
+  { id: "1c6e1514-a037-42fe-bc9f-c0978b32b865", slug: "l-sit", name: "L-Sit", category: "Core", primaryMuscles: ["abs","hip flexors"], secondaryMuscles: ["triceps","shoulders"], equipment: ["parallettes"], cues: ["Hands by hips","Legs straight out","Depress shoulders","Ultimate core strength"], youtubeUrl: "https://www.youtube.com/watch?v=IUZJoSP66HI", difficultyLevel: 4, videoVerified: true, chainGroup: "lsit-chain", chainOrder: 1 },
+  { id: "5be52763-a4db-4dab-a704-ec55ae57a7c1", slug: "v-up", name: "V-Up", category: "Core", primaryMuscles: ["Core","Hip Flexors"], secondaryMuscles: ["Obliques"], equipment: ["None"], cues: ["Legs and arms meet at top","Control descent","Keep legs straight"], youtubeUrl: "https://www.youtube.com/watch?v=iP2fjvG0g3w", difficultyLevel: 3, chainGroup: "lsit-chain", chainOrder: 2 },
 
-  // 4️⃣ Rings & Dynamic Strength
-  {
-    id: "ring-muscle-ups",
-    name: "Ring Muscle-Ups",
-    category: "rings-dynamic",
-    difficulty: "advanced",
-    sets: "3×5",
-    description: "Ultimate upper body power movement on gymnastics rings",
-    progression: "Ring Iron Cross Preparation",
-    videoId: "ring-muscle-up-tutorial", 
-    muscleGroups: ["lats", "chest", "triceps", "core"],
-    equipment: ["rings"],
-    musclesWorked: {
-      primary: ["Latissimus Dorsi", "Pectoralis Major", "Triceps Brachii"],
-      secondary: ["Posterior Deltoid", "Rhomboids", "Serratus Anterior"],
-      stabilizers: ["Deep Core Stabilizers", "Rotator Cuff Complex"]
-    },
-    tendonsInvolved: ["Biceps Tendon", "Pectoralis Major Tendon", "Triceps Tendon"],
-    recoveryTime: {
-      muscle: "48-72 hours",
-      tendon: "72-96 hours",
-      nervous: "36-48 hours"
-    },
-    formCues: [
-      "False grip essential",
-      "Pull high then transition",
-      "Control the negative phase"
-    ]
-  },
+  // ── LEGS ───────────────────────────────────────────────────
+  { id: "16ce0343-714c-46a7-a295-f94eae130762", slug: "bodyweight-squat", name: "Bodyweight Squat", category: "Legs", primaryMuscles: ["quads","glutes"], secondaryMuscles: ["hamstrings","core"], equipment: ["bodyweight"], cues: ["Feet shoulder width","Sit back and down","Knees track over toes","Depth below parallel"], youtubeUrl: "https://www.youtube.com/watch?v=aclHkVaku9U", difficultyLevel: 2, videoVerified: true, chainGroup: "squat-chain", chainOrder: 1 },
+  { id: "6d00f2b9-c928-48fa-8843-fd0ab327c90a", slug: "jump-squat", name: "Jump Squat", category: "Legs", primaryMuscles: ["Quads","Glutes"], secondaryMuscles: ["Calves","Core"], equipment: ["None"], cues: ["Explosive upward","Soft landing","Full depth squat"], youtubeUrl: "https://www.youtube.com/watch?v=A-cFYGvaXEc", difficultyLevel: 2, chainGroup: "squat-chain", chainOrder: 2 },
+  { id: "561c21e7-37a2-4cb1-b3f3-896cb222b996", slug: "bulgarian-split-squat", name: "Bulgarian Split Squat", category: "Legs", primaryMuscles: ["quads","glutes"], secondaryMuscles: ["hamstrings","core"], equipment: ["bench"], cues: ["Rear foot elevated","Lower until knee near ground","Keep torso upright","Great unilateral work"], youtubeUrl: "https://www.youtube.com/watch?v=2C-uNgKwPLE", difficultyLevel: 2, videoVerified: true, chainGroup: "squat-chain", chainOrder: 3 },
+  { id: "0c6d07e0-3cc2-4255-ab23-55adbddb3a94", slug: "shrimp-squat", name: "Shrimp Squat", category: "Legs", primaryMuscles: ["quads","glutes"], secondaryMuscles: ["hamstrings"], equipment: ["bodyweight"], cues: ["Grab rear foot","Knee touches ground","Stay upright","Harder than pistol"], youtubeUrl: "https://www.youtube.com/watch?v=_FBuC-VPbRY", difficultyLevel: 2, videoVerified: true, chainGroup: "squat-chain", chainOrder: 4 },
+  { id: "25171d11-68e5-46ce-8984-cda421f2fc36", slug: "pistol-squat", name: "Pistol Squat", category: "Legs", primaryMuscles: ["quads","glutes"], secondaryMuscles: ["hamstrings","core","hip flexors"], equipment: ["bodyweight"], cues: ["One leg extended forward","Sit all the way down","Drive through heel","Balance is key"], youtubeUrl: "https://www.youtube.com/watch?v=vq5-vdgJc0I", difficultyLevel: 3, videoVerified: true, chainGroup: "squat-chain", chainOrder: 5 },
+  { id: "e54ab481-6b9a-4f17-b2c4-061690353e3c", slug: "nordic-curl", name: "Nordic Curl", category: "Legs", primaryMuscles: ["hamstrings"], secondaryMuscles: ["glutes","calves"], equipment: ["anchor"], cues: ["Kneel with feet anchored","Lower body slowly","Use hamstrings to control","Extremely challenging"], youtubeUrl: "https://www.youtube.com/watch?v=dJ8LBl3U85g", difficultyLevel: 1, videoVerified: true },
+  { id: "21fa66f7-c3a0-4087-b15b-7c920a9df418", slug: "calf-raise", name: "Calf Raise", category: "Legs", primaryMuscles: ["calves"], secondaryMuscles: [], equipment: ["step"], cues: ["Stand on edge of step","Rise up on toes","Lower heels below step","Full range of motion"], youtubeUrl: "https://www.youtube.com/watch?v=gwLzBJYoWlI", difficultyLevel: 1, videoVerified: true },
+  { id: "6d7ed904-88a4-4934-95b9-62bf091a1efa", slug: "lunge", name: "Lunge", category: "Legs", primaryMuscles: ["Quads","Glutes"], secondaryMuscles: ["Hamstrings"], equipment: ["None"], cues: ["Knee tracks over toes","Upright torso","Full depth"], youtubeUrl: "https://www.youtube.com/watch?v=QOVaHwm-Q6U", difficultyLevel: 1 },
+  { id: "60baacb5-a9ef-419a-a54e-cf870559020f", slug: "glute-bridge", name: "Glute Bridge", category: "Legs", primaryMuscles: ["Glutes","Hamstrings"], secondaryMuscles: ["Core"], equipment: ["None"], cues: ["Drive through heels","Squeeze glutes at top","Ribs down"], youtubeUrl: "https://www.youtube.com/watch?v=8bbE64NuDTU", difficultyLevel: 1 },
+  { id: "fce36ec3-17ea-4b9e-9002-0f87192dfe60", slug: "step-up", name: "Step-up", category: "Legs", primaryMuscles: ["Quads","Glutes"], secondaryMuscles: ["Hamstrings","Core"], equipment: ["None"], cues: ["Drive through front foot","No push off back leg","Control descent"], youtubeUrl: "https://www.youtube.com/watch?v=WCFCdxzFBa4", difficultyLevel: 2 },
+  { id: "b19d860a-528b-4e49-a09c-38869763c2e4", slug: "single-leg-rdl", name: "Single Leg RDL", category: "Legs", primaryMuscles: ["Hamstrings","Glutes"], secondaryMuscles: ["Core","Lower Back"], equipment: ["None"], cues: ["Hinge at hips","Straight back leg","Touch floor if able"], youtubeUrl: "https://www.youtube.com/watch?v=Oj7SRLkAotU", difficultyLevel: 3 },
+  { id: "d987c8d8-92fa-4f98-a874-4613f73cca28", slug: "sissy-squat", name: "Sissy Squat", category: "Legs", primaryMuscles: ["Quads"], secondaryMuscles: ["Core","Hip Flexors"], equipment: ["None"], cues: ["Lean back at knees","Keep hips extended","Control eccentric"], youtubeUrl: "https://www.youtube.com/watch?v=R-oglfAMCQo", difficultyLevel: 3 },
 
-  // 5️⃣ Dynamic & Elite Skills
-  {
-    id: "human-flag",
-    name: "Human Flag",
-    category: "dynamic-showstoppers", 
-    difficulty: "advanced",
-    sets: "3×8–12s",
-    description: "Iconic lateral core and grip strength demonstration",
-    progression: "Flag-to-Muscle-Up Flow",
-    videoId: "human-flag-progression",
-    muscleGroups: ["core", "lats", "grip"],
-    equipment: ["pole", "wall-bars"],
-    musclesWorked: {
-      primary: ["Obliques", "Quadratus Lumborum", "Latissimus Dorsi"],
-      secondary: ["Serratus Anterior", "Posterior Deltoid", "Hip Abductors"],
-      stabilizers: ["Deep Core Stabilizers", "Forearm Complex"]
-    },
-    tendonsInvolved: ["Latissimus Dorsi Tendon", "Oblique Aponeuroses"],
-    recoveryTime: {
-      muscle: "48-72 hours",
-      tendon: "72-96 hours",
-      nervous: "36-72 hours"
-    },
-    formCues: [
-      "Top arm pushes, bottom arm pulls",
-      "Body straight and rigid",
-      "Breathe throughout hold"
-    ]
-  },
+  // ── SKILLS ─────────────────────────────────────────────────
+  { id: "e7070fde-1565-4563-96fb-510a6eba9c85", slug: "planche", name: "Planche", category: "Skills", primaryMuscles: ["shoulders","chest"], secondaryMuscles: ["triceps","core","wrists"], equipment: ["floor"], cues: ["Hands on floor","Body horizontal","Lean forward significantly","Years to master"], youtubeUrl: "https://www.youtube.com/watch?v=bn-HZm7bpy0", difficultyLevel: 5, videoVerified: true, chainGroup: "planche-chain", chainOrder: 5 },
+  { id: "a0dab72f-2e37-4ac3-9fec-d6d90e93517a", slug: "front-lever", name: "Front Lever", category: "Skills", primaryMuscles: ["lats","core"], secondaryMuscles: ["shoulders","biceps"], equipment: ["pull-up bar"], cues: ["Hang from bar","Body horizontal face up","Arms completely straight","King of lat exercises"], youtubeUrl: "https://www.youtube.com/watch?v=AGhb8V8M758", difficultyLevel: 4, videoVerified: true, chainGroup: "lever-chain", chainOrder: 3 },
+  { id: "f6d08baf-2b99-48cc-8577-16c4578c681e", slug: "back-lever", name: "Back Lever", category: "Skills", primaryMuscles: ["shoulders","lats"], secondaryMuscles: ["biceps","core"], equipment: ["rings"], cues: ["Inverted hang","Lower body behind","Straight body horizontal","Shoulder flexibility key"], youtubeUrl: "https://www.youtube.com/watch?v=HXaG8mJmSnU", difficultyLevel: 4, videoVerified: true, chainGroup: "ring-chain", chainOrder: 1 },
+  { id: "5bfcdccf-4a61-4268-aaee-e61e11f1e756", slug: "human-flag", name: "Human Flag", category: "Skills", primaryMuscles: ["obliques","lats"], secondaryMuscles: ["shoulders","grip"], equipment: ["vertical pole"], cues: ["Grip pole with both hands","Push bottom, pull top","Body horizontal","Ultimate side strength"], youtubeUrl: "https://www.youtube.com/watch?v=TF9XhvYh_m8", difficultyLevel: 5, videoVerified: true },
+  { id: "d7a9d4bb-ad99-4e3f-b8b2-7cf605a460c6", slug: "handstand", name: "Freestanding Handstand", category: "Skills", primaryMuscles: ["shoulders","core"], secondaryMuscles: ["triceps","wrists"], equipment: ["bodyweight"], cues: ["Kick up controlled","Stack joints vertically","Fingers for balance","Practice daily"], youtubeUrl: "https://www.youtube.com/watch?v=d6_lcWtQDxw", difficultyLevel: 4, videoVerified: true, chainGroup: "handstand-chain", chainOrder: 2 },
+  { id: "da89846a-5659-43a7-b780-8af13026d995", slug: "wall-handstand", name: "Wall Handstand", category: "Skills", primaryMuscles: ["Shoulders","Core"], secondaryMuscles: ["Triceps","Forearms"], equipment: ["Wall space"], cues: ["Chest to wall","Fingers spread","Push through shoulders"], youtubeUrl: "https://www.youtube.com/watch?v=6Ml8BIc8p6A", difficultyLevel: 2, chainGroup: "handstand-chain", chainOrder: 1 },
+  { id: "1e799082-3bcd-4b97-b497-86bb1a5e6c00", slug: "l-sit-to-handstand", name: "L-Sit to Handstand", category: "Skills", primaryMuscles: ["Shoulders","Core"], secondaryMuscles: ["Triceps","Hip Flexors"], equipment: ["Parallettes"], cues: ["Press through shoulders","Slow controlled lift","Stack hips over shoulders"], youtubeUrl: "https://www.youtube.com/watch?v=Q7dB1jSJpLk", difficultyLevel: 5, chainGroup: "handstand-chain", chainOrder: 3 },
+  { id: "ec6570fb-0933-4f0c-b023-d4579c016e82", slug: "iron-cross", name: "Iron Cross", category: "Skills", primaryMuscles: ["Chest","Shoulders"], secondaryMuscles: ["Biceps","Core"], equipment: ["Rings"], cues: ["Straight arms","Slow entry","Full shoulder control"], youtubeUrl: "https://www.youtube.com/watch?v=2PDPDqOa_cg", difficultyLevel: 5, chainGroup: "ring-chain", chainOrder: 2 },
+  { id: "ee236504-2019-4dfd-b13b-be548d38898e", slug: "maltese", name: "Maltese", category: "Skills", primaryMuscles: ["Chest","Shoulders"], secondaryMuscles: ["Core","Biceps"], equipment: ["Rings"], cues: ["Arms behind body plane","Extreme shoulder flexibility","Full body tension"], youtubeUrl: "https://www.youtube.com/watch?v=6U6W3NjhJgo", difficultyLevel: 5, chainGroup: "ring-chain", chainOrder: 3 },
+  { id: "42bf2254-e09a-4e88-9929-7e24b15690cf", slug: "victorian-cross", name: "Victorian Cross", category: "Skills", primaryMuscles: ["Shoulders","Chest"], secondaryMuscles: ["Biceps","Core"], equipment: ["Rings"], cues: ["Arms inverted position","Full body tension","Extreme control"], youtubeUrl: "https://www.youtube.com/watch?v=0CXqbR8y8v4", difficultyLevel: 5, chainGroup: "ring-chain", chainOrder: 4 },
+  { id: "d5fe0efb-2984-4f17-9c75-381161bfe482", slug: "manna", name: "Manna", category: "Skills", primaryMuscles: ["Shoulders","Core"], secondaryMuscles: ["Triceps","Hip Flexors"], equipment: ["Parallettes"], cues: ["Hips above shoulders","Legs forward","Maximum compression"], youtubeUrl: "https://www.youtube.com/watch?v=p22IDJHqHKE", difficultyLevel: 5 },
+  { id: "c748d6dd-31da-4fa0-893a-8fa596bc9fea", slug: "ringmaster", name: "Ringmaster", category: "Skills", primaryMuscles: ["shoulders","chest","core"], secondaryMuscles: ["triceps","forearms"], equipment: ["rings"], cues: ["Maintain false grip on rings","Keep rings turned out at top","Control the descent slowly","Engage core throughout movement","Start with support holds before full movements"], youtubeUrl: "https://www.youtube.com/watch?v=Ry6PmcQ5qq0", difficultyLevel: 3, videoVerified: true },
+  { id: "cfbb52ef-1d18-48bf-af10-57bd32e9928e", slug: "crow-pose", name: "Crow Pose", category: "Skills", primaryMuscles: ["Shoulders","Core"], secondaryMuscles: ["Wrists","Triceps"], equipment: ["None"], cues: ["Knees on triceps","Lean forward slowly","Eyes ahead"], youtubeUrl: "https://www.youtube.com/watch?v=Hml31hm-Zkg", difficultyLevel: 2, chainGroup: "balance-chain", chainOrder: 1 },
+  { id: "2eb0decd-be58-4f25-9e85-89fa79738c73", slug: "elbow-lever", name: "Elbow Lever", category: "Skills", primaryMuscles: ["core","shoulders"], secondaryMuscles: ["triceps","wrists"], equipment: ["floor"], cues: ["Elbow in hip crease","Lean forward","Balance point on elbow","Entry to balancing skills"], youtubeUrl: "https://www.youtube.com/watch?v=w_XvThlKMrU", difficultyLevel: 1, videoVerified: true, chainGroup: "balance-chain", chainOrder: 2 },
 
-  // 6️⃣ Mobility & Flexibility Enhancement
-  {
-    id: "downward-dog-flow",
-    name: "Downward Dog → Dolphin → Tripod → Headstand",
-    category: "mobility-yoga",
-    difficulty: "beginner", 
-    sets: "3×5 transitions",
-    description: "Foundation flexibility flow for shoulder mobility and strength",
-    progression: "Advanced Flow Sequences",
-    videoId: "yoga-handstand-prep-flow",
-    muscleGroups: ["shoulders", "hamstrings", "core"],
-    musclesWorked: {
-      primary: ["Posterior Deltoid", "Hamstrings", "Gastrocnemius"],
-      secondary: ["Latissimus Dorsi", "Serratus Anterior", "Rectus Abdominis"],
-      stabilizers: ["Deep Neck Flexors", "Rotator Cuff"]
-    },
-    tendonsInvolved: ["Achilles Tendon", "Hamstring Tendons"],
-    recoveryTime: {
-      muscle: "12-24 hours",
-      tendon: "18-36 hours",
-      nervous: "6-12 hours"
-    },
-    formCues: [
-      "Keep spine long in downward dog",
-      "Smooth transitions between poses",
-      "Breathe deeply throughout flow"
-    ]
-  },
+  // ── YOGA ───────────────────────────────────────────────────
+  { id: "03dbcc50-16c0-410c-ba4a-26c7605d6f32", slug: "downward-dog", name: "Downward Dog", category: "Yoga", primaryMuscles: ["hamstrings","calves"], secondaryMuscles: ["shoulders","back"], equipment: ["bodyweight"], cues: ["Inverted V position","Heels toward ground","Push through shoulders","Yoga staple"], youtubeUrl: "https://www.youtube.com/watch?v=j97SSGsnCAQ", difficultyLevel: 1, videoVerified: true },
+  { id: "b4b1a89a-27a4-4713-a4e0-025819c7c7c0", slug: "pigeon-pose", name: "Pigeon Pose", category: "Yoga", primaryMuscles: ["hip flexors","glutes"], secondaryMuscles: ["lower back"], equipment: ["bodyweight"], cues: ["Front leg bent across","Back leg extended","Sink hips down","Deep hip opener"], youtubeUrl: "https://www.youtube.com/watch?v=0RQVD6viVXo", difficultyLevel: 1, videoVerified: true },
+  { id: "9b1f042a-2bc2-4557-bd41-00984ab67c8c", slug: "bridge", name: "Bridge Pose", category: "Yoga", primaryMuscles: ["glutes","lower back"], secondaryMuscles: ["hamstrings","core"], equipment: ["bodyweight"], cues: ["Lie on back","Push hips up","Squeeze glutes","Spine mobility"], youtubeUrl: "https://www.youtube.com/watch?v=wPM8icPu6H8", difficultyLevel: 1, videoVerified: true },
+  { id: "471bfbf3-4c92-4ebb-a885-29e91b83446e", slug: "cobra-pose", name: "Cobra Pose", category: "Yoga", primaryMuscles: ["lower back","abs"], secondaryMuscles: ["shoulders"], equipment: ["bodyweight"], cues: ["Lie face down","Push upper body up","Keep hips on ground","Spine extension"], youtubeUrl: "https://www.youtube.com/watch?v=n6jrC6WeF84", difficultyLevel: 1, videoVerified: true },
+  { id: "5861f80a-c452-43cd-9585-d61f67e3b0ab", slug: "cat-cow", name: "Cat-Cow Stretch", category: "Yoga", primaryMuscles: ["spine","core"], secondaryMuscles: ["shoulders","hips"], equipment: ["bodyweight"], cues: ["On hands and knees","Arch then round spine","Coordinate with breath","Spinal warmup"], youtubeUrl: "https://www.youtube.com/watch?v=kqnua4rHVVA", difficultyLevel: 1, videoVerified: true },
+  { id: "1a4cec61-247e-4a3c-a358-94c8dc0e7996", slug: "warrior-i", name: "Warrior I", category: "Yoga", primaryMuscles: ["quadriceps","hip flexors"], secondaryMuscles: ["hamstrings","calves"], equipment: ["None"], cues: ["Step one foot forward into a lunge","Back foot at 45 degrees","Raise arms overhead","Square hips forward","Hold and breathe"], youtubeUrl: "https://www.youtube.com/watch?v=k4qaVoAbeHM", difficultyLevel: 1 },
+  { id: "5cecd6bc-d2e2-4bf0-a6bb-c817f26656dc", slug: "warrior-ii", name: "Warrior II", category: "Yoga", primaryMuscles: ["quadriceps","glutes"], secondaryMuscles: ["hip flexors","shoulders"], equipment: ["None"], cues: ["Wide stance","Front knee over ankle","Arms extended","Gaze over front hand","Sink hips low"], youtubeUrl: "https://www.youtube.com/watch?v=QMr0JJfEgbM", difficultyLevel: 1 },
+  { id: "5f9e2d21-29e0-4160-b4b1-aeb61701265a", slug: "tree-pose", name: "Tree Pose", category: "Yoga", primaryMuscles: ["quadriceps","core"], secondaryMuscles: ["hip flexors","calves"], equipment: ["None"], cues: ["Stand on one leg","Place foot on inner thigh or calf","Hands at heart or overhead","Fix gaze on a point","Engage core for balance"], youtubeUrl: "https://www.youtube.com/watch?v=yVE4XXFFO70", difficultyLevel: 1 },
+  { id: "98f22756-2307-4497-8cfb-33bc1c67ca75", slug: "childs-pose", name: "Childs Pose", category: "Yoga", primaryMuscles: ["lower back","hips"], secondaryMuscles: ["shoulders","ankles"], equipment: ["None"], cues: ["Kneel on mat","Sit back on heels","Reach arms forward","Forehead to ground","Breathe deeply"], youtubeUrl: "https://www.youtube.com/watch?v=2MJGg-dUKh0", difficultyLevel: 1 },
+  { id: "f5065d69-2d62-4077-aaa2-90f3d8697ff8", slug: "triangle-pose", name: "Triangle Pose", category: "Yoga", primaryMuscles: ["hamstrings","obliques"], secondaryMuscles: ["hip flexors","shoulders"], equipment: ["None"], cues: ["Wide stance","Reach to front shin or floor","Top arm to ceiling","Keep both legs straight","Open chest"], youtubeUrl: "https://www.youtube.com/watch?v=S6gB0QHbWFE", difficultyLevel: 2 },
+  { id: "47fceec7-f381-4b78-8a85-e3cbf70b83bb", slug: "chair-pose", name: "Chair Pose", category: "Yoga", primaryMuscles: ["quadriceps","glutes"], secondaryMuscles: ["core","shoulders"], equipment: ["None"], cues: ["Feet together","Sit back as if into a chair","Arms overhead","Weight in heels","Chest lifted"], youtubeUrl: "https://www.youtube.com/watch?v=semq253gJOc", difficultyLevel: 2 },
+  { id: "a6473125-f2c5-42bf-8348-d63e5bc772bd", slug: "camel-pose", name: "Camel Pose", category: "Yoga", primaryMuscles: ["hip flexors","chest"], secondaryMuscles: ["shoulders","core"], equipment: ["None"], cues: ["Kneel with hips over knees","Lean back","Reach for heels","Push hips forward","Open chest"], youtubeUrl: "https://www.youtube.com/watch?v=VPp5n2MZO4c", difficultyLevel: 2 },
+  { id: "ef19235d-96bf-4e0e-b6ce-aeee02b51b74", slug: "crow-pose-yoga", name: "Crow Pose Yoga", category: "Yoga", primaryMuscles: ["shoulders","core"], secondaryMuscles: ["wrists","hip flexors"], equipment: ["None"], cues: ["Squat with hands on floor","Knees on triceps","Lean forward","Lift feet off ground","Round upper back"], youtubeUrl: "https://www.youtube.com/watch?v=Kkwto8PEL2o", difficultyLevel: 3 },
+  { id: "210a2470-c40d-4477-b204-e0db3bd892ab", slug: "half-moon-pose", name: "Half Moon Pose", category: "Yoga", primaryMuscles: ["glutes","core"], secondaryMuscles: ["hamstrings","obliques"], equipment: ["None"], cues: ["From triangle pose","Shift weight to front foot","Lift back leg","Top arm to ceiling","Stack hips"], youtubeUrl: "https://www.youtube.com/watch?v=pMoBDGa_BT0", difficultyLevel: 3 },
+  { id: "1d7e1bf5-4fde-47c8-9172-773c5380f006", slug: "wheel-pose", name: "Wheel Pose", category: "Yoga", primaryMuscles: ["shoulders","spine"], secondaryMuscles: ["glutes","hip flexors"], equipment: ["None"], cues: ["Lie on back","Hands by ears, fingers toward shoulders","Press up","Straighten arms","Push chest through"], youtubeUrl: "https://www.youtube.com/watch?v=ViPnKbrc_bI", difficultyLevel: 4 },
 
-  // Swimming & Cardio
-  {
-    id: "swimming-laps-freestyle",
-    name: "Swimming Laps - Freestyle",
-    category: "swimming-cardio",
-    difficulty: "beginner",
-    sets: "20×25m",
-    description: "Cardiovascular endurance and full-body conditioning exercise",
-    progression: "Distance and Speed Progression",
-    videoId: "freestyle-swimming-technique",
-    muscleGroups: ["full-body", "cardiovascular"],
-    musclesWorked: {
-      primary: ["Latissimus Dorsi", "Deltoids", "Quadriceps", "Core"],
-      secondary: ["Triceps", "Pectorals", "Hamstrings", "Calves"],
-      stabilizers: ["Deep Core", "Rotator Cuff", "Hip Stabilizers"]
-    },
-    tendonsInvolved: ["Shoulder Complex Tendons", "Hip Flexor Tendons"],
-    recoveryTime: {
-      muscle: "12-24 hours",
-      tendon: "18-24 hours",
-      nervous: "6-18 hours"
-    },
-    formCues: [
-      "High elbow catch",
-      "Rotate from core",
-      "Consistent breathing pattern"
-    ]
-  },
-  {
-    id: "vasa-trainer-okc",
-    name: "Vasa Trainer (OKC Location)",
-    category: "swimming-cardio",
-    difficulty: "intermediate", 
-    sets: "3×500m",
-    description: "Land-based swimming training at Vasa Oklahoma City facility",
-    progression: "Power and Endurance Protocols",
-    videoId: "vasa-trainer-techniques",
-    muscleGroups: ["lats", "core", "cardiovascular"],
-    equipment: ["vasa-trainer"],
-    musclesWorked: {
-      primary: ["Latissimus Dorsi", "Posterior Deltoid", "Core Stabilizers"],
-      secondary: ["Rhomboids", "Middle Trapezius", "Hip Flexors"],
-      stabilizers: ["Rotator Cuff", "Deep Core"]
-    },
-    tendonsInvolved: ["Latissimus Dorsi Tendon", "Rotator Cuff Tendons"],
-    recoveryTime: {
-      muscle: "18-36 hours",
-      tendon: "24-48 hours",
-      nervous: "12-24 hours"
-    },
-    formCues: [
-      "Simulate swimming stroke pattern",
-      "Maintain core engagement",
-      "Control both pull and return phases"
-    ]
-  }
+  // ── MOBILITY ───────────────────────────────────────────────
+  { id: "f19d6e06-eb89-4534-acd8-11dbcd18eea5", slug: "worlds-greatest-stretch", name: "Worlds Greatest Stretch", category: "Mobility", primaryMuscles: ["hip flexors","hamstrings"], secondaryMuscles: ["thoracic spine","shoulders"], equipment: ["bodyweight"], cues: ["Lunge with rotation","Elbow to instep","Rotate and reach","Full body opener"], youtubeUrl: "https://www.youtube.com/watch?v=-CiWQ2IvY34", difficultyLevel: 1, videoVerified: true },
+  { id: "b31e82ea-177f-44f3-9d2a-d0cab06414cc", slug: "shoulder-dislocate", name: "Shoulder Dislocate", category: "Mobility", primaryMuscles: ["shoulders"], secondaryMuscles: ["chest","upper back"], equipment: ["stick or band"], cues: ["Wide grip on stick","Rotate overhead and behind","Keep arms straight","Shoulder mobility gold"], youtubeUrl: "https://www.youtube.com/watch?v=02HdChcpyBs", difficultyLevel: 1, videoVerified: true },
+  { id: "5be55969-4748-41a7-bff3-00ce8a8652ee", slug: "deep-squat-hold", name: "Deep Squat Hold", category: "Mobility", primaryMuscles: ["hips","ankles"], secondaryMuscles: ["lower back"], equipment: ["bodyweight"], cues: ["Sit in bottom of squat","Heels on ground","Knees out","Primal rest position"], youtubeUrl: "https://www.youtube.com/watch?v=zJBLDJMJiDE", difficultyLevel: 2, videoVerified: true },
+  { id: "b36a093d-55fd-41f3-9e3e-d7a7efef1f10", slug: "frog-stretch", name: "Frog Stretch", category: "Mobility", primaryMuscles: ["Adductors","Hips"], secondaryMuscles: ["Groin"], equipment: ["None"], cues: ["Knees wide","Push hips back","Hold at comfortable depth"], youtubeUrl: "https://www.youtube.com/watch?v=yq9MtXJb2Q4", difficultyLevel: 1 },
+  { id: "3b8ba757-7828-4bc8-9c7d-d005d30dedb1", slug: "jefferson-curl", name: "Jefferson Curl", category: "Mobility", primaryMuscles: ["Hamstrings","Spine"], secondaryMuscles: ["Lower Back","Calves"], equipment: ["None"], cues: ["Roll down one vertebra at a time","Very light or bodyweight only","Slow and controlled"], youtubeUrl: "https://www.youtube.com/watch?v=nYS0R4c3qCA", difficultyLevel: 2 },
+  { id: "0bda8ff6-7e02-43a6-bfff-163cdc90219b", slug: "wrist-circles", name: "Wrist Circles", category: "Mobility", primaryMuscles: ["Wrists","Forearms"], secondaryMuscles: ["Hands"], equipment: ["None"], cues: ["Full range circles","Both directions","Gentle pressure"], youtubeUrl: "https://www.youtube.com/watch?v=mSZWSQSSEjE", difficultyLevel: 1 },
+  { id: "84698031-2642-4745-b394-814c354f288c", slug: "thoracic-extension", name: "Thoracic Extension", category: "Mobility", primaryMuscles: ["Upper Back","Shoulders"], secondaryMuscles: ["Chest"], equipment: ["None"], cues: ["Use foam roller or bench","Open chest","Breathe deeply"], youtubeUrl: "https://www.youtube.com/watch?v=LT_dFRnmdGs", difficultyLevel: 1 },
+
+  // ── FLEXIBILITY ────────────────────────────────────────────
+  { id: "ba5f7a78-54d8-49ef-a760-61e7c8364fb5", slug: "pancake-stretch", name: "Pancake Stretch", category: "Flexibility", primaryMuscles: ["Hamstrings","Adductors"], secondaryMuscles: ["Lower Back"], equipment: ["None"], cues: ["Legs wide","Chest forward","Breathe into the stretch"], youtubeUrl: "https://www.youtube.com/watch?v=2nnhHj5YAIw", difficultyLevel: 2 },
+  { id: "1c3db39a-c222-4841-afa5-a6e9f0b5ea44", slug: "pike-stretch", name: "Pike Stretch", category: "Flexibility", primaryMuscles: ["Hamstrings"], secondaryMuscles: ["Calves","Lower Back"], equipment: ["None"], cues: ["Legs together","Fold forward from hips","Keep spine neutral"], youtubeUrl: "https://www.youtube.com/watch?v=0LRb4Bf2U1w", difficultyLevel: 1 },
+  { id: "0bdfab9b-917d-4376-bf3a-a54622a2624e", slug: "front-split", name: "Front Split", category: "Flexibility", primaryMuscles: ["hamstrings","hip flexors"], secondaryMuscles: ["glutes","adductors"], equipment: ["None"], cues: ["Warm up thoroughly","Slide into split slowly","Keep hips square","Use blocks for support","Hold 30-60 seconds"], youtubeUrl: "https://www.youtube.com/watch?v=UbFx3kVaqZE", difficultyLevel: 4 },
+  { id: "bc96bc27-c936-4a04-a35b-c611cc9e5e07", slug: "middle-split", name: "Middle Split", category: "Flexibility", primaryMuscles: ["adductors","hip flexors"], secondaryMuscles: ["hamstrings","glutes"], equipment: ["None"], cues: ["Wide stance facing forward","Slide feet apart","Keep toes forward","Use hands for support","Breathe into the stretch"], youtubeUrl: "https://www.youtube.com/watch?v=0MJl4DjEMCE", difficultyLevel: 5 },
+  { id: "892ba986-d031-4aac-9e04-abee80bd63ba", slug: "straddle-stretch", name: "Straddle Stretch", category: "Flexibility", primaryMuscles: ["adductors","hamstrings"], secondaryMuscles: ["lower back","hip flexors"], equipment: ["None"], cues: ["Sit with legs wide","Keep spine tall","Fold forward slowly","Reach toward floor","Hold and breathe"], youtubeUrl: "https://www.youtube.com/watch?v=b7K9TlBdSzE", difficultyLevel: 2 },
+  { id: "94dad6a4-1e93-49fc-96b9-b2293e333448", slug: "shoulder-bridge", name: "Shoulder Bridge", category: "Flexibility", primaryMuscles: ["shoulders","chest"], secondaryMuscles: ["spine","hip flexors"], equipment: ["None"], cues: ["Lie on back","Push up into bridge","Walk hands closer to feet","Open shoulders","Hold position"], youtubeUrl: "https://www.youtube.com/watch?v=3g1fvGDevIg", difficultyLevel: 3 },
+  { id: "0a2c51c7-ca0f-4d3a-b846-88f14b9a455d", slug: "standing-pike", name: "Standing Pike", category: "Flexibility", primaryMuscles: ["hamstrings","calves"], secondaryMuscles: ["lower back"], equipment: ["None"], cues: ["Stand with feet together","Fold forward from hips","Keep legs straight","Reach for toes","Relax neck"], youtubeUrl: "https://www.youtube.com/watch?v=g_tea8ZNk5A", difficultyLevel: 2 },
+  { id: "53d29661-3eae-41db-bc99-f6a82c8b522d", slug: "german-hang", name: "German Hang", category: "Flexibility", primaryMuscles: ["shoulders","chest"], secondaryMuscles: ["biceps","forearms"], equipment: ["Rings"], cues: ["Hang from rings or bar","Rotate backwards","Arms behind body","Open shoulders","Hold briefly"], youtubeUrl: "https://www.youtube.com/watch?v=NpMTNdauaHg", difficultyLevel: 4 },
+  { id: "e3d944a3-7523-4f04-a8d5-5c6a8b1308e8", slug: "pancake-good-morning", name: "Pancake Good Morning", category: "Flexibility", primaryMuscles: ["hamstrings","adductors"], secondaryMuscles: ["lower back","glutes"], equipment: ["None"], cues: ["Wide stance","Hinge at hips","Keep back flat","Lower chest toward floor","Drive hips back"], youtubeUrl: "https://www.youtube.com/watch?v=P2B5QMPRqlE", difficultyLevel: 3 },
+  { id: "2f482e29-f3e5-4ad0-90a5-32c1b20ff9ef", slug: "couch-stretch", name: "Couch Stretch", category: "Flexibility", primaryMuscles: ["hip flexors","quadriceps"], secondaryMuscles: ["glutes"], equipment: ["None"], cues: ["Back knee on floor by wall","Shin against wall","Front foot forward","Push hips forward","Keep torso upright"], youtubeUrl: "https://www.youtube.com/watch?v=FBib8Rkf0Mg", difficultyLevel: 2 },
 ];
 
-export const getExercisesByCategory = (category: string) => {
-  return exerciseDatabase.filter(exercise => exercise.category === category);
-};
+export const getExercisesByCategory = (category: string) =>
+  exerciseDatabase.filter((e) => e.category === category);
 
-export const getExercisesByDifficulty = (difficulty: string) => {
-  return exerciseDatabase.filter(exercise => exercise.difficulty === difficulty);
-};
+export const getExercisesByDifficulty = (level: number) =>
+  exerciseDatabase.filter((e) => e.difficultyLevel === level);
+
+export const getExerciseById = (id: string) =>
+  exerciseDatabase.find((e) => e.id === id);
+
+export const getExerciseBySlug = (slug: string) =>
+  exerciseDatabase.find((e) => e.slug === slug);
