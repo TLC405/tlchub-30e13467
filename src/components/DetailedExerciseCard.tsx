@@ -6,45 +6,22 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { 
-  Play, 
-  ChevronDown, 
-  Heart, 
-  Clock, 
-  Zap,
-  Target,
-  Activity,
-  AlertCircle,
-  BookOpen
-} from "lucide-react";
+import { Play, ChevronDown, Heart, Zap, Target, Activity, AlertCircle, BookOpen } from "lucide-react";
 import type { Exercise } from "@/types";
 import LearnTab from "@/components/learn/LearnTab";
 
 interface DetailedExerciseCardProps {
   exercise: Exercise;
-  onPlayVideo?: (videoId: string) => void;
   onMarkComplete?: (exerciseId: string) => void;
   isCompleted?: boolean;
 }
 
-const DetailedExerciseCard = ({ 
-  exercise, 
-  onPlayVideo, 
-  onMarkComplete, 
-  isCompleted 
-}: DetailedExerciseCardProps) => {
+const difficultyLabels: Record<number, string> = { 1: "L1", 2: "L2", 3: "L3", 4: "L4", 5: "L5" };
+const difficultyColors: Record<number, string> = { 1: "bg-green-600", 2: "bg-blue-600", 3: "bg-orange-600", 4: "bg-red-600", 5: "bg-purple-600" };
+
+const DetailedExerciseCard = ({ exercise, onMarkComplete, isCompleted }: DetailedExerciseCardProps) => {
   const [showDetails, setShowDetails] = useState(false);
   const [activeTab, setActiveTab] = useState("details");
-
-  const getDifficultyColor = (difficulty: string) => {
-    switch (difficulty) {
-      case 'beginner': return 'success-gradient';
-      case 'intermediate': return 'info-gradient';
-      case 'advanced': return 'warning-gradient';
-      case 'elite': return 'bg-destructive';
-      default: return 'bg-muted';
-    }
-  };
 
   return (
     <Card className="clean-border premium-shadow bg-card">
@@ -53,31 +30,23 @@ const DetailedExerciseCard = ({
           <div className="flex-1">
             <div className="flex items-center gap-2 mb-2">
               <CardTitle className="text-lg text-foreground">{exercise.name}</CardTitle>
-              <Badge className={`${getDifficultyColor(exercise.difficulty)} text-white`}>
-                {exercise.difficulty.toUpperCase()}
+              <Badge className={`${difficultyColors[exercise.difficultyLevel] || "bg-muted"} text-white`}>
+                {difficultyLabels[exercise.difficultyLevel] || "?"} {exercise.category}
               </Badge>
             </div>
-            <p className="text-sm text-muted-foreground mb-3">{exercise.description}</p>
-            
-            <div className="flex items-center gap-4 text-xs text-muted-foreground">
-              <div className="flex items-center gap-1">
-                <Target className="h-3 w-3" />
-                {exercise.sets}
-              </div>
-              {exercise.duration && (
-                <div className="flex items-center gap-1">
-                  <Clock className="h-3 w-3" />
-                  {exercise.duration}
-                </div>
-              )}
+
+            <div className="flex flex-wrap gap-1 mb-2">
+              {exercise.primaryMuscles.map((m, i) => (
+                <Badge key={i} variant="secondary" className="text-xs">{m}</Badge>
+              ))}
             </div>
           </div>
-          
+
           <div className="flex gap-2">
-            {exercise.videoId && (
+            {exercise.youtubeUrl && (
               <Button
                 size="sm"
-                onClick={() => onPlayVideo?.(exercise.videoId!)}
+                onClick={() => window.open(exercise.youtubeUrl, "_blank", "noopener")}
                 className="bg-destructive hover:bg-destructive/90 text-destructive-foreground"
               >
                 <Play className="h-3 w-3 mr-1" />
@@ -105,7 +74,7 @@ const DetailedExerciseCard = ({
             <ChevronDown className={`h-4 w-4 transition-transform ${showDetails ? 'rotate-180' : ''}`} />
           </Button>
         </CollapsibleTrigger>
-        
+
         <CollapsibleContent>
           <CardContent className="pt-0">
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
@@ -121,128 +90,87 @@ const DetailedExerciseCard = ({
               </TabsList>
 
               <TabsContent value="details" className="space-y-4">
-                {/* Muscles Worked */}
-                {exercise.musclesWorked && (
-                  <div>
-                    <h4 className="text-sm font-semibold text-foreground mb-2 flex items-center gap-1">
-                      <Activity className="h-3 w-3" />
-                      Muscles Worked
-                    </h4>
-                    <div className="space-y-2">
-                      <div>
-                        <p className="text-xs font-medium text-muted-foreground mb-1">Primary:</p>
-                        <div className="flex flex-wrap gap-1">
-                          {exercise.musclesWorked.primary.map((muscle, idx) => (
-                            <Badge key={idx} variant="default" className="text-xs">
-                              {muscle}
-                            </Badge>
-                          ))}
-                        </div>
+                {/* Muscles */}
+                <div>
+                  <h4 className="text-sm font-semibold text-foreground mb-2 flex items-center gap-1">
+                    <Activity className="h-3 w-3" />
+                    Muscles
+                  </h4>
+                  <div className="space-y-2">
+                    <div>
+                      <p className="text-xs font-medium text-muted-foreground mb-1">Primary:</p>
+                      <div className="flex flex-wrap gap-1">
+                        {exercise.primaryMuscles.map((m, i) => (
+                          <Badge key={i} variant="default" className="text-xs">{m}</Badge>
+                        ))}
                       </div>
+                    </div>
+                    {exercise.secondaryMuscles.length > 0 && (
                       <div>
                         <p className="text-xs font-medium text-muted-foreground mb-1">Secondary:</p>
                         <div className="flex flex-wrap gap-1">
-                          {exercise.musclesWorked.secondary.map((muscle, idx) => (
-                            <Badge key={idx} variant="secondary" className="text-xs">
-                              {muscle}
-                            </Badge>
+                          {exercise.secondaryMuscles.map((m, i) => (
+                            <Badge key={i} variant="secondary" className="text-xs">{m}</Badge>
                           ))}
                         </div>
                       </div>
-                      <div>
-                        <p className="text-xs font-medium text-muted-foreground mb-1">Stabilizers:</p>
-                        <div className="flex flex-wrap gap-1">
-                          {exercise.musclesWorked.stabilizers.map((muscle, idx) => (
-                            <Badge key={idx} variant="outline" className="text-xs">
-                              {muscle}
-                            </Badge>
-                          ))}
-                        </div>
-                      </div>
+                    )}
+                  </div>
+                </div>
+
+                <Separator />
+
+                {/* Equipment */}
+                {exercise.equipment.length > 0 && (
+                  <div>
+                    <h4 className="text-sm font-semibold text-foreground mb-2 flex items-center gap-1">
+                      <Zap className="h-3 w-3" />
+                      Equipment
+                    </h4>
+                    <div className="flex flex-wrap gap-1">
+                      {exercise.equipment.map((eq, i) => (
+                        <Badge key={i} variant="outline" className="text-xs">{eq}</Badge>
+                      ))}
                     </div>
                   </div>
                 )}
 
-                <Separator />
-
-                {/* Tendons & Recovery */}
-                {(exercise.tendonsInvolved || exercise.recoveryTime) && (
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {exercise.tendonsInvolved && (
-                      <div>
-                        <h4 className="text-sm font-semibold text-foreground mb-2 flex items-center gap-1">
-                          <Zap className="h-3 w-3" />
-                          Tendons Involved
-                        </h4>
-                        <div className="flex flex-wrap gap-1">
-                          {exercise.tendonsInvolved.map((tendon, idx) => (
-                            <Badge key={idx} variant="outline" className="text-xs warning-gradient text-warning-foreground">
-                              {tendon}
-                            </Badge>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-
-                    {exercise.recoveryTime && (
-                      <div>
-                        <h4 className="text-sm font-semibold text-foreground mb-2 flex items-center gap-1">
-                          <Clock className="h-3 w-3" />
-                          Recovery Times
-                        </h4>
-                        <div className="space-y-1 text-xs">
-                          <div className="flex justify-between">
-                            <span className="text-muted-foreground">Muscle:</span>
-                            <span className="text-foreground">{exercise.recoveryTime.muscle}</span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span className="text-muted-foreground">Tendon:</span>
-                            <span className="text-foreground">{exercise.recoveryTime.tendon}</span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span className="text-muted-foreground">Nervous:</span>
-                            <span className="text-foreground">{exercise.recoveryTime.nervous}</span>
-                          </div>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                )}
-
-                <Separator />
-
                 {/* Form Cues */}
-                {exercise.formCues && (
-                  <div>
-                    <h4 className="text-sm font-semibold text-foreground mb-2 flex items-center gap-1">
-                      <AlertCircle className="h-3 w-3" />
-                      Form Cues
-                    </h4>
-                    <ul className="space-y-1">
-                      {exercise.formCues.map((cue, idx) => (
-                        <li key={idx} className="text-xs text-muted-foreground flex items-start gap-2">
-                          <span className="text-accent-foreground">•</span>
-                          {cue}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                {exercise.cues.length > 0 && (
+                  <>
+                    <Separator />
+                    <div>
+                      <h4 className="text-sm font-semibold text-foreground mb-2 flex items-center gap-1">
+                        <AlertCircle className="h-3 w-3" />
+                        Form Cues
+                      </h4>
+                      <ul className="space-y-1">
+                        {exercise.cues.map((cue, idx) => (
+                          <li key={idx} className="text-xs text-muted-foreground flex items-start gap-2">
+                            <span className="text-accent-foreground">•</span>
+                            {cue}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </>
                 )}
 
-                {/* Progression */}
-                {exercise.progression && (
-                  <div className="bg-background-secondary p-3 rounded-lg">
+                {/* Chain Info */}
+                {exercise.chainGroup && (
+                  <div className="bg-muted/50 p-3 rounded-lg">
                     <p className="text-xs font-medium text-foreground">
-                      Next Level: <span className="text-primary">{exercise.progression}</span>
+                      Chain: <span className="text-primary">{exercise.chainGroup}</span>
+                      {exercise.chainOrder && <span className="text-muted-foreground"> · Step {exercise.chainOrder}</span>}
                     </p>
                   </div>
                 )}
               </TabsContent>
 
               <TabsContent value="learn">
-                <LearnTab 
+                <LearnTab
                   exerciseName={exercise.name}
-                  difficulty={exercise.difficulty}
+                  difficulty={exercise.difficultyLevel <= 2 ? "foundation" : exercise.difficultyLevel === 3 ? "advanced" : "elite"}
                 />
               </TabsContent>
             </Tabs>
