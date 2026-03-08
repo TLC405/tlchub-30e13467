@@ -249,16 +249,9 @@ const SkillTreeView = ({ initialTreeId, onNavigate }: SkillTreeViewProps) => {
           <CardContent className="space-y-6">
             <p className="text-muted-foreground">{selectedStep.description}</p>
 
-            {/* Watch Demo — real YouTube URL */}
+            {/* Watch Demo — inline player */}
             {selectedStep.youtubeUrl && (
-              <Button
-                variant="outline"
-                className="border-[2px] border-foreground rounded-[16px] w-full"
-                onClick={() => window.open(selectedStep.youtubeUrl, "_blank", "noopener")}
-              >
-                <Play className="h-4 w-4 mr-2" />
-                Watch Demo — YouTube
-              </Button>
+              <InlineVideo url={selectedStep.youtubeUrl} title={selectedStep.name} />
             )}
 
             <Tabs defaultValue="training" className="w-full">

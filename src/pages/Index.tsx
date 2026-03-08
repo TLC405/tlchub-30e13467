@@ -40,10 +40,10 @@ const Index = () => {
     <ThemeProvider>
       <div className="min-h-screen bg-background pb-24">
         {/* Header */}
-        <header className="h-14 border-b-[3px] border-foreground bg-card sticky top-0 z-40">
+        <header className="h-12 border-b border-border bg-card sticky top-0 z-40">
           <div className="flex items-center justify-between h-full px-4">
             <div>
-              <h1 className="font-serif text-xl font-black text-foreground tracking-tight leading-none">
+              <h1 className="font-serif text-lg font-black text-foreground tracking-tight leading-none">
                 {APP_NAME}
               </h1>
               <p className="text-[9px] text-muted-foreground tracking-widest uppercase leading-none mt-0.5">
@@ -54,7 +54,6 @@ const Index = () => {
               <span className="text-[8px] text-primary font-bold tracking-wider uppercase hidden sm:inline">
                 {APP_POWERED_BY}
               </span>
-              <DownloadProject />
               <ThemeSelector />
             </div>
           </div>
