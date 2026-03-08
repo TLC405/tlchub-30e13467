@@ -1,8 +1,8 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { skillPaths, comingSoon, APP_PHILOSOPHY, APP_POWERED_BY, APP_FOUNDATION } from "@/data/controlContent";
+import { skillPaths, comingSoon, APP_PHILOSOPHY, APP_POWERED_BY, APP_FOUNDATION, APP_SOCIAL_HANDLE, STACKED_LAWS } from "@/data/controlContent";
 import { NonNegotiables } from "./NonNegotiables";
-import { ChevronRight, Lock, BookOpen } from "lucide-react";
+import { ChevronRight, Lock, BookOpen, Shield } from "lucide-react";
 
 interface LearnPathViewProps {
   onNavigate: (view: string) => void;
@@ -23,7 +23,27 @@ const LearnPathView = ({ onNavigate }: LearnPathViewProps) => {
 
       <NonNegotiables compact />
 
-      {/* Skill Paths */}
+      {/* STACKED Laws */}
+      <Card className="border-[3px] border-foreground rounded-[24px]">
+        <CardHeader className="pb-2">
+          <CardTitle className="font-serif text-lg font-bold flex items-center gap-2 text-foreground">
+            <Shield className="h-5 w-5" />
+            STACKED Laws
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <ul className="space-y-2">
+            {STACKED_LAWS.map((law, i) => (
+              <li key={i} className="text-sm text-muted-foreground flex items-start gap-2">
+                <span className="text-primary font-bold mt-0.5">{i + 1}.</span>
+                {law}
+              </li>
+            ))}
+          </ul>
+        </CardContent>
+      </Card>
+
+      {/* Skill Paths — all 9 */}
       <div className="space-y-4 stagger-children">
         {skillPaths.map((path) => (
           <Card
@@ -45,11 +65,11 @@ const LearnPathView = ({ onNavigate }: LearnPathViewProps) => {
               <p className="text-sm text-muted-foreground">{path.description}</p>
             </CardHeader>
             <CardContent className="space-y-3">
-              {/* Gates with L1-L4 badges */}
+              {/* Gates */}
               <div className="flex flex-wrap gap-2">
                 {path.gates.map((gate, i) => {
-                  const level = `L${i + 1}`;
-                  const isElite = i === 3;
+                  const level = gate.split(":")[0];
+                  const isElite = i >= 4;
                   return (
                     <Badge
                       key={i}
@@ -79,7 +99,7 @@ const LearnPathView = ({ onNavigate }: LearnPathViewProps) => {
         ))}
       </div>
 
-      {/* Coming Soon — individual cards */}
+      {/* Coming Soon */}
       <div className="space-y-3 stagger-children">
         <h2 className="font-serif text-lg font-bold text-muted-foreground text-center">
           Coming Soon
@@ -110,7 +130,7 @@ const LearnPathView = ({ onNavigate }: LearnPathViewProps) => {
         ))}
       </div>
 
-      <p className="text-[10px] text-center text-primary font-semibold">{APP_POWERED_BY}</p>
+      <p className="text-[10px] text-center text-primary font-semibold">{APP_POWERED_BY} · {APP_SOCIAL_HANDLE}</p>
       <p className="text-[9px] text-center text-muted-foreground">{APP_FOUNDATION}</p>
     </div>
   );

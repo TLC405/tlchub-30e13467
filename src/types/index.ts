@@ -1,44 +1,25 @@
-export type ViewType = 'dashboard' | 'training' | 'progress' | 'library' | 'timer' | 'foundation' | 'advanced' | 'skills' | 'discipline' | 'plan' | 'files' | 'ai' | 'enhanced-library' | 'updates' | 'agent';
+export type ViewType = 'dashboard' | 'training' | 'progress' | 'library' | 'timer' | 'foundation' | 'advanced' | 'skills' | 'discipline' | 'plan' | 'files' | 'ai' | 'enhanced-library' | 'updates' | 'agent' | 'tlctv';
+
+export type ExerciseCategory = 'Push' | 'Pull' | 'Core' | 'Legs' | 'Skills' | 'Yoga' | 'Mobility' | 'Flexibility';
+
+export type DifficultyLevel = 1 | 2 | 3 | 4 | 5;
 
 export interface Exercise {
   id: string;
+  slug: string;
   name: string;
   category: ExerciseCategory;
-  difficulty: DifficultyLevel;
-  sets: string;
-  reps?: string;
-  duration?: string;
-  description: string;
-  progression: string;
-  videoId?: string;
-  imageUrl?: string;
-  prerequisites?: string[];
-  muscleGroups: string[];
-  equipment?: string[];
-  musclesWorked?: {
-    primary: string[];
-    secondary: string[];
-    stabilizers: string[];
-  };
-  tendonsInvolved?: string[];
-  recoveryTime?: {
-    muscle: string;
-    tendon: string;
-    nervous: string;
-  };
-  formCues?: string[];
+  primaryMuscles: string[];
+  secondaryMuscles: string[];
+  equipment: string[];
+  cues: string[];
+  youtubeUrl?: string;
+  instagramUrl?: string;
+  difficultyLevel: DifficultyLevel;
+  chainGroup?: string;
+  chainOrder?: number;
+  videoVerified?: boolean;
 }
-
-export type ExerciseCategory = 
-  | 'handstand-inverted'
-  | 'pulling-rows' 
-  | 'planche-parallettes'
-  | 'rings-dynamic'
-  | 'dynamic-showstoppers'
-  | 'mobility-yoga'
-  | 'swimming-cardio';
-
-export type DifficultyLevel = 'beginner' | 'intermediate' | 'advanced' | 'elite';
 
 export interface WeatherData {
   temperature: number;
