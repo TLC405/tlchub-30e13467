@@ -89,19 +89,19 @@ const StepCard = React.memo(({
       isCompleted ? "border-green-600/40 bg-green-600/5"
         : isUnlocked ? "border-border hover:border-foreground/20 hover:shadow-medium" : "border-border/50 opacity-50"
     }`}>
-      <button className="w-full text-left" onClick={onToggle}>
+      <button className="w-full text-left smooth-colors" onClick={onToggle}>
         <div className="flex items-center gap-3 px-3 py-2.5">
           {/* Video thumbnail */}
           {videoId ? (
-            <div className="w-14 h-10 flex-shrink-0 relative rounded overflow-hidden bg-secondary">
+            <div className="w-14 h-10 flex-shrink-0 relative rounded overflow-hidden bg-secondary group">
               <img
                 src={`https://img.youtube.com/vi/${videoId}/default.jpg`}
                 alt=""
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
                 loading="lazy"
               />
-              <div className="absolute inset-0 bg-foreground/20 flex items-center justify-center">
-                <Play className="h-3 w-3 text-primary-foreground fill-current" />
+              <div className="absolute inset-0 bg-foreground/20 group-hover:bg-foreground/10 transition-colors flex items-center justify-center">
+                <Play className="h-3 w-3 text-primary-foreground fill-current transition-transform duration-200 group-hover:scale-110" />
               </div>
             </div>
           ) : (
