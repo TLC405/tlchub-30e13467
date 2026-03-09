@@ -114,17 +114,17 @@ const TrainingView = ({ onNavigate }: TrainingViewProps) => {
               {/* Day header */}
               <button
                 onClick={() => setExpandedDay(isOpen ? null : day.id)}
-                className="w-full flex items-center justify-between px-4 py-3 hover:bg-muted/30 transition-colors"
+                className="w-full flex items-center justify-between px-4 py-3 hover:bg-muted/30 transition-all duration-200 smooth-colors"
               >
                 <div className="flex items-center gap-3">
-                  <div className="h-9 w-9 rounded-lg border border-border flex items-center justify-center bg-background">
+                  <div className="h-9 w-9 rounded-lg border border-border flex items-center justify-center bg-background transition-transform duration-200 hover:scale-105">
                     {iconMap[day.icon]}
                   </div>
                   <div className="text-left">
                     <div className="flex items-center gap-2">
                       <span className="font-bold text-sm text-foreground">{day.label} — {day.title}</span>
                       {isToday && (
-                        <Badge className="bg-primary text-primary-foreground text-[9px] px-1.5 py-0 rounded">TODAY</Badge>
+                        <Badge className="bg-primary text-primary-foreground text-[9px] px-1.5 py-0 rounded animate-pulse-glow">TODAY</Badge>
                       )}
                       {day.optional && (
                         <Badge variant="outline" className="text-[9px] rounded border-border">Optional</Badge>
@@ -135,9 +135,9 @@ const TrainingView = ({ onNavigate }: TrainingViewProps) => {
                 </div>
                 <div className="flex items-center gap-2">
                   {completed > 0 && (
-                    <span className="text-[10px] text-primary font-semibold">{completed}/{day.blocks.length}</span>
+                    <span className="text-[10px] text-primary font-semibold animate-fade-in">{completed}/{day.blocks.length}</span>
                   )}
-                  {isOpen ? <ChevronUp className="h-4 w-4 text-muted-foreground" /> : <ChevronDown className="h-4 w-4 text-muted-foreground" />}
+                  <ChevronDown className={`h-4 w-4 text-muted-foreground transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`} />
                 </div>
               </button>
 
