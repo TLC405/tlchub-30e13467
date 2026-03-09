@@ -163,9 +163,9 @@ const TLCtvView = () => {
 
       {/* AI Chat Panel */}
       {showChat && (
-        <div className="border border-primary rounded-lg bg-card overflow-hidden animate-fade-in">
+        <div className="border border-primary rounded-lg bg-card overflow-hidden animate-slide-in-up">
           <div className="px-4 py-2.5 border-b border-border flex items-center gap-2">
-            <Bot className="h-4 w-4 text-primary" />
+            <Bot className="h-4 w-4 text-primary animate-pulse-glow" />
             <span className="text-sm font-bold text-foreground">Coach TLC</span>
             <Badge variant="outline" className="text-[9px] rounded border-border">AI</Badge>
           </div>
@@ -182,12 +182,18 @@ const TLCtvView = () => {
               </div>
             )}
             {messages.map((m, i) => (
-              <div key={i} className={`flex gap-2 ${m.role === "user" ? "justify-end" : "justify-start"}`}>
+              <div 
+                key={i} 
+                className={`flex gap-2 ${m.role === "user" ? "justify-end" : "justify-start"} ${
+                  m.role === "user" ? "animate-slide-in-right" : "animate-slide-in-left"
+                }`}
+                style={{ animationDelay: `${i * 50}ms` }}
+              >
                 {m.role === "assistant" && <Bot className="h-4 w-4 text-primary flex-shrink-0 mt-1" />}
                 <div
-                  className={`max-w-[80%] text-sm rounded-lg px-3 py-2 ${
+                  className={`max-w-[80%] text-sm rounded-lg px-3 py-2 transition-all duration-200 ${
                     m.role === "user"
-                      ? "bg-primary text-primary-foreground"
+                      ? "bg-primary text-primary-foreground shadow-medium"
                       : "bg-muted text-foreground"
                   }`}
                 >
@@ -249,13 +255,18 @@ const TLCtvView = () => {
             </div>
 
             <div className="flex gap-2.5 overflow-x-auto pb-2 -mx-1 px-1 scrollbar-none">
-              {videos.map(({ step, videoId }) => (
-                <button key={step.id} onClick={() => setActiveVideo({ videoId, title: step.name })} className="flex-shrink-0 w-[180px] group text-left">
-                  <Card className="border border-border rounded-lg overflow-hidden transition-colors hover:border-primary/50">
+              {videos.map(({ step, videoId }, idx) => (
+                <button 
+                  key={step.id} 
+                  onClick={() => setActiveVideo({ videoId, title: step.name })} 
+                  className="flex-shrink-0 w-[180px] group text-left stagger-item"
+                  style={{ animationDelay: `${idx * 50}ms` }}
+                >
+                  <Card className="border border-border rounded-lg overflow-hidden transition-all duration-200 hover:border-primary/50 hover:shadow-medium interactive-lift">
                     <div className="relative aspect-video bg-secondary">
-                      <img src={`https://img.youtube.com/vi/${videoId}/mqdefault.jpg`} alt={step.name} className="w-full h-full object-cover" loading="lazy" />
+                      <img src={`https://img.youtube.com/vi/${videoId}/mqdefault.jpg`} alt={step.name} className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" loading="lazy" />
                       <div className="absolute inset-0 bg-foreground/20 group-hover:bg-foreground/10 transition-colors flex items-center justify-center">
-                        <div className="h-7 w-7 rounded-full bg-primary flex items-center justify-center">
+                        <div className="h-7 w-7 rounded-full bg-primary flex items-center justify-center transition-transform duration-200 group-hover:scale-110 animate-pulse-glow">
                           <Play className="h-3 w-3 text-primary-foreground ml-0.5" />
                         </div>
                       </div>

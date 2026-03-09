@@ -85,23 +85,23 @@ const StepCard = React.memo(({
   const videoId = getVideoId(step.youtubeUrl);
 
   return (
-    <div className={`border rounded-lg overflow-hidden transition-all duration-200 ${
+    <div className={`border rounded-lg overflow-hidden transition-all duration-200 smooth-colors ${
       isCompleted ? "border-green-600/40 bg-green-600/5"
-        : isUnlocked ? "border-border hover:border-foreground/20" : "border-border/50 opacity-50"
+        : isUnlocked ? "border-border hover:border-foreground/20 hover:shadow-medium" : "border-border/50 opacity-50"
     }`}>
-      <button className="w-full text-left" onClick={onToggle}>
+      <button className="w-full text-left smooth-colors" onClick={onToggle}>
         <div className="flex items-center gap-3 px-3 py-2.5">
           {/* Video thumbnail */}
           {videoId ? (
-            <div className="w-14 h-10 flex-shrink-0 relative rounded overflow-hidden bg-secondary">
+            <div className="w-14 h-10 flex-shrink-0 relative rounded overflow-hidden bg-secondary group">
               <img
                 src={`https://img.youtube.com/vi/${videoId}/default.jpg`}
                 alt=""
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
                 loading="lazy"
               />
-              <div className="absolute inset-0 bg-foreground/20 flex items-center justify-center">
-                <Play className="h-3 w-3 text-primary-foreground fill-current" />
+              <div className="absolute inset-0 bg-foreground/20 group-hover:bg-foreground/10 transition-colors flex items-center justify-center">
+                <Play className="h-3 w-3 text-primary-foreground fill-current transition-transform duration-200 group-hover:scale-110" />
               </div>
             </div>
           ) : (
@@ -111,10 +111,10 @@ const StepCard = React.memo(({
           )}
 
           {/* Status indicator */}
-          <div className={`h-6 w-6 rounded flex items-center justify-center text-[10px] font-bold flex-shrink-0 ${
+          <div className={`h-6 w-6 rounded flex items-center justify-center text-[10px] font-bold flex-shrink-0 transition-all duration-200 ${
             isCompleted ? "bg-green-600 text-white" : isUnlocked ? "bg-secondary text-foreground" : "bg-muted text-muted-foreground"
           }`}>
-            {isCompleted ? <CheckCircle className="h-3.5 w-3.5" /> : isUnlocked ? globalIndex + 1 : <Lock className="h-3 w-3" />}
+            {isCompleted ? <CheckCircle className="h-3.5 w-3.5 animate-scale-bounce" /> : isUnlocked ? globalIndex + 1 : <Lock className="h-3 w-3" />}
           </div>
 
           {/* Name + compact attributes */}
@@ -132,13 +132,13 @@ const StepCard = React.memo(({
             </div>
           </div>
 
-          {isOpen ? <ChevronUp className="h-4 w-4 text-muted-foreground flex-shrink-0" /> : <ChevronDown className="h-4 w-4 text-muted-foreground flex-shrink-0" />}
+          <ChevronDown className={`h-4 w-4 text-muted-foreground flex-shrink-0 transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`} />
         </div>
       </button>
 
       {/* Expanded content */}
       {isOpen && (
-        <div className="border-t border-border px-4 py-4 space-y-4 animate-fade-in">
+        <div className="border-t border-border px-4 py-4 space-y-4 animate-accordion-down">
           {videoId && <VideoPlayer videoId={videoId} title={`${step.name} Demo`} />}
 
           <div className="space-y-1">
@@ -282,10 +282,10 @@ const SkillTreeView = ({ initialTreeId, onNavigate }: SkillTreeViewProps) => {
             <button
               key={cat}
               onClick={() => setFilter(cat)}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition-colors whitespace-nowrap ${
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 whitespace-nowrap active:scale-95 ${
                 filter === cat
-                  ? "bg-primary text-primary-foreground"
-                  : "bg-secondary text-muted-foreground hover:text-foreground"
+                  ? "bg-primary text-primary-foreground shadow-medium"
+                  : "bg-secondary text-muted-foreground hover:text-foreground hover:bg-secondary/80"
               }`}
             >
               {categoryIcons[cat]}
@@ -296,21 +296,22 @@ const SkillTreeView = ({ initialTreeId, onNavigate }: SkillTreeViewProps) => {
 
         {/* Grid */}
         <div className="grid grid-cols-2 gap-2">
-          {filteredTrees.map((tree) => {
+          {filteredTrees.map((tree, idx) => {
             const progress = getTreeProgress(tree);
             const completed = completedSteps[tree.id]?.length || 0;
 
             return (
               <button
                 key={tree.id}
-                className="text-left border border-border rounded-lg p-3 hover:border-foreground/30 transition-all duration-200 hover:shadow-md bg-card active:scale-[0.98]"
+                className="text-left border border-border rounded-lg p-3 hover:border-foreground/30 transition-all duration-200 hover:shadow-medium bg-card active:scale-[0.98] interactive-lift stagger-item"
+                style={{ animationDelay: `${idx * 50}ms` }}
                 onClick={() => setSelectedTree(tree)}
               >
                 <div className="flex items-center gap-2 mb-2">
                   {muscleDiagrams[tree.id] ? (
-                    <img src={muscleDiagrams[tree.id]} alt="" className="w-10 h-10 object-contain rounded bg-secondary/30 p-0.5" loading="lazy" />
+                    <img src={muscleDiagrams[tree.id]} alt="" className="w-10 h-10 object-contain rounded bg-secondary/30 p-0.5 transition-transform duration-200 group-hover:scale-105" loading="lazy" />
                   ) : (
-                    <div className="w-10 h-10 rounded bg-secondary flex items-center justify-center">
+                    <div className="w-10 h-10 rounded bg-secondary flex items-center justify-center transition-transform duration-200 hover:scale-105">
                       {iconMap[tree.icon] || <Dumbbell className="h-4 w-4" />}
                     </div>
                   )}

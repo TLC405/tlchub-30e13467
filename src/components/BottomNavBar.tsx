@@ -28,17 +28,21 @@ export function BottomNavBar({ onNavigate, activeView }: BottomNavBarProps) {
           <button
             key={item.id}
             onClick={() => onNavigate(item.id)}
-            className={`relative flex flex-col items-center justify-center min-w-0 flex-1 py-2 px-1 rounded-lg transition-colors duration-150 ${
+            className={`relative flex flex-col items-center justify-center min-w-0 flex-1 py-2 px-1 rounded-lg transition-all duration-200 ${
               activeView === item.id
                 ? "text-primary"
                 : "text-muted-foreground hover:text-foreground"
             }`}
           >
             {activeView === item.id && (
-              <span className="absolute -top-1.5 left-1/2 -translate-x-1/2 w-6 h-0.5 bg-primary rounded-full" />
+              <span className="absolute -top-1.5 left-1/2 -translate-x-1/2 w-6 h-0.5 bg-primary rounded-full transition-all duration-300 animate-slide-in-up" />
             )}
-            <item.icon className="h-5 w-5 mb-1 flex-shrink-0" />
-            <span className="text-[10px] font-semibold tracking-wide">{item.title}</span>
+            <item.icon className={`h-5 w-5 mb-1 flex-shrink-0 transition-transform duration-200 ${
+              activeView === item.id ? "scale-110" : "scale-100"
+            }`} />
+            <span className={`text-[10px] font-semibold tracking-wide transition-opacity duration-200 ${
+              activeView === item.id ? "opacity-100" : "opacity-70"
+            }`}>{item.title}</span>
           </button>
         ))}
       </div>

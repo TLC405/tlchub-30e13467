@@ -114,17 +114,17 @@ const TrainingView = ({ onNavigate }: TrainingViewProps) => {
               {/* Day header */}
               <button
                 onClick={() => setExpandedDay(isOpen ? null : day.id)}
-                className="w-full flex items-center justify-between px-4 py-3 hover:bg-muted/30 transition-colors"
+                className="w-full flex items-center justify-between px-4 py-3 hover:bg-muted/30 transition-all duration-200 smooth-colors"
               >
                 <div className="flex items-center gap-3">
-                  <div className="h-9 w-9 rounded-lg border border-border flex items-center justify-center bg-background">
+                  <div className="h-9 w-9 rounded-lg border border-border flex items-center justify-center bg-background transition-transform duration-200 hover:scale-105">
                     {iconMap[day.icon]}
                   </div>
                   <div className="text-left">
                     <div className="flex items-center gap-2">
                       <span className="font-bold text-sm text-foreground">{day.label} — {day.title}</span>
                       {isToday && (
-                        <Badge className="bg-primary text-primary-foreground text-[9px] px-1.5 py-0 rounded">TODAY</Badge>
+                        <Badge className="bg-primary text-primary-foreground text-[9px] px-1.5 py-0 rounded animate-pulse-glow">TODAY</Badge>
                       )}
                       {day.optional && (
                         <Badge variant="outline" className="text-[9px] rounded border-border">Optional</Badge>
@@ -135,15 +135,15 @@ const TrainingView = ({ onNavigate }: TrainingViewProps) => {
                 </div>
                 <div className="flex items-center gap-2">
                   {completed > 0 && (
-                    <span className="text-[10px] text-primary font-semibold">{completed}/{day.blocks.length}</span>
+                    <span className="text-[10px] text-primary font-semibold animate-fade-in">{completed}/{day.blocks.length}</span>
                   )}
-                  {isOpen ? <ChevronUp className="h-4 w-4 text-muted-foreground" /> : <ChevronDown className="h-4 w-4 text-muted-foreground" />}
+                  <ChevronDown className={`h-4 w-4 text-muted-foreground transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`} />
                 </div>
               </button>
 
               {/* Expanded blocks */}
               {isOpen && (
-                <div className="border-t border-border">
+                <div className="border-t border-border animate-accordion-down">
                   {day.blocks.map((block, i) => {
                     const isDone = blocks[i] || false;
                     const isPain = (painFlags[day.id] || [])[i] || false;
@@ -153,17 +153,21 @@ const TrainingView = ({ onNavigate }: TrainingViewProps) => {
                     const integrity = getIntegrityForAction(block.action);
 
                     return (
-                      <div key={i} className={`border-b border-border last:border-b-0 ${isPain ? "bg-destructive/5" : ""}`}>
+                      <div 
+                        key={i} 
+                        className={`border-b border-border last:border-b-0 transition-all duration-200 ${isPain ? "bg-destructive/5 animate-shake" : ""} stagger-item`}
+                        style={{ animationDelay: `${i * 50}ms` }}
+                      >
                         {/* Block row */}
                         <div className="flex items-center gap-2 px-4 py-2.5">
                           {/* Complete toggle */}
                           <button
                             onClick={() => toggleBlock(day.id, i)}
-                            className={`h-5 w-5 rounded flex-shrink-0 border flex items-center justify-center transition-colors ${
+                            className={`h-5 w-5 rounded flex-shrink-0 border flex items-center justify-center transition-all duration-200 ${
                               isDone ? "border-primary bg-primary/10" : "border-border hover:border-foreground/40"
                             }`}
                           >
-                            {isDone && <CheckCircle className="h-3 w-3 text-primary" />}
+                            {isDone && <CheckCircle className="h-3 w-3 text-primary animate-scale-bounce" />}
                           </button>
 
                           {/* Label — tappable to expand */}
@@ -195,7 +199,7 @@ const TrainingView = ({ onNavigate }: TrainingViewProps) => {
 
                         {/* Expanded detail — inline, no popup */}
                         {isBlockOpen && (skillTree || integrity) && (
-                          <div className="px-4 pb-3 animate-fade-in">
+                          <div className="px-4 pb-3 animate-slide-in-left">
                             {skillTree && <SkillTreeInline tree={skillTree} onNavigate={onNavigate} />}
                             {integrity && <IntegrityInline block={integrity} />}
                           </div>
