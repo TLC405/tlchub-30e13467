@@ -143,7 +143,7 @@ const TrainingView = ({ onNavigate }: TrainingViewProps) => {
 
               {/* Expanded blocks */}
               {isOpen && (
-                <div className="border-t border-border">
+                <div className="border-t border-border animate-accordion-down">
                   {day.blocks.map((block, i) => {
                     const isDone = blocks[i] || false;
                     const isPain = (painFlags[day.id] || [])[i] || false;
@@ -153,17 +153,21 @@ const TrainingView = ({ onNavigate }: TrainingViewProps) => {
                     const integrity = getIntegrityForAction(block.action);
 
                     return (
-                      <div key={i} className={`border-b border-border last:border-b-0 ${isPain ? "bg-destructive/5" : ""}`}>
+                      <div 
+                        key={i} 
+                        className={`border-b border-border last:border-b-0 transition-all duration-200 ${isPain ? "bg-destructive/5 animate-shake" : ""} stagger-item`}
+                        style={{ animationDelay: `${i * 50}ms` }}
+                      >
                         {/* Block row */}
                         <div className="flex items-center gap-2 px-4 py-2.5">
                           {/* Complete toggle */}
                           <button
                             onClick={() => toggleBlock(day.id, i)}
-                            className={`h-5 w-5 rounded flex-shrink-0 border flex items-center justify-center transition-colors ${
+                            className={`h-5 w-5 rounded flex-shrink-0 border flex items-center justify-center transition-all duration-200 ${
                               isDone ? "border-primary bg-primary/10" : "border-border hover:border-foreground/40"
                             }`}
                           >
-                            {isDone && <CheckCircle className="h-3 w-3 text-primary" />}
+                            {isDone && <CheckCircle className="h-3 w-3 text-primary animate-scale-bounce" />}
                           </button>
 
                           {/* Label — tappable to expand */}
