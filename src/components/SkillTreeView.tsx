@@ -282,10 +282,10 @@ const SkillTreeView = ({ initialTreeId, onNavigate }: SkillTreeViewProps) => {
             <button
               key={cat}
               onClick={() => setFilter(cat)}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition-colors whitespace-nowrap ${
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 whitespace-nowrap active:scale-95 ${
                 filter === cat
-                  ? "bg-primary text-primary-foreground"
-                  : "bg-secondary text-muted-foreground hover:text-foreground"
+                  ? "bg-primary text-primary-foreground shadow-medium"
+                  : "bg-secondary text-muted-foreground hover:text-foreground hover:bg-secondary/80"
               }`}
             >
               {categoryIcons[cat]}
