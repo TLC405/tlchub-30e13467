@@ -85,9 +85,9 @@ const StepCard = React.memo(({
   const videoId = getVideoId(step.youtubeUrl);
 
   return (
-    <div className={`border rounded-lg overflow-hidden transition-all duration-200 ${
+    <div className={`border rounded-lg overflow-hidden transition-all duration-200 smooth-colors ${
       isCompleted ? "border-green-600/40 bg-green-600/5"
-        : isUnlocked ? "border-border hover:border-foreground/20" : "border-border/50 opacity-50"
+        : isUnlocked ? "border-border hover:border-foreground/20 hover:shadow-medium" : "border-border/50 opacity-50"
     }`}>
       <button className="w-full text-left" onClick={onToggle}>
         <div className="flex items-center gap-3 px-3 py-2.5">
