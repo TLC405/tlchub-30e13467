@@ -111,10 +111,10 @@ const StepCard = React.memo(({
           )}
 
           {/* Status indicator */}
-          <div className={`h-6 w-6 rounded flex items-center justify-center text-[10px] font-bold flex-shrink-0 ${
+          <div className={`h-6 w-6 rounded flex items-center justify-center text-[10px] font-bold flex-shrink-0 transition-all duration-200 ${
             isCompleted ? "bg-green-600 text-white" : isUnlocked ? "bg-secondary text-foreground" : "bg-muted text-muted-foreground"
           }`}>
-            {isCompleted ? <CheckCircle className="h-3.5 w-3.5" /> : isUnlocked ? globalIndex + 1 : <Lock className="h-3 w-3" />}
+            {isCompleted ? <CheckCircle className="h-3.5 w-3.5 animate-scale-bounce" /> : isUnlocked ? globalIndex + 1 : <Lock className="h-3 w-3" />}
           </div>
 
           {/* Name + compact attributes */}
