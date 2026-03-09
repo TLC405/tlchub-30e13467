@@ -255,13 +255,18 @@ const TLCtvView = () => {
             </div>
 
             <div className="flex gap-2.5 overflow-x-auto pb-2 -mx-1 px-1 scrollbar-none">
-              {videos.map(({ step, videoId }) => (
-                <button key={step.id} onClick={() => setActiveVideo({ videoId, title: step.name })} className="flex-shrink-0 w-[180px] group text-left">
-                  <Card className="border border-border rounded-lg overflow-hidden transition-colors hover:border-primary/50">
+              {videos.map(({ step, videoId }, idx) => (
+                <button 
+                  key={step.id} 
+                  onClick={() => setActiveVideo({ videoId, title: step.name })} 
+                  className="flex-shrink-0 w-[180px] group text-left stagger-item"
+                  style={{ animationDelay: `${idx * 50}ms` }}
+                >
+                  <Card className="border border-border rounded-lg overflow-hidden transition-all duration-200 hover:border-primary/50 hover:shadow-medium interactive-lift">
                     <div className="relative aspect-video bg-secondary">
-                      <img src={`https://img.youtube.com/vi/${videoId}/mqdefault.jpg`} alt={step.name} className="w-full h-full object-cover" loading="lazy" />
+                      <img src={`https://img.youtube.com/vi/${videoId}/mqdefault.jpg`} alt={step.name} className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" loading="lazy" />
                       <div className="absolute inset-0 bg-foreground/20 group-hover:bg-foreground/10 transition-colors flex items-center justify-center">
-                        <div className="h-7 w-7 rounded-full bg-primary flex items-center justify-center">
+                        <div className="h-7 w-7 rounded-full bg-primary flex items-center justify-center transition-transform duration-200 group-hover:scale-110 animate-pulse-glow">
                           <Play className="h-3 w-3 text-primary-foreground ml-0.5" />
                         </div>
                       </div>

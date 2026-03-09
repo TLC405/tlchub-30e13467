@@ -23,9 +23,13 @@ export function AttributeGraph({ attributes, compact = false }: AttributeGraphPr
             {Array.from({ length: 10 }).map((_, i) => (
               <div
                 key={i}
-                className={`w-[3px] h-2.5 rounded-[1px] ${
+                className={`w-[3px] h-2.5 rounded-[1px] transition-all duration-300 ${
                   i < attributes[key] ? color : "bg-border"
                 }`}
+                style={{ 
+                  animationDelay: `${i * 30}ms`,
+                  animation: i < attributes[key] ? 'scale-in 0.3s ease-out forwards' : 'none'
+                }}
               />
             ))}
           </div>
@@ -36,16 +40,20 @@ export function AttributeGraph({ attributes, compact = false }: AttributeGraphPr
 
   return (
     <div className="space-y-1.5">
-      {attributeConfig.map(({ key, label, color }) => (
+      {attributeConfig.map(({ key, label, color }, attrIndex) => (
         <div key={key} className="flex items-center gap-2">
           <span className="text-[9px] font-bold text-muted-foreground w-10 tracking-wider">{label}</span>
           <div className="flex-1 flex gap-[2px]">
             {Array.from({ length: 10 }).map((_, i) => (
               <div
                 key={i}
-                className={`flex-1 h-2 rounded-[2px] transition-colors ${
+                className={`flex-1 h-2 rounded-[2px] transition-all duration-300 ${
                   i < attributes[key] ? color : "bg-border"
                 }`}
+                style={{ 
+                  animationDelay: `${(attrIndex * 100) + (i * 30)}ms`,
+                  animation: i < attributes[key] ? 'progress-fill 0.5s ease-out forwards' : 'none'
+                }}
               />
             ))}
           </div>

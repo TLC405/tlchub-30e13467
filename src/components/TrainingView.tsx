@@ -199,7 +199,7 @@ const TrainingView = ({ onNavigate }: TrainingViewProps) => {
 
                         {/* Expanded detail — inline, no popup */}
                         {isBlockOpen && (skillTree || integrity) && (
-                          <div className="px-4 pb-3 animate-fade-in">
+                          <div className="px-4 pb-3 animate-slide-in-left">
                             {skillTree && <SkillTreeInline tree={skillTree} onNavigate={onNavigate} />}
                             {integrity && <IntegrityInline block={integrity} />}
                           </div>
