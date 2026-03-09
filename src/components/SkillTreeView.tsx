@@ -296,21 +296,22 @@ const SkillTreeView = ({ initialTreeId, onNavigate }: SkillTreeViewProps) => {
 
         {/* Grid */}
         <div className="grid grid-cols-2 gap-2">
-          {filteredTrees.map((tree) => {
+          {filteredTrees.map((tree, idx) => {
             const progress = getTreeProgress(tree);
             const completed = completedSteps[tree.id]?.length || 0;
 
             return (
               <button
                 key={tree.id}
-                className="text-left border border-border rounded-lg p-3 hover:border-foreground/30 transition-all duration-200 hover:shadow-md bg-card active:scale-[0.98]"
+                className="text-left border border-border rounded-lg p-3 hover:border-foreground/30 transition-all duration-200 hover:shadow-medium bg-card active:scale-[0.98] interactive-lift stagger-item"
+                style={{ animationDelay: `${idx * 50}ms` }}
                 onClick={() => setSelectedTree(tree)}
               >
                 <div className="flex items-center gap-2 mb-2">
                   {muscleDiagrams[tree.id] ? (
-                    <img src={muscleDiagrams[tree.id]} alt="" className="w-10 h-10 object-contain rounded bg-secondary/30 p-0.5" loading="lazy" />
+                    <img src={muscleDiagrams[tree.id]} alt="" className="w-10 h-10 object-contain rounded bg-secondary/30 p-0.5 transition-transform duration-200 group-hover:scale-105" loading="lazy" />
                   ) : (
-                    <div className="w-10 h-10 rounded bg-secondary flex items-center justify-center">
+                    <div className="w-10 h-10 rounded bg-secondary flex items-center justify-center transition-transform duration-200 hover:scale-105">
                       {iconMap[tree.icon] || <Dumbbell className="h-4 w-4" />}
                     </div>
                   )}
