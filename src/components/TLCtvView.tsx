@@ -163,9 +163,9 @@ const TLCtvView = () => {
 
       {/* AI Chat Panel */}
       {showChat && (
-        <div className="border border-primary rounded-lg bg-card overflow-hidden animate-fade-in">
+        <div className="border border-primary rounded-lg bg-card overflow-hidden animate-slide-in-up">
           <div className="px-4 py-2.5 border-b border-border flex items-center gap-2">
-            <Bot className="h-4 w-4 text-primary" />
+            <Bot className="h-4 w-4 text-primary animate-pulse-glow" />
             <span className="text-sm font-bold text-foreground">Coach TLC</span>
             <Badge variant="outline" className="text-[9px] rounded border-border">AI</Badge>
           </div>
