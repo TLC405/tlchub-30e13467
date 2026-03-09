@@ -182,12 +182,18 @@ const TLCtvView = () => {
               </div>
             )}
             {messages.map((m, i) => (
-              <div key={i} className={`flex gap-2 ${m.role === "user" ? "justify-end" : "justify-start"}`}>
+              <div 
+                key={i} 
+                className={`flex gap-2 ${m.role === "user" ? "justify-end" : "justify-start"} ${
+                  m.role === "user" ? "animate-slide-in-right" : "animate-slide-in-left"
+                }`}
+                style={{ animationDelay: `${i * 50}ms` }}
+              >
                 {m.role === "assistant" && <Bot className="h-4 w-4 text-primary flex-shrink-0 mt-1" />}
                 <div
-                  className={`max-w-[80%] text-sm rounded-lg px-3 py-2 ${
+                  className={`max-w-[80%] text-sm rounded-lg px-3 py-2 transition-all duration-200 ${
                     m.role === "user"
-                      ? "bg-primary text-primary-foreground"
+                      ? "bg-primary text-primary-foreground shadow-medium"
                       : "bg-muted text-foreground"
                   }`}
                 >
