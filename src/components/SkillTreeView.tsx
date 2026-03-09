@@ -138,7 +138,7 @@ const StepCard = React.memo(({
 
       {/* Expanded content */}
       {isOpen && (
-        <div className="border-t border-border px-4 py-4 space-y-4 animate-fade-in">
+        <div className="border-t border-border px-4 py-4 space-y-4 animate-accordion-down">
           {videoId && <VideoPlayer videoId={videoId} title={`${step.name} Demo`} />}
 
           <div className="space-y-1">
