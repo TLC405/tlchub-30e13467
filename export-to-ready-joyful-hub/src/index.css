@@ -1,0 +1,393 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* EDITORIAL BRUTALISM DESIGN SYSTEM — Newspaper / Red + Black */
+
+@layer base {
+  /* ===== LIGHT THEME (default) ===== */
+  :root {
+    --background: 40 20% 96%;
+    --foreground: 0 0% 8%;
+
+    --surface-0: 40 15% 94%;
+    --surface-1: 0 0% 100%;
+    --surface-2: 40 10% 98%;
+    --surface-3: 40 10% 92%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 8%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 8%;
+
+    --primary: 0 65% 42%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 0 0% 92%;
+    --secondary-foreground: 0 0% 15%;
+
+    --muted: 40 10% 92%;
+    --muted-foreground: 0 0% 40%;
+
+    --accent: 0 65% 42%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 0% 8%;
+    --destructive-foreground: 0 0% 100%;
+
+    --success: 150 40% 35%;
+    --success-foreground: 0 0% 100%;
+
+    --difficulty-easy: 0 0% 45%;
+    --difficulty-beginner: 150 40% 32%;
+    --difficulty-intermediate: 35 60% 40%;
+    --difficulty-advanced: 0 55% 45%;
+    --difficulty-master: 270 40% 40%;
+
+    --category-ballet: 330 65% 55%;
+
+    --border: 0 0% 15%;
+    --border-subtle: 0 0% 80%;
+    --border-active: 0 65% 42%;
+    --input: 0 0% 92%;
+    --ring: 0 65% 42%;
+
+    --radius: 0.25rem;
+
+    --space-xs: 0.25rem;
+    --space-sm: 0.5rem;
+    --space-md: 1rem;
+    --space-lg: 1.5rem;
+    --space-xl: 2rem;
+    --space-2xl: 3rem;
+    --space-3xl: 4rem;
+
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 0 0% 8%;
+    --sidebar-primary: 0 65% 42%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 40 10% 95%;
+    --sidebar-accent-foreground: 0 0% 8%;
+    --sidebar-border: 0 0% 15%;
+    --sidebar-ring: 0 65% 42%;
+  }
+
+  /* ===== DARK THEME ===== */
+  .dark {
+    --background: 0 0% 6%;
+    --foreground: 40 15% 92%;
+
+    --surface-0: 0 0% 6%;
+    --surface-1: 0 0% 10%;
+    --surface-2: 0 0% 13%;
+    --surface-3: 0 0% 16%;
+
+    --card: 0 0% 10%;
+    --card-foreground: 40 15% 92%;
+
+    --popover: 0 0% 10%;
+    --popover-foreground: 40 15% 92%;
+
+    --primary: 0 65% 50%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 0 0% 16%;
+    --secondary-foreground: 40 15% 85%;
+
+    --muted: 0 0% 14%;
+    --muted-foreground: 0 0% 55%;
+
+    --accent: 0 65% 50%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 40 15% 92%;
+    --destructive-foreground: 0 0% 6%;
+
+    --success: 150 40% 45%;
+    --success-foreground: 0 0% 6%;
+
+    --difficulty-easy: 0 0% 55%;
+    --difficulty-beginner: 150 40% 45%;
+    --difficulty-intermediate: 35 60% 50%;
+    --difficulty-advanced: 0 55% 55%;
+    --difficulty-master: 270 40% 55%;
+
+    --category-ballet: 330 65% 65%;
+
+    --border: 0 0% 80%;
+    --border-subtle: 0 0% 20%;
+    --border-active: 0 65% 50%;
+    --input: 0 0% 14%;
+    --ring: 0 65% 50%;
+
+    --sidebar-background: 0 0% 8%;
+    --sidebar-foreground: 40 15% 92%;
+    --sidebar-primary: 0 65% 50%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 0 0% 14%;
+    --sidebar-accent-foreground: 40 15% 92%;
+    --sidebar-border: 0 0% 25%;
+    --sidebar-ring: 0 65% 50%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border/20;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .font-chalk {
+    font-family: 'Space Grotesk', sans-serif;
+    letter-spacing: -0.02em;
+    font-weight: 700;
+  }
+
+  ::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: hsl(var(--background));
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--foreground) / 0.15);
+    border-radius: 2px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--primary));
+  }
+}
+
+@layer utilities {
+  /* ===== EDITORIAL SURFACE UTILITIES ===== */
+
+  /* Flat bordered card */
+  .surface-raised {
+    background: hsl(var(--card));
+    border: 1px solid hsl(var(--foreground) / 0.12);
+  }
+
+  .surface-raised:hover {
+    border-color: hsl(var(--foreground) / 0.25);
+  }
+
+  /* Recessed area */
+  .surface-inset {
+    background: hsl(var(--surface-0));
+    border: 1px solid hsl(var(--foreground) / 0.08);
+  }
+
+  /* Elevated (same as raised in editorial) */
+  .surface-elevated {
+    background: hsl(var(--card));
+    border: 1px solid hsl(var(--foreground) / 0.12);
+  }
+
+  /* Glass (simplified — just translucent bg) */
+  .surface-glass {
+    background: hsl(var(--card) / 0.95);
+    backdrop-filter: blur(12px);
+    border: 1px solid hsl(var(--foreground) / 0.1);
+  }
+
+  /* Premium glass replaced with flat bordered */
+  .glass-premium {
+    background: hsl(var(--card));
+    border: 1px solid hsl(var(--foreground) / 0.15);
+  }
+
+  /* Editorial bordered button */
+  .btn-raised {
+    background: hsl(var(--card));
+    border: 1px solid hsl(var(--foreground) / 0.12);
+    transition: all 0.15s ease;
+  }
+  .btn-raised:hover {
+    background: hsl(var(--foreground));
+    color: hsl(var(--card));
+    border-color: hsl(var(--foreground));
+  }
+  .btn-raised:active {
+    transform: translateY(1px);
+  }
+
+  /* Rectangular editorial badge */
+  .badge-coin {
+    background: hsl(var(--card));
+    border: 1px solid hsl(var(--foreground) / 0.15);
+  }
+
+  /* Flat progress track */
+  .track-inset {
+    background: hsl(var(--surface-0));
+    border: 1px solid hsl(var(--foreground) / 0.08);
+    border-radius: 0;
+  }
+
+  /* Flat fill bar */
+  .bar-raised {
+    border-radius: 0;
+  }
+
+  /* ===== TYPOGRAPHY UTILITIES ===== */
+  .text-label {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+
+  .text-heading {
+    font-family: 'Space Grotesk', sans-serif;
+    letter-spacing: -0.04em;
+    font-weight: 700;
+  }
+
+  /* Massive editorial headline */
+  .text-editorial {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(2.5rem, 7vw, 5rem);
+    font-weight: 700;
+    line-height: 0.92;
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
+  }
+
+  /* Sub-editorial headline */
+  .text-editorial-sm {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    font-weight: 700;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+  }
+
+  /* Embossed text — flat in editorial (just bold) */
+  .text-embossed {
+    text-shadow: none;
+  }
+
+  /* No brushed metal texture */
+  .texture-brushed {
+    position: relative;
+  }
+
+  /* ===== ACCENT LINE ===== */
+  .accent-line {
+    position: relative;
+  }
+
+  .accent-line::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    width: 0;
+    background: hsl(var(--primary));
+    transition: width 0.3s ease;
+  }
+
+  .accent-line:hover::after {
+    width: 100%;
+  }
+
+  /* ===== CARD EFFECTS — minimal ===== */
+  .card-hover {
+    transition: all 0.2s ease;
+  }
+
+  .card-hover:hover {
+    transform: translateY(-2px);
+    border-color: hsl(var(--primary));
+  }
+
+  .border-brutal {
+    border: 1px solid hsl(var(--foreground) / 0.15);
+  }
+
+  .border-brutal-accent {
+    border: 2px solid hsl(var(--primary));
+  }
+
+  /* Image overlay — editorial */
+  .image-overlay {
+    background: linear-gradient(
+      to top,
+      hsl(var(--card)) 0%,
+      hsl(var(--card) / 0.6) 30%,
+      transparent 100%
+    );
+  }
+
+  /* Newspaper divider */
+  .editorial-divider {
+    border-top: 1px solid hsl(var(--foreground) / 0.15);
+  }
+
+  .editorial-divider-thick {
+    border-top: 3px solid hsl(var(--foreground));
+  }
+
+  /* ===== DIFFICULTY BADGES — flat editorial ===== */
+  .difficulty-easy {
+    background: transparent;
+    color: hsl(var(--difficulty-easy));
+    border-color: hsl(var(--difficulty-easy) / 0.4);
+  }
+
+  .difficulty-beginner {
+    background: transparent;
+    color: hsl(var(--difficulty-beginner));
+    border-color: hsl(var(--difficulty-beginner) / 0.4);
+  }
+
+  .difficulty-intermediate {
+    background: transparent;
+    color: hsl(var(--difficulty-intermediate));
+    border-color: hsl(var(--difficulty-intermediate) / 0.4);
+  }
+
+  .difficulty-advanced {
+    background: transparent;
+    color: hsl(var(--difficulty-advanced));
+    border-color: hsl(var(--difficulty-advanced) / 0.4);
+  }
+
+  .difficulty-master {
+    background: transparent;
+    color: hsl(var(--difficulty-master));
+    border-color: hsl(var(--difficulty-master) / 0.4);
+  }
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+*:focus-visible {
+  outline: 2px solid hsl(var(--primary));
+  outline-offset: 2px;
+}
