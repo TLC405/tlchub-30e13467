@@ -59,7 +59,7 @@ const CompactExerciseLibrary = () => {
     <div className="space-y-6 max-w-full">
       <div className="text-center space-y-2">
         <h1 className="text-3xl font-bold text-foreground tracking-tight">Exercise Library</h1>
-        <p className="text-muted-foreground max-w-2xl mx-auto">99 real exercises with YouTube demos — no mock data</p>
+        <p className="text-muted-foreground max-w-2xl mx-auto">{exerciseDatabase.length} real exercises with YouTube demos — no mock data</p>
       </div>
 
       <Tabs value={selectedCategory} onValueChange={(v) => setSelectedCategory(v as ExerciseCategory)}>

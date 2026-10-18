@@ -5,6 +5,8 @@ import { nonNegotiables, stackedWeek, integrityBlocks, APP_POWERED_BY } from "@/
 import { skillProgressions } from "@/data/skillProgressions";
 import { muscleDiagrams } from "@/data/muscleDiagrams";
 import type { TrainingBlock } from "@/data/controlContent";
+import { getExercisesForBlock } from "@/data/placements";
+import BlockExercises from "./BlockExercises";
 import {
   Dumbbell, ArrowUp, Zap, Target, Star, ChevronDown, ChevronUp,
   Shield, Heart, Clock, CircleDot, CheckCircle, Play, ExternalLink,
@@ -151,6 +153,7 @@ const TrainingView = ({ onNavigate }: TrainingViewProps) => {
                     const isBlockOpen = expandedBlock === bKey;
                     const skillTree = getSkillTreeForAction(block.action);
                     const integrity = getIntegrityForAction(block.action);
+                    const blockExercises = getExercisesForBlock(day.id, i);
 
                     return (
                       <div 
@@ -182,7 +185,7 @@ const TrainingView = ({ onNavigate }: TrainingViewProps) => {
 
                           {/* Indicators */}
                           <div className="flex items-center gap-1.5">
-                            {(skillTree || integrity) && (
+                            {(skillTree || integrity || blockExercises.length > 0) && (
                               <ChevronDown className={`h-3.5 w-3.5 text-primary transition-transform ${isBlockOpen ? "rotate-180" : ""}`} />
                             )}
                             <button
@@ -198,8 +201,9 @@ const TrainingView = ({ onNavigate }: TrainingViewProps) => {
                         </div>
 
                         {/* Expanded detail — inline, no popup */}
-                        {isBlockOpen && (skillTree || integrity) && (
+                        {isBlockOpen && (skillTree || integrity || blockExercises.length > 0) && (
                           <div className="px-4 pb-3 animate-slide-in-left">
+                            <BlockExercises exercises={blockExercises} />
                             {skillTree && <SkillTreeInline tree={skillTree} onNavigate={onNavigate} />}
                             {integrity && <IntegrityInline block={integrity} />}
                           </div>
