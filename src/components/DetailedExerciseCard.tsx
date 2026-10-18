@@ -9,6 +9,7 @@ import { Play, ChevronDown, Heart, Zap, Target, Activity, AlertCircle, BookOpen 
 import type { Exercise } from "@/types";
 import LearnTab from "@/components/learn/LearnTab";
 import VideoPlayer from "@/components/VideoPlayer";
+import { getPlacesForExercise } from "@/data/placements";
 
 interface DetailedExerciseCardProps {
   exercise: Exercise;
@@ -36,6 +37,9 @@ const DetailedExerciseCard = ({ exercise, onMarkComplete, isCompleted }: Detaile
               </Badge>
             </div>
 
+            {getPlacesForExercise(exercise.slug).length > 0 && (
+              <p className="text-[11px] text-muted-foreground mb-1">Also used in: {getPlacesForExercise(exercise.slug).join(" · ")}</p>
+            )}
             <div className="flex flex-wrap gap-1 mb-2">
               {exercise.primaryMuscles.map((m, i) => (
                 <Badge key={i} variant="secondary" className="text-xs">{m}</Badge>
